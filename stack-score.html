@@ -177,7 +177,7 @@ p{margin:0}
 /* ======== SETTINGS (edit these) ======== */
 const KIT_API_KEY = "rWMhWOuYNu8lJKKWoWIfsg";   // Kit PUBLIC API key
 const KIT_FORM_ID = "10078143";                  // "Stack Score" form in Kit
-const APPLY_URL   = "/apply";                    // <-- paste your Six-Pack Stack application link
+const APPLY_URL   = "/";                         // Six-Pack Stack sales page
 const BTL_URL     = "#beyond-the-label";         // <-- paste your Beyond the Label sales page link
 const PHOTO_URL   = "";                          // <-- optional: link to a photo of you (e.g. your after photo)
 /* ====================================== */
@@ -528,7 +528,7 @@ function renderResults(){
       <p>Your stack isn't the only thing holding you back. Fixing it on your own takes trial and error. It took me 3 years.</p>
       <p>I'll audit your full stack, build your plan around foods you like, and check in every week until you see your abs.</p>
       <div class="guarantee"><b>Abs in 12 weeks, or I coach you free until you do.</b><span class="small muted">Follow the plan, check in weekly, send progress photos every 2 weeks.</span></div>
-      <a class="btn" id="${id}" href="${APPLY_URL}" target="_blank" rel="noopener">See If I Qualify →</a>
+      <a class="btn" id="${id}" href="${APPLY_URL}">See If I Qualify →</a>
       <p class="muted small" style="text-align:center">2-minute application. No sales call.</p>
       <p class="quote">"In one month, Anthony lost 11 lbs." Results vary with effort and consistency.</p>
     </div>`;
@@ -539,7 +539,7 @@ function renderResults(){
       <div class="bignum" style="color:var(--red-2)">${r.score}<span style="color:var(--muted)">/100</span></div>
     </div>
     <div class="leak"><span class="k">🚨 Your #1 leak</span><span class="t">${esc(r.leak.t)}</span><p>${esc(r.leak.d)}</p></div>
-    <a class="btn" href="${APPLY_URL}" target="_blank" rel="noopener">Fix It With Me: See If I Qualify →</a>
+    <a class="btn" href="${APPLY_URL}">Fix It With Me: See If I Qualify →</a>
     <span class="eyebrow" style="margin-top:8px">Your full report</span>
     <div class="facts" role="region" aria-label="Your Stack Score report">
       <div class="ft">Stack Score Facts</div>
