@@ -1,0 +1,610 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Stack Score</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="The free 60-second audit that shows guys exactly what to cut, keep and swap.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&display=swap">
+<style>
+/* Layout: one centered column, a quiz that moves screen to screen; results render as a "Supplement Facts" label. Single navy brand look. */
+:root{
+  --navy:#0d1b33;
+  --navy-2:#142645;
+  --navy-3:#1d3459;
+  --line:#2b4470;
+  --cream:#ffffff;
+  --muted:#e3e9f2;
+  --red:#e2433b;
+  --red-2:#ff5a50;
+  --keep:#3fbf7f;
+  --warn:#f0b43c;
+  --label-bg:#ffffff;
+  --label-ink:#0d1b33;
+  --display:"Montserrat","Arial Black","Helvetica Neue",Arial,sans-serif;
+  --body:"Montserrat","Helvetica Neue",Arial,sans-serif;
+  --mono:"Montserrat","Helvetica Neue",Arial,sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{background:var(--navy);color:var(--cream)}
+body{font-family:var(--body);font-size:16px;font-weight:500;line-height:1.55;font-variant-numeric:tabular-nums;min-height:100%;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0}
+.wrap{max-width:640px;margin:0 auto;padding-block:28px 56px}
+.brand{display:flex;align-items:center;justify-content:space-between;gap:12px;font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.brand b{color:var(--cream);font-weight:700}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--red);margin-right:8px;vertical-align:middle}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0}
+h1{font-size:clamp(40px,9vw,64px);line-height:1;font-weight:900;letter-spacing:-.02em;text-transform:uppercase}
+h1 em{font-style:normal;color:var(--red-2)}
+h2{font-size:clamp(24px,6vw,32px);line-height:1.12;font-weight:900;letter-spacing:-.015em}
+p{margin:0}
+.lede{font-size:19px;color:var(--cream);max-width:34em}
+.muted{color:var(--muted)}
+.small{font-size:14px}
+.stack{display:flex;flex-direction:column;gap:20px}
+.hero{display:flex;flex-direction:column;gap:22px;margin-top:40px}
+.bullets{list-style:none;padding:0;margin:0;display:grid;gap:10px}
+.bullets li{display:flex;gap:12px;align-items:flex-start}
+.tick{flex:none;width:22px;height:22px;border-radius:4px;background:var(--red);display:grid;place-items:center;font-weight:800;font-size:13px;color:#fff;margin-top:2px}
+.btn{appearance:none;border:0;cursor:pointer;font-family:var(--display);font-weight:900;font-size:18px;letter-spacing:.02em;text-transform:uppercase;
+  background:var(--red);color:#fff;padding:18px 26px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  text-decoration:none;transition:background .15s, transform .15s;width:100%}
+.btn:hover{background:var(--red-2)}
+.btn:active{transform:translateY(1px)}
+.btn:focus-visible,.opt:focus-visible,.chk:focus-within,.link:focus-visible,input:focus-visible{outline:3px solid var(--warn);outline-offset:2px}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.btn.ghost{background:transparent;color:var(--cream);border:1px solid var(--line)}
+.btn.ghost:hover{background:var(--navy-2)}
+.link{background:none;border:0;color:var(--muted);font:inherit;font-size:15px;cursor:pointer;padding:6px 0;text-decoration:underline;text-underline-offset:3px}
+.byline{display:flex;gap:14px;align-items:flex-start;border-top:1px solid var(--line);padding-top:18px}
+.byline .av{flex:none;width:44px;height:44px;border-radius:50%;background:var(--navy-3);display:grid;place-items:center;font-family:var(--display);font-weight:900;color:var(--red-2)}
+
+/* example card on start screen */
+.example{position:relative;border:1px dashed var(--line);border-radius:8px;padding:18px;display:flex;gap:18px;align-items:center;background:var(--navy-2)}
+.example .tag{position:absolute;top:-10px;left:14px;background:var(--navy);padding:0 8px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.mini-score{font-family:var(--mono);font-weight:700;font-size:40px;line-height:1;color:var(--red-2)}
+.mini-score span{font-size:16px;color:var(--muted)}
+.example ul{list-style:none;margin:0;padding:0;display:grid;gap:4px;font-size:15px;min-width:0}
+
+/* quiz */
+.progress{margin-top:28px;display:flex;flex-direction:column;gap:8px}
+.bar{height:6px;background:var(--navy-3);border-radius:99px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--red);width:0;transition:width .3s ease}
+.qmeta{display:flex;justify-content:space-between;font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.screen{margin-top:26px}
+.opts{display:grid;gap:10px}
+.opt{appearance:none;text-align:left;cursor:pointer;width:100%;font:inherit;font-size:18px;font-weight:600;color:var(--cream);
+  background:var(--navy-2);border:1px solid var(--line);border-radius:8px;padding:16px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px;transition:border-color .15s, background .15s}
+.opt:hover{border-color:var(--muted)}
+.opt[aria-pressed="true"]{border-color:var(--red);background:var(--navy-3)}
+.opt .arrow{color:var(--muted);font-family:var(--mono)}
+.search{width:100%;font:inherit;font-size:16px;padding:12px 14px;border-radius:6px;border:1px solid var(--line);background:var(--navy-2);color:var(--cream)}
+.cat{display:flex;flex-direction:column;gap:8px}
+.cat h3{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:700;margin-top:6px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chk{position:relative;display:inline-flex;align-items:center;gap:8px;cursor:pointer;border:1px solid var(--line);background:var(--navy-2);border-radius:99px;padding:9px 14px;font-size:15px;font-weight:500;user-select:none;max-width:100%}
+.chk input{position:absolute;opacity:0;width:1px;height:1px}
+.chk .box{flex:none;width:16px;height:16px;border-radius:4px;border:1.5px solid var(--muted);display:grid;place-items:center;font-size:11px;line-height:1}
+.chk:has(input:checked){border-color:var(--red);background:var(--navy-3)}
+.chk:has(input:checked) .box{background:var(--red);border-color:var(--red);color:#fff}
+.chk:has(input:checked) .box::after{content:"✓"}
+.count{font-family:var(--mono);font-size:13px;color:var(--muted)}
+.sticky-next{position:sticky;bottom:0;padding-block:14px calc(14px + env(safe-area-inset-bottom,0px));background:linear-gradient(to top,var(--navy) 70%,transparent);display:flex;gap:12px;align-items:center}
+.field{display:flex;flex-direction:column;gap:8px}
+.field label{font-weight:600}
+.field input[type=email],.field input[type=text]{width:100%;font:inherit;font-size:18px;padding:16px;border-radius:6px;border:1px solid var(--line);background:#fff;color:var(--label-ink)}
+.err{color:var(--red-2);font-size:15px;min-height:1.2em}
+.lock{display:flex;gap:16px;align-items:center;background:var(--navy-2);border:1px solid var(--line);border-radius:8px;padding:18px}
+.lock .q{font-family:var(--mono);font-weight:700;font-size:44px;line-height:1;color:var(--muted);filter:blur(5px)}
+
+/* results: supplement facts label */
+.facts{background:var(--label-bg);color:var(--label-ink);border:2px solid var(--label-ink);padding:14px 16px 16px;border-radius:2px;box-shadow:0 10px 30px rgba(0,0,0,.35)}
+.facts .ft{font-family:var(--display);font-weight:900;font-size:30px;letter-spacing:-.01em;line-height:1;border-bottom:1px solid var(--label-ink);padding-bottom:6px}
+.facts .serv{font-size:14px;display:flex;justify-content:space-between;gap:10px;padding-block:6px;border-bottom:8px solid var(--label-ink)}
+.scoreline{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;padding-block:10px;border-bottom:4px solid var(--label-ink)}
+.scoreline .lbl{font-family:var(--display);font-weight:900;font-size:20px}
+.scoreline .band{font-weight:600;font-size:15px}
+.bignum{font-family:var(--mono);font-weight:900;font-size:64px;line-height:.9;font-variant-numeric:tabular-nums}
+.bignum span{font-size:22px}
+.vhead{display:flex;justify-content:space-between;font-size:13px;font-weight:700;padding-block:6px;border-bottom:1px solid var(--label-ink)}
+.vrow{display:grid;grid-template-columns:1fr auto;gap:4px 12px;padding-block:8px;border-bottom:1px solid #c9ced8}
+.vrow .nm{font-weight:700;min-width:0}
+.vrow .why{grid-column:1 / -1;font-size:14px;color:#3a4a66}
+.pill{font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:3px;white-space:nowrap;align-self:start}
+.p-keep{background:#dff5ea;color:#13633d}
+.p-depends{background:#fdf0d4;color:#7a5408}
+.p-cut{background:#fde2e0;color:#a3221b}
+.p-risk{background:#a3221b;color:#fff}
+.totals{display:grid;gap:0;margin-top:2px}
+.trow{display:flex;justify-content:space-between;gap:12px;padding-block:10px;border-bottom:1px solid var(--label-ink);font-weight:700}
+.trow:last-child{border-bottom:8px solid var(--label-ink)}
+.trow .v{font-family:var(--mono);font-variant-numeric:tabular-nums;text-align:right}
+.foot{font-size:12px;color:#3a4a66;padding-top:8px}
+.leak{border-left:4px solid var(--red);background:var(--navy-2);padding:16px 18px;border-radius:0 8px 8px 0;display:flex;flex-direction:column;gap:6px}
+.leak .k{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--red-2)}
+.leak .t{font-family:var(--display);font-weight:800;font-size:22px}
+.cta{background:var(--navy-2);border:1px solid var(--line);border-radius:10px;padding:22px;display:flex;flex-direction:column;gap:14px}
+.sent{font-size:14px;color:var(--muted)}
+/* hormozi-style landing additions */
+.callout{background:var(--red);color:#fff;text-align:center;font-weight:700;font-size:15px;padding:10px 14px;border-radius:6px;margin-top:18px}
+.hero h1{font-size:clamp(38px,10vw,68px)}
+.sub{font-size:21px;line-height:1.4;font-weight:500;max-width:30em}
+.sub b{color:#fff}
+.micro{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 16px;font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.micro span::before{content:"✓ ";color:var(--keep)}
+.proof{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.proof div{background:var(--navy-2);border:1px solid var(--line);border-radius:8px;padding:14px 12px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.proof b{font-family:var(--mono);font-size:22px;color:var(--cream);line-height:1.1}
+.proof span{font-size:13px;color:var(--muted);line-height:1.3}
+.sec{display:flex;flex-direction:column;gap:18px;padding-top:40px;margin-top:40px;border-top:1px solid var(--line)}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--red-2)}
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:12px;counter-reset:s}
+.steps li{display:grid;grid-template-columns:44px 1fr;gap:14px;align-items:start;counter-increment:s}
+.steps li::before{content:counter(s);width:44px;height:44px;border-radius:50%;border:2px solid var(--red);display:grid;place-items:center;font-family:var(--display);font-weight:900;font-size:20px}
+.steps b{display:block;font-family:var(--display);font-size:19px}
+.me{display:grid;grid-template-columns:96px 1fr;gap:16px;align-items:center}
+.me .ph{width:96px;height:96px;border-radius:10px;background:var(--navy-3) center/cover no-repeat;display:grid;place-items:center;font-family:var(--display);font-weight:900;font-size:34px;color:var(--red-2);border:1px solid var(--line)}
+.faq{display:grid;gap:10px}
+.faq div{background:var(--navy-2);border:1px solid var(--line);border-radius:8px;padding:14px 16px}
+.faq b{display:block;margin-bottom:2px}
+.inside{list-style:none;padding:0;margin:0;display:grid;gap:8px}
+.inside li::before{content:"✓  ";color:var(--keep);font-weight:800}
+.blurred{filter:blur(4px);pointer-events:none;user-select:none;opacity:.85}
+.gatewrap{position:relative}
+.gatewrap .badge{position:absolute;inset:0;display:grid;place-items:center}
+.gatewrap .badge span{background:var(--navy);border:1px solid var(--line);padding:10px 16px;border-radius:99px;font-weight:700;font-size:15px}
+.guarantee{border:2px dashed var(--keep);border-radius:10px;padding:16px 18px;display:flex;flex-direction:column;gap:4px}
+.guarantee b{font-family:var(--display);font-size:19px}
+.quote{font-size:15px;color:var(--muted);border-left:3px solid var(--line);padding-left:12px}
+@media (max-width:420px){.proof b{font-size:18px}.me{grid-template-columns:72px 1fr}.me .ph{width:72px;height:72px;font-size:26px}}
+/* ---------- desktop layout ---------- */
+.get-grid,.res-grid{display:grid;gap:22px}
+.get-grid > *,.res-grid > *{min-width:0}
+@media (min-width:900px){
+  body{font-size:18px}
+  .wrap{max-width:1120px;padding-block:36px 72px}
+  .wrap.narrow-mode main{max-width:680px;margin-inline:auto}
+  .hero{align-items:center;text-align:center;margin-top:56px;gap:26px}
+  .hero h1{font-size:clamp(56px,6.4vw,84px)}
+  .hero .sub{max-width:760px;font-size:23px}
+  .hero .stack{width:100%;max-width:480px}
+  .hero .proof{width:100%;max-width:820px}
+  .proof b{font-size:28px}
+  .sec{padding-top:64px;margin-top:64px;gap:24px}
+  .sec > .eyebrow,.sec > h2{text-align:center}
+  .get-grid{grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+  .get-grid .bullets{gap:16px;font-size:19px}
+  .steps{grid-template-columns:repeat(3,1fr);gap:24px}
+  .steps li{grid-template-columns:1fr;gap:12px}
+  .me{max-width:820px;margin-inline:auto;grid-template-columns:150px 1fr;gap:28px}
+  .me .ph{width:150px;height:150px}
+  .faq{grid-template-columns:repeat(3,1fr)}
+  .sec .ctaend{max-width:480px;margin-inline:auto;width:100%}
+  .res-grid{grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:40px;align-items:start}
+  .res-grid .left{display:flex;flex-direction:column;gap:22px}
+  .res-grid .bignum{font-size:84px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+@media (max-width:420px){.bignum{font-size:54px}.facts .ft{font-size:26px}}
+</style>
+<script defer src="/_vercel/insights/script.js"></script>
+</head>
+<body>
+
+<div class="wrap">
+  <div class="brand"><span><span class="dot"></span><b>Stack Score</b></span><span>by Boon Fay</span></div>
+  <main id="app" aria-live="polite"></main>
+</div>
+
+<script>
+/* ======== SETTINGS (edit these) ======== */
+const KIT_API_KEY = "rWMhWOuYNu8lJKKWoWIfsg";   // Kit PUBLIC API key
+const KIT_FORM_ID = "10078143";                  // "Stack Score" form in Kit
+const APPLY_URL   = "/";                         // Six-Pack Stack sales page
+const BTL_URL     = "#beyond-the-label";         // <-- paste your Beyond the Label sales page link
+const PHOTO_URL   = "data:image/jpeg;base64,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";                          // <-- optional: link to a photo of you (e.g. your after photo)
+/* ====================================== */
+
+const PRODUCTS = [
+  // [id, name, category, verdict, points, wastePerMonth, why]
+  ["whey","Whey protein","Protein & muscle","keep",0,0,"Keep, if you can't hit your protein from food."],
+  ["plant","Plant protein","Protein & muscle","keep",0,0,"Keep. Same job as whey."],
+  ["casein","Casein","Protein & muscle","keep",0,0,"Keep. It's just protein."],
+  ["creatine","Creatine","Protein & muscle","keep",0,0,"Keep. Proven, cheap, worth it. 3–5g a day."],
+  ["gainer","Mass gainer","Protein & muscle","cut",8,50,"Mostly sugar and oats at a premium price."],
+  ["bcaa","BCAAs","Protein & muscle","cut",8,35,"Your protein already covers them."],
+  ["eaa","EAAs","Protein & muscle","depends",0,0,"Pointless if you already hit your protein."],
+  ["glutamine","Glutamine","Protein & muscle","cut",8,25,"Little evidence for muscle or fat loss."],
+  ["hmb","HMB","Protein & muscle","cut",8,30,"Weak evidence in guys who train."],
+  ["bars","Protein bars / snacks","Protein & muscle","depends",0,0,"Run the 5-second test: calories ÷ 10 vs protein."],
+
+  ["pre","Pre-workout","Energy & pre-workout","depends",0,0,"Keep only with real doses and no proprietary blend."],
+  ["caffeine","Caffeine pills","Energy & pre-workout","keep",0,0,"Keep. Cheap and does the same job."],
+  ["energy","Energy drinks (Celsius, Ghost etc.)","Energy & pre-workout","depends",0,0,"Watch the calories and sugar."],
+  ["nootropic","Nootropics / focus blends","Energy & pre-workout","cut",10,40,"Mostly caffeine with marketing."],
+  ["citrulline","Citrulline or beta-alanine","Energy & pre-workout","depends",0,0,"Fine, but often already in your pre."],
+
+  ["fatburner","Fat burner / thermogenic","Fat loss","cut",12,45,"Mostly caffeine. It burns money, not fat."],
+  ["carnitine","L-carnitine","Fat loss","cut",10,30,"Little evidence for fat loss."],
+  ["cla","CLA","Fat loss","cut",10,25,"Tiny or no effect."],
+  ["acv","Apple cider vinegar gummies","Fat loss","cut",10,20,"Candy with vinegar."],
+  ["garcinia","Garcinia / raspberry ketones","Fat loss","cut",10,25,"No solid evidence."],
+  ["gte","Green tea extract","Fat loss","cut",10,25,"Weak effect, liver concerns at high doses."],
+  ["detox","Detox / cleanse tea","Fat loss","cut",10,30,"Mostly a laxative."],
+  ["appetite","Appetite suppressants","Fat loss","cut",10,40,"Fix the meals instead."],
+  ["berberine","Berberine (\"nature's Ozempic\")","Fat loss","cut",10,30,"Not a fat-loss shortcut."],
+
+  ["testbooster","Test booster","Testosterone & men's health","cut",12,50,"Little evidence it raises testosterone in healthy guys."],
+  ["tongkat","Tongkat ali","Testosterone & men's health","cut",10,40,"Limited evidence."],
+  ["turk","Turkesterone","Testosterone & men's health","cut",10,50,"Little solid human research."],
+  ["fadogia","Fadogia agrestis","Testosterone & men's health","cut",10,35,"Limited human research."],
+  ["shilajit","Shilajit","Testosterone & men's health","cut",10,35,"The marketing outruns the research."],
+  ["ashwa","Ashwagandha","Testosterone & men's health","depends",0,0,"May help stress and sleep. Not your abs."],
+  ["maca","Maca / horny goat weed","Testosterone & men's health","cut",8,25,"Not for body composition."],
+  ["zma","ZMA","Testosterone & men's health","depends",0,0,"Only useful if you're low in zinc or magnesium."],
+  ["dim","DIM","Testosterone & men's health","cut",8,25,"No reason for most guys to take it."],
+
+  ["greens","Greens powder (AG1 etc.)","Health & wellness","cut",12,80,"An expensive multivitamin. Eat vegetables instead."],
+  ["multi","Multivitamin","Health & wellness","depends",0,0,"Cheap insurance. Fine to keep."],
+  ["vitd","Vitamin D","Health & wellness","depends",0,0,"Useful if you're low or get little sun."],
+  ["mag","Magnesium","Health & wellness","depends",0,0,"May help sleep."],
+  ["fishoil","Fish oil / omega-3","Health & wellness","depends",0,0,"Useful if you don't eat fish."],
+  ["zinc","Zinc","Health & wellness","depends",0,0,"Only if you're low."],
+  ["electro","Electrolytes (LMNT, Liquid IV etc.)","Health & wellness","depends",0,0,"Only needed for heavy sweating."],
+  ["collagen","Collagen","Health & wellness","depends",0,0,"Not a muscle-building protein."],
+  ["probiotic","Probiotics","Health & wellness","depends",0,0,"Varies a lot by product and person."],
+  ["fiber","Fiber supplement","Health & wellness","depends",0,0,"Keep if you eat little fiber."],
+  ["melatonin","Melatonin / sleep aids","Health & wellness","depends",0,0,"Short-term use only."],
+  ["seamoss","Sea moss","Health & wellness","cut",10,30,"A trend with little evidence."],
+  ["colostrum","Colostrum","Health & wellness","cut",10,50,"A trend with little evidence."],
+  ["organs","Beef organ supplements","Health & wellness","cut",8,40,"Just eat the food."],
+  ["mushroom","Mushroom coffee / lion's mane","Health & wellness","cut",8,40,"Not doing anything for your abs."],
+
+  ["sarms","SARMs","\"Enhanced\"","risk",20,100,"Not approved for human use, often mislabeled."],
+  ["peptides","Peptides (BPC-157 etc.)","\"Enhanced\"","risk",20,100,"Often sold \"not for human consumption.\""],
+  ["prohormones","Prohormones","\"Enhanced\"","risk",20,80,"Serious health risks."]
+];
+const PMAP = Object.fromEntries(PRODUCTS.map(p=>[p[0],p]));
+const CATS = [...new Set(PRODUCTS.map(p=>p[2]))];
+
+const QUESTIONS = [
+  {id:"goal",q:"What's your #1 goal?",opts:["Lose fat and see my abs","Build muscle","Both"]},
+  {id:"abs",q:"Have you ever seen your abs?",opts:["Never","Almost","Yes, but I lost them"]},
+  {id:"stack",q:"What do you take right now?",multi:true},
+  {id:"spend",q:"About how much do you spend a month on supplements?",opts:["Under $50","$50–100","$100–200","$200+"]},
+  {id:"protein",q:"Do you hit your protein most days?",opts:["Yes","Sometimes","No","No idea how much I need"]},
+  {id:"train",q:"How many days a week do you train?",opts:["0–1","2–3","4+"]},
+  {id:"cals",q:"Do you know roughly how many calories you eat?",opts:["Yes","Roughly","No idea"]},
+  {id:"weekend",q:"How are your weekends?",opts:["On track","A bit loose","I undo the whole week"]}
+];
+
+const state = {step:0, answers:{}, stack:new Set(), other:"", email:"", filter:""};
+const app = document.getElementById("app");
+const esc = s => String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+/* ---------- scoring ---------- */
+function computeResult(a, stack){
+  const picked = [...stack].map(id=>PMAP[id]).filter(Boolean);
+  let productPts = picked.reduce((s,p)=>s+p[4],0);
+  if(!stack.has("creatine")) productPts += 5;
+  productPts = Math.min(productPts,40);
+
+  const proteinPts = {"Yes":0,"Sometimes":8,"No":15,"No idea how much I need":12}[a.protein] ?? 0;
+  const trainPts   = {"4+":0,"2–3":8,"0–1":15}[a.train] ?? 0;
+  const calPts     = {"Yes":0,"Roughly":5,"No idea":12}[a.cals] ?? 0;
+  const wkPts      = {"On track":0,"A bit loose":6,"I undo the whole week":12}[a.weekend] ?? 0;
+
+  let score = 100 - productPts - proteinPts - trainPts - calPts - wkPts;
+  score = Math.max(10, Math.min(95, score));
+
+  const wasteYear = picked.reduce((s,p)=>s+p[5],0) * 12;
+
+  const leaks = [
+    {k:"stack",pts:productPts,t:"Your stack",d:"You're paying for products that aren't moving you closer to your abs."},
+    {k:"protein",pts:proteinPts,t:"Your protein",d:"Without enough protein, you lose muscle while you diet, so there's less to show when the fat comes off."},
+    {k:"train",pts:trainPts,t:"Your training",d:"Fewer than 4 days a week makes it hard to hold muscle while you lose fat."},
+    {k:"cals",pts:calPts,t:"Your calories",d:"If you don't know what you eat, hidden calories are quietly stalling your fat loss."},
+    {k:"weekend",pts:wkPts,t:"Your weekends",d:"You're undoing your weekday progress every Saturday and Sunday."}
+  ].sort((x,y)=>y.pts-x.pts);
+  const leak = leaks[0].pts>0 ? leaks[0] : {t:"The last 10%",d:"Your basics are solid. What's left is dialing in the plan so the last layer comes off."};
+
+  let band, bandText;
+  if(score<50){band="Leaking";bandText="You're spending money and effort that isn't getting you closer to your abs.";}
+  else if(score<75){band="Close, but leaking";bandText="You've got a decent foundation, but a few leaks are costing you your abs.";}
+  else {band="Dialed in";bandText="Your stack is solid. You're ready for the last 10%, and that's where a plan built for you makes the difference.";}
+
+  const order = {risk:0,cut:1,depends:2,keep:3};
+  const verdicts = picked.slice().sort((x,y)=>order[x[3]]-order[y[3]]);
+  return {score, band, bandText, wasteYear, leak, verdicts};
+}
+
+/* ---------- Kit signup ---------- */
+async function sendToKit(email, r){
+  const fields = {stack_score:String(r.score), goal:state.answers.goal||"", monthly_spend:state.answers.spend||""};
+  try{
+    const res = await fetch(`https://api.convertkit.com/v3/forms/${KIT_FORM_ID}/subscribe`,{
+      method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({api_key:KIT_API_KEY,email,fields})
+    });
+    if(res.ok) return true;
+    throw new Error("api");
+  }catch(e){
+    try{
+      const fd = new FormData();
+      fd.append("email_address",email);
+      Object.entries(fields).forEach(([k,v])=>fd.append(`fields[${k}]`,v));
+      await fetch(`https://app.kit.com/forms/${KIT_FORM_ID}/subscriptions`,{method:"POST",mode:"no-cors",body:fd});
+      return true;
+    }catch(e2){ return false; }
+  }
+}
+
+/* ---------- screens ---------- */
+function render(){
+  const s = state.step;
+  document.querySelector(".wrap").classList.toggle("narrow-mode", s>=1 && s<=QUESTIONS.length+1);
+  if(s===0) return renderStart();
+  if(s>=1 && s<=QUESTIONS.length) return renderQuestion(s-1);
+  if(s===QUESTIONS.length+1) return renderGate();
+  return renderResults();
+}
+function progress(i){
+  const pct = Math.round(((i+1)/QUESTIONS.length)*100);
+  return `<div class="progress"><div class="qmeta"><span>Question ${i+1} of ${QUESTIONS.length}</span><span>${pct}%</span></div><div class="bar"><i style="width:${pct}%"></i></div></div>`;
+}
+function go(n){ state.step=n; render(); window.scrollTo({top:0,behavior:"smooth"}); const h=app.querySelector("h1,h2"); if(h){h.setAttribute("tabindex","-1");h.focus({preventScroll:true});} }
+
+function ctaBlock(id,label){
+  return `<div class="stack" style="gap:10px"><button class="btn" data-start id="${id}">${label}</button>
+  <div class="micro"><span>Free</span><span>60 seconds</span><span>No sign-up to start</span></div></div>`;
+}
+function exampleLabel(){
+  return `<div class="facts" aria-label="Example Stack Score report">
+    <div class="ft">Stack Score Facts</div>
+    <div class="serv"><span>Example report</span><span>4 products checked</span></div>
+    <div class="scoreline"><div><div class="lbl">Your Stack Score</div><div class="band">"Leaking"</div></div><div class="bignum">42<span>/100</span></div></div>
+    <div class="vhead"><span>Product</span><span>Verdict</span></div>
+    <div class="vrow"><span class="nm">Creatine</span><span class="pill p-keep">Keep</span></div>
+    <div class="vrow"><span class="nm">Pre-workout</span><span class="pill p-depends">Depends</span></div>
+    <div class="vrow"><span class="nm">Fat burner</span><span class="pill p-cut">Cut</span></div>
+    <div class="vrow"><span class="nm">Greens powder (AG1 etc.)</span><span class="pill p-cut">Cut</span></div>
+    <div class="totals"><div class="trow"><span>Estimated yearly waste</span><span class="v">About $1,500</span></div><div class="trow"><span>#1 leak</span><span class="v">Your weekends</span></div></div>
+  </div>`;
+}
+function renderStart(){
+  const photo = PHOTO_URL ? `style="background-image:url('${esc(PHOTO_URL)}')"` : "";
+  app.innerHTML = `
+  <section class="hero" style="margin-top:28px">
+    <h1>What's Your <em>Stack Score?</em></h1>
+    <p class="sub">The free 60-second audit that shows you exactly what to <b>cut, keep and swap</b>, and how much your supplements are really costing you.</p>
+    ${ctaBlock("start","Get My Stack Score →")}
+    <div class="proof">
+      <div><b>50+</b><span>supplements audited</span></div>
+      <div><b>225→175</b><span>my own transformation</span></div>
+      <div><b>−11 lbs</b><span>client result in 1 month</span></div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <span class="eyebrow">What you'll get</span>
+    <h2>Your personal Stack Score report</h2>
+    <div class="get-grid">
+    <div class="stack">
+    <ul class="bullets">
+      <li><span class="tick">✓</span><span><b>Your score out of 100</b>, so you know exactly where you stand</span></li>
+      <li><span class="tick">✓</span><span><b>A verdict on every supplement you take:</b> keep, cut or depends</span></li>
+      <li><span class="tick">✓</span><span><b>Your yearly waste:</b> how much money is going to products that don't work</span></li>
+      <li><span class="tick">✓</span><span><b>Your #1 leak:</b> the one thing keeping your abs hidden</span></li>
+    </ul>
+    ${ctaBlock("start2","Get My Stack Score →")}
+    </div>
+    ${exampleLabel()}
+    </div>
+  </section>
+
+  <section class="sec">
+    <span class="eyebrow">How it works</span>
+    <h2>3 steps. 60 seconds.</h2>
+    <ol class="steps">
+      <li><div><b>Answer 8 quick questions</b><span class="muted">Your goal, what you take and your habits. One tap each.</span></div></li>
+      <li><div><b>Get your score instantly</b><span class="muted">See your verdicts, your waste and your #1 leak on screen.</span></div></li>
+      <li><div><b>Get your fix list</b><span class="muted">Your full report lands in your inbox so you can act on it.</span></div></li>
+    </ol>
+  </section>
+
+  <section class="sec">
+    <span class="eyebrow">Who built this</span>
+    <div class="me">
+      <div class="ph" ${photo}>${PHOTO_URL?"":"B"}</div>
+      <div class="stack" style="gap:6px">
+        <h2 style="font-size:24px">I'm Boon. I wasted thousands on supplements.</h2>
+        <p class="muted">At 225 lbs, my cabinet looked like a GNC shelf. Fat burners, test boosters, greens powder. Most of it did nothing. I got to 175 once I cut the junk and kept what worked. This is the audit I wish someone had given me.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <span class="eyebrow">Questions</span>
+    <div class="faq">
+      <div><b>Is it really free?</b>Yes. No card, no catch.</div>
+      <div><b>How long does it take?</b>About 60 seconds. 8 questions, one tap each.</div>
+      <div><b>Do I need to sign up first?</b>No. Answer the questions first. You only add your email to get your report.</div>
+    </div>
+    <div class="ctaend">${ctaBlock("start3","Find Out My Stack Score →")}</div>
+  </section>`;
+  app.querySelectorAll("[data-start]").forEach(b=>b.onclick=()=>go(1));
+}
+
+function renderQuestion(i){
+  const Q = QUESTIONS[i];
+  if(Q.multi) return renderStack(i);
+  const cur = state.answers[Q.id];
+  app.innerHTML = `${progress(i)}
+  <section class="screen stack">
+    <h2>${esc(Q.q)}</h2>
+    <div class="opts">${Q.opts.map((o,k)=>`<button class="opt" data-k="${k}" aria-pressed="${cur===o}"><span>${esc(o)}</span><span class="arrow">→</span></button>`).join("")}</div>
+    <div><button class="link" id="back">← Back</button></div>
+  </section>`;
+  app.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{
+    state.answers[Q.id]=Q.opts[+b.dataset.k];
+    app.querySelectorAll(".opt").forEach(x=>x.setAttribute("aria-pressed","false"));
+    b.setAttribute("aria-pressed","true");
+    setTimeout(()=>go(state.step+1),160);
+  });
+  document.getElementById("back").onclick=()=>go(state.step-1);
+}
+
+function renderStack(i){
+  const f = state.filter.trim().toLowerCase();
+  const catHtml = CATS.map(c=>{
+    const items = PRODUCTS.filter(p=>p[2]===c && (!f || p[1].toLowerCase().includes(f)));
+    if(!items.length) return "";
+    return `<div class="cat"><h3>${esc(c)}</h3><div class="chips">${items.map(p=>`
+      <label class="chk"><input type="checkbox" id="p-${p[0]}" value="${p[0]}" ${state.stack.has(p[0])?"checked":""}><span class="box"></span><span>${esc(p[1])}</span></label>`).join("")}</div></div>`;
+  }).join("");
+  app.innerHTML = `${progress(i)}
+  <section class="screen stack">
+    <h2>What do you take right now?</h2>
+    <p class="muted">Tick everything. Be honest, it's just you and the results.</p>
+    <input class="search" id="filter" type="search" placeholder="Search products…" value="${esc(state.filter)}" aria-label="Search products">
+    ${catHtml || `<p class="muted">No match. Add it under "Other" below.</p>`}
+    <div class="field">
+      <label for="other">Other (type it in)</label>
+      <input type="text" id="other" placeholder="e.g. a specific brand or product" value="${esc(state.other)}">
+    </div>
+    <label class="chk" style="align-self:flex-start"><input type="checkbox" id="p-none" ${state.stack.size===0 && state.answers.stack==="none"?"checked":""}><span class="box"></span><span>Nothing yet</span></label>
+  </section>
+  <div class="sticky-next">
+    <button class="btn ghost" id="back" style="width:auto">←</button>
+    <button class="btn" id="next">Next → <span class="count" id="cnt" style="color:#fff">${state.stack.size?`(${state.stack.size})`:""}</span></button>
+  </div>`;
+  const upd=()=>{document.getElementById("cnt").textContent=state.stack.size?`(${state.stack.size})`:"";};
+  app.querySelectorAll('.chk input[value]').forEach(cb=>cb.onchange=()=>{
+    cb.checked?state.stack.add(cb.value):state.stack.delete(cb.value);
+    if(cb.checked){document.getElementById("p-none").checked=false;state.answers.stack="";}
+    upd();
+  });
+  document.getElementById("p-none").onchange=e=>{
+    if(e.target.checked){state.stack.clear();state.answers.stack="none";app.querySelectorAll('.chk input[value]').forEach(c=>c.checked=false);upd();}
+    else state.answers.stack="";
+  };
+  const fi=document.getElementById("filter");
+  fi.oninput=()=>{state.filter=fi.value;const pos=fi.selectionStart;renderStack(i);const n=document.getElementById("filter");n.focus();n.setSelectionRange(pos,pos);};
+  document.getElementById("other").oninput=e=>state.other=e.target.value;
+  document.getElementById("back").onclick=()=>go(state.step-1);
+  document.getElementById("next").onclick=()=>{state.filter="";go(state.step+1);};
+}
+
+function renderGate(){
+  app.innerHTML = `
+  <div class="progress"><div class="qmeta"><span>Done</span><span>100%</span></div><div class="bar"><i style="width:100%"></i></div></div>
+  <section class="screen stack" style="margin-top:28px">
+    <h2>✅ Your Stack Score is ready.</h2>
+    <div class="gatewrap">
+      <div class="facts blurred" aria-hidden="true">
+        <div class="ft">Stack Score Facts</div>
+        <div class="scoreline"><div><div class="lbl">Your Stack Score</div><div class="band">"———"</div></div><div class="bignum">??<span>/100</span></div></div>
+        <div class="vrow"><span class="nm">████████</span><span class="pill p-cut">Cut</span></div>
+        <div class="vrow"><span class="nm">██████</span><span class="pill p-keep">Keep</span></div>
+        <div class="trow"><span>Estimated yearly waste</span><span class="v">$█,███</span></div>
+      </div>
+      <div class="badge"><span>🔒 Enter your email to unlock</span></div>
+    </div>
+    <p class="lede">Where should I send your full report?</p>
+    <ul class="inside">
+      <li>Your score out of 100</li>
+      <li>Your verdict on every product you take</li>
+      <li>How much you're wasting every year</li>
+      <li>Your #1 leak and how to fix it</li>
+    </ul>
+    <form id="gate" class="stack" novalidate style="gap:12px">
+      <div class="field">
+        <label for="email">Email address</label>
+        <input type="email" id="email" autocomplete="email" inputmode="email" placeholder="you@email.com" value="${esc(state.email)}" required>
+        <div class="err" id="err" role="alert"></div>
+      </div>
+      <button class="btn" id="show" type="submit">Show My Stack Score →</button>
+      <p class="muted small" style="text-align:center">🔒 No spam. Unsubscribe anytime.</p>
+    </form>
+    <div><button class="link" id="back">← Back</button></div>
+  </section>`;
+  document.getElementById("back").onclick=()=>go(state.step-1);
+  document.getElementById("gate").onsubmit=async e=>{
+    e.preventDefault();
+    const em=document.getElementById("email").value.trim();
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(em)){document.getElementById("err").textContent="Enter a valid email so I can send your report.";return;}
+    state.email=em;
+    const btn=document.getElementById("show");btn.disabled=true;btn.textContent="Calculating…";
+    const r=computeResult(state.answers,state.stack);
+    state.result=r;
+    state.sent = await sendToKit(em,r);
+    go(state.step+1);
+  };
+}
+
+function renderResults(){
+  const r = state.result || computeResult(state.answers,state.stack);
+  const rows = r.verdicts.map(p=>{
+    const v=p[3], label={keep:"Keep",depends:"Depends",cut:"Cut",risk:"Cut now"}[v];
+    return `<div class="vrow"><span class="nm">${esc(p[1])}</span><span class="pill p-${v}">${label}</span><span class="why">${esc(p[6])}</span></div>`;
+  }).join("");
+  const otherRow = state.other.trim()?`<div class="vrow"><span class="nm">${esc(state.other.trim())}</span><span class="pill p-depends">Check</span><span class="why">I'd need to see the label. This is exactly what the full audit covers.</span></div>`:"";
+  const noCreatine = !state.stack.has("creatine")?`<div class="vrow"><span class="nm">Creatine (missing)</span><span class="pill p-keep">Add</span><span class="why">The one supplement I'd never cut. Plain monohydrate, 3–5g a day.</span></div>`:"";
+  const wasteTxt = r.wasteYear>0?`About $${r.wasteYear.toLocaleString("en-US")}`:"Little to none";
+  const cta = (id)=>`<div class="cta">
+      <h2>Want me to fix all of it for you?</h2>
+      <p>Your stack isn't the only thing holding you back. Fixing it on your own takes trial and error. It took me 3 years.</p>
+      <p>I'll audit your full stack, build your plan around foods you like, and check in every week until you see your abs.</p>
+      <div class="guarantee"><b>Abs in 12 weeks, or I coach you free until you do.</b><span class="small muted">Follow the plan, check in weekly, send progress photos every 2 weeks.</span></div>
+      <a class="btn" id="${id}" href="${APPLY_URL}">See If I Qualify →</a>
+      <p class="muted small" style="text-align:center">2-minute application. No sales call.</p>
+      <p class="quote">"In one month, Anthony lost 11 lbs." Results vary with effort and consistency.</p>
+    </div>`;
+  app.innerHTML = `
+  <section class="screen res-grid" style="margin-top:32px">
+  <div class="left stack" style="gap:22px">
+    <div class="scoreline" style="border:0;padding:0;align-items:center">
+      <div><span class="eyebrow">Your Stack Score</span><h2 style="margin-top:4px">"${esc(r.band)}"</h2></div>
+      <div class="bignum" style="color:var(--red-2)">${r.score}<span style="color:var(--muted)">/100</span></div>
+    </div>
+    <div class="leak"><span class="k">🚨 Your #1 leak</span><span class="t">${esc(r.leak.t)}</span><p>${esc(r.leak.d)}</p></div>
+    <a class="btn" href="${APPLY_URL}">Fix It With Me: See If I Qualify →</a>
+    ${cta("apply2")}
+  </div>
+  <div class="stack" style="gap:22px">
+    <span class="eyebrow">Your full report</span>
+    <div class="facts" role="region" aria-label="Your Stack Score report">
+      <div class="ft">Stack Score Facts</div>
+      <div class="serv"><span>Serving size: 1 honest audit</span><span>${r.verdicts.length} product${r.verdicts.length===1?"":"s"} checked</span></div>
+      <div class="scoreline">
+        <div><div class="lbl">Your Stack Score</div><div class="band">"${esc(r.band)}"</div></div>
+        <div class="bignum">${r.score}<span>/100</span></div>
+      </div>
+      <p style="font-size:15px;padding-block:8px;border-bottom:1px solid var(--label-ink)">${esc(r.bandText)}</p>
+      <div class="vhead"><span>Product</span><span>Verdict</span></div>
+      ${rows}${otherRow}${noCreatine}
+      ${(!rows && !otherRow)?`<div class="vrow"><span class="nm">No supplements yet</span><span class="pill p-keep">Good</span><span class="why">You're not wasting money. Your results come from the basics below.</span></div>`:""}
+      <div class="totals">
+        <div class="trow"><span>Estimated yearly waste</span><span class="v">${wasteTxt}</span></div>
+        <div class="trow"><span>#1 leak</span><span class="v">${esc(r.leak.t)}</span></div>
+      </div>
+      <p class="foot">General information, not medical advice. Check with your doctor before stopping anything prescribed. Waste is an estimate based on typical prices.</p>
+    </div>
+
+    <p class="sent">${state.sent?`Not ready? Your full report is on its way to <b>${esc(state.email)}</b>.`:`Not ready? Keep an eye on your inbox at <b>${esc(state.email)}</b>.`}</p>
+    <p class="small muted">Want the do-it-yourself version? <a href="${BTL_URL}" target="_blank" rel="noopener" style="color:var(--cream)">Beyond the Label</a> breaks down every major supplement: what works and what's marketing.</p>
+    <div><button class="link" id="redo">Retake the audit</button></div>
+  </div>
+  </section>`;
+  document.getElementById("redo").onclick=()=>{state.answers={};state.stack.clear();state.other="";state.result=null;go(0);};
+}
+
+render();
+</script>
+
+</body>
+</html>
