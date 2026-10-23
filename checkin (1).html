@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Six-Pack Stack Weekly Check-in</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="robots" content="noindex">
+<meta name="description" content="Your Six-Pack Stack weekly check-in. About 3 minutes.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&display=swap">
+<style>
+/* Layout: one centered column, one question per screen with a progress bar, same navy brand as the Stack Score. */
+:root{
+  --navy:#0d1b33;
+  --navy-2:#142645;
+  --navy-3:#1d3459;
+  --line:#2b4470;
+  --white:#ffffff;
+  --soft:#e3e9f2;
+  --red:#e2433b;
+  --red-2:#ff5a50;
+  --keep:#3fbf7f;
+  --warn:#f0b43c;
+  --font:"Montserrat","Helvetica Neue",Arial,sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{background:var(--navy);color:var(--white)}
+body{font-family:var(--font);font-size:17px;font-weight:500;line-height:1.55;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0}
+.wrap{max-width:680px;margin:0 auto;padding-block:28px 64px}
+.brand{display:flex;justify-content:space-between;gap:12px;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--soft)}
+.brand a{color:var(--soft);text-decoration:none}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--red);margin-right:8px;vertical-align:middle}
+h1,h2{font-family:var(--font);text-wrap:balance;margin:0;font-weight:900}
+h1{font-size:clamp(34px,8vw,54px);line-height:1.04;letter-spacing:-.02em;text-transform:uppercase}
+h1 em{font-style:normal;color:var(--red-2)}
+h2{font-size:clamp(24px,5.6vw,32px);line-height:1.15;letter-spacing:-.015em}
+p{margin:0}
+.soft{color:var(--soft)}
+.small{font-size:14px}
+.stack{display:flex;flex-direction:column;gap:20px}
+.screen{margin-top:28px}
+.btn{appearance:none;border:0;cursor:pointer;font-family:var(--font);font-weight:900;font-size:18px;letter-spacing:.03em;text-transform:uppercase;
+  background:var(--red);color:#fff;padding:18px 26px;border-radius:6px;display:flex;align-items:center;justify-content:center;gap:10px;width:100%;text-decoration:none;transition:background .15s}
+.btn:hover{background:var(--red-2)}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.btn.ghost{background:transparent;border:1px solid var(--line);width:auto;color:var(--white)}
+.btn:focus-visible,.opt:focus-visible,.chk:focus-within,input:focus-visible,textarea:focus-visible,.link:focus-visible{outline:3px solid var(--warn);outline-offset:2px}
+.link{background:none;border:0;color:var(--soft);font:inherit;font-size:15px;cursor:pointer;padding:6px 0;text-decoration:underline;text-underline-offset:3px}
+.micro{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 16px;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--soft)}
+.micro span::before{content:"✓ ";color:var(--keep)}
+.me{display:grid;grid-template-columns:72px 1fr;gap:14px;align-items:center;background:var(--navy-2);border:1px solid var(--line);border-radius:10px;padding:14px}
+.me img{width:72px;height:72px;border-radius:50%;object-fit:cover;display:block}
+.next{list-style:none;margin:0;padding:0;display:grid;gap:12px;counter-reset:n}
+.next li{display:grid;grid-template-columns:36px 1fr;gap:12px;align-items:start;counter-increment:n}
+.next li::before{content:counter(n);width:36px;height:36px;border-radius:50%;background:var(--red);display:grid;place-items:center;font-weight:900}
+.progress{margin-top:24px;display:flex;flex-direction:column;gap:8px}
+.bar{height:6px;background:var(--navy-3);border-radius:99px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--red);transition:width .3s ease}
+.qmeta{display:flex;justify-content:space-between;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--soft)}
+.opts{display:grid;gap:10px}
+.opt{appearance:none;text-align:left;cursor:pointer;width:100%;font:inherit;font-size:18px;font-weight:600;color:var(--white);
+  background:var(--navy-2);border:1px solid var(--line);border-radius:8px;padding:16px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.opt:hover{border-color:var(--soft)}
+.opt[aria-pressed="true"]{border-color:var(--red);background:var(--navy-3)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chk{position:relative;display:inline-flex;align-items:center;gap:8px;cursor:pointer;border:1px solid var(--line);background:var(--navy-2);border-radius:99px;padding:10px 15px;font-size:16px;font-weight:600;user-select:none}
+.chk input{position:absolute;opacity:0;width:1px;height:1px}
+.chk .box{flex:none;width:16px;height:16px;border-radius:4px;border:1.5px solid var(--soft);display:grid;place-items:center;font-size:11px;line-height:1}
+.chk:has(input:checked){border-color:var(--red);background:var(--navy-3)}
+.chk:has(input:checked) .box{background:var(--red);border-color:var(--red);color:#fff}
+.chk:has(input:checked) .box::after{content:"✓"}
+.field{display:flex;flex-direction:column;gap:6px}
+.field label{font-weight:700}
+.field input,.field textarea{width:100%;font:inherit;font-size:17px;padding:15px 16px;border-radius:6px;border:1px solid var(--line);background:#fff;color:var(--navy)}
+.field textarea{min-height:120px;resize:vertical}
+.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.hint{font-size:13px;color:var(--soft)}
+.err{color:var(--red-2);font-size:15px;font-weight:600;min-height:1.2em}
+.navrow{display:flex;gap:12px;align-items:center}
+.done{display:flex;flex-direction:column;gap:20px;margin-top:48px;text-align:center;align-items:center}
+.check{width:76px;height:76px;border-radius:50%;background:var(--keep);display:grid;place-items:center;font-size:40px;font-weight:900;color:var(--navy)}
+.card{background:var(--navy-2);border:1px solid var(--line);border-radius:10px;padding:18px;text-align:left;width:100%}
+.fs{border:0;margin:0;padding:0;min-width:0}
+.fs legend{font-weight:700;padding:0;margin-bottom:10px}
+.field textarea{min-height:0}
+.field input[type=radio]{position:absolute;opacity:0;width:1px;height:1px}
+.foot{display:flex;justify-content:center;gap:18px;margin-top:48px;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.foot a{color:var(--soft);text-decoration:none}
+.foot a:hover{color:#fff}
+@media (max-width:420px){.row3{grid-template-columns:1fr}}
+@media (min-width:900px){body{font-size:18px}.wrap{padding-block:40px 80px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+.field select{width:100%;font:inherit;font-size:17px;padding:15px 16px;border-radius:6px;border:1px solid var(--line);background:#fff;color:var(--navy)}
+.chk.sm{padding:10px 14px;min-width:46px;justify-content:center}
+</style>
+<script defer src="/_vercel/insights/script.js"></script>
+</head>
+<body>
+
+<div class="wrap">
+  <div class="brand"><a href="/"><span class="dot"></span>The Six-Pack Stack</a><span>Weekly Check-in</span></div>
+  <main id="app" aria-live="polite"></main>
+  <footer class="foot"><a href="/terms">Terms</a><a href="/privacy">Privacy</a><a href="/disclaimer">Disclaimer</a></footer>
+</div>
+
+<script>
+/* ======== SETTINGS ======== */
+const KIT_API_KEY = "rWMhWOuYNu8lJKKWoWIfsg";   // Kit PUBLIC API key
+const KIT_FORM_ID = "10088364";                   // "Six-Pack Stack Check-in" form
+const WHATSAPP    = "boonfaypt";
+const PHOTO_WEEKS = [1,3,5,7,9,11,12];          // front, side and back photos due these weeks
+/* ========================== */
+
+const params = new URLSearchParams(location.search);
+const A = {name:(params.get("name")||"").trim(), email:(params.get("email")||"").trim(), week:(params.get("week")||"").trim()};
+const app = document.getElementById("app");
+const esc = s => String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const chips = (name, opts, cur) => `<div class="chips">${opts.map(o=>`<label class="chk"><input type="radio" name="${name}" value="${esc(o)}" ${cur===o?"checked":""}><span class="box"></span><span>${esc(o)}</span></label>`).join("")}</div>`;
+const scale = name => `<div class="chips">${[1,2,3,4,5,6,7,8,9,10].map(n=>`<label class="chk sm"><input type="radio" name="${name}" value="${n}"><span>${n}</span></label>`).join("")}</div>`;
+
+function render(){
+  app.innerHTML = `
+  <form class="screen stack" id="f" novalidate style="margin-top:32px">
+    <div class="stack" style="gap:8px"><h1>Sunday <em>check-in</em></h1>
+      <p class="soft">About 3 minutes. Be honest: I can only fix what I can see. I'll reply with your adjustments within 24 hours.</p></div>
+
+    <div class="field"><label for="q_name">First name</label><input id="q_name" autocomplete="given-name" value="${esc(A.name)}" maxlength="80"></div>
+    <div class="field"><label for="q_email">Email (the one you signed up with)</label><input id="q_email" type="email" inputmode="email" autocomplete="email" value="${esc(A.email)}" maxlength="120"></div>
+    <div class="field"><label for="q_week">Which week is this?</label>
+      <select id="q_week">${["",1,2,3,4,5,6,7,8,9,10,11,12].map(w=>`<option value="${w}" ${String(w)===A.week?"selected":""}>${w===""?"Choose your week":"Week "+w}</option>`).join("")}</select></div>
+    <div class="card stack" id="photoBox" hidden style="gap:8px">
+      <b>📸 Photo week</b>
+      <p class="soft small">Send your front, side and back photos to me on WhatsApp (<b style="color:#fff">${WHATSAPP}</b>) today. Same spot, same lighting, same time of day as last time. Photos every 2 weeks are required for your guarantee.</p>
+      <label class="chk" style="border-radius:8px"><input type="checkbox" id="q_photos"><span class="box"></span><span>I've sent my photos on WhatsApp</span></label>
+    </div>
+
+    <h2 style="margin-top:8px">The numbers</h2>
+    <div class="row3">
+      <div class="field"><label for="q_weight">Weight this morning (lbs)</label><input id="q_weight" inputmode="decimal" placeholder="e.g. 196.4" maxlength="10"></div>
+      <div class="field"><label for="q_waist">Waist at belly button (in)</label><input id="q_waist" inputmode="decimal" placeholder="optional" maxlength="10"></div>
+      <div class="field"><label for="q_steps">Average daily steps</label><input id="q_steps" inputmode="numeric" placeholder="e.g. 8000" maxlength="10"></div>
+    </div>
+    <fieldset class="field fs"><legend>Workouts done this week (out of 4)</legend>${chips("q_workouts",["0","1","2","3","4","5+"])}</fieldset>
+    <fieldset class="field fs"><legend>Days you hit your nutrition plan (out of 7)</legend>${chips("q_nutrition",["0","1","2","3","4","5","6","7"])}</fieldset>
+    <fieldset class="field fs"><legend>Days you hit your protein target (out of 7)</legend>${chips("q_protein",["0","1","2","3","4","5","6","7"])}</fieldset>
+    <fieldset class="field fs"><legend>Took your stack every day?</legend>${chips("q_stack",["Yes","Most days","No"])}</fieldset>
+    <fieldset class="field fs"><legend>Average sleep</legend>${chips("q_sleep",["Under 6 hours","6–7 hours","7–8 hours","8+ hours"])}</fieldset>
+
+    <h2 style="margin-top:8px">How it felt</h2>
+    <fieldset class="field fs"><legend>Energy (1 = dead, 10 = great)</legend>${scale("q_energy")}</fieldset>
+    <fieldset class="field fs"><legend>Hunger (1 = never hungry, 10 = starving)</legend>${scale("q_hunger")}</fieldset>
+    <fieldset class="field fs"><legend>Training performance</legend>${chips("q_strength",["Stronger","Same","Weaker"])}</fieldset>
+
+    <h2 style="margin-top:8px">The real stuff</h2>
+    <div class="field"><label for="q_wins">Your biggest win this week</label><textarea id="q_wins" rows="2" maxlength="500" placeholder="Big or small. It counts."></textarea></div>
+    <div class="field"><label for="q_struggles">What was hardest?</label><textarea id="q_struggles" rows="2" maxlength="500" placeholder="Weekend, cravings, work, travel, anything"></textarea></div>
+    <div class="field"><label for="q_questions">Questions for me</label><textarea id="q_questions" rows="2" maxlength="500" placeholder="Type &quot;none&quot; if none"></textarea></div>
+
+    <div class="err" id="err" role="alert"></div>
+    <button class="btn" id="next" type="submit">Send My Check-in →</button>
+  </form>`;
+
+  const wk=document.getElementById("q_week"), pb=document.getElementById("photoBox");
+  const syncPhoto=()=>{pb.hidden=!PHOTO_WEEKS.includes(parseInt(wk.value,10));};
+  wk.onchange=syncPhoto; syncPhoto();
+  document.getElementById("f").addEventListener("input",()=>{document.getElementById("err").textContent="";});
+
+  document.getElementById("f").onsubmit = async e => {
+    e.preventDefault();
+    const val=id=>document.getElementById(id).value.trim();
+    const pick=n=>{const r=app.querySelector(`input[name="${n}"]:checked`);return r?r.value:"";};
+    const fail=(m,el)=>{document.getElementById("err").textContent=m; if(el){el.focus();el.scrollIntoView({block:"center",behavior:"smooth"});} };
+    A.name=val("q_name"); A.email=val("q_email"); A.week=val("q_week");
+    if(!A.name) return fail("Add your first name.", document.getElementById("q_name"));
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(A.email)) return fail("Enter the email you signed up with.", document.getElementById("q_email"));
+    if(!A.week) return fail("Choose which week this is.", wk);
+    const weight=val("q_weight"); if(!/^\d{2,3}(\.\d)?$/.test(weight)) return fail("Add this morning's weight, like 196.4.", document.getElementById("q_weight"));
+    const req=[["q_workouts","workouts"],["q_nutrition","nutrition days"],["q_protein","protein days"],["q_stack","your stack"],["q_sleep","sleep"],["q_energy","energy"],["q_hunger","hunger"],["q_strength","training performance"]];
+    const R={}; for(const [n,l] of req){ R[n]=pick(n); if(!R[n]) return fail(`Choose an answer for ${l}.`, app.querySelector(`input[name="${n}"]`)); }
+    const wins=val("q_wins"), struggles=val("q_struggles"), questions=val("q_questions");
+    if(!wins) return fail("Add your biggest win, even a small one.", document.getElementById("q_wins"));
+    if(!struggles) return fail("Tell me what was hardest.", document.getElementById("q_struggles"));
+    if(!questions) return fail("Add your questions, or type \"none\".", document.getElementById("q_questions"));
+    const photoWeek=PHOTO_WEEKS.includes(parseInt(A.week,10)); const photos=photoWeek?(document.getElementById("q_photos").checked?"Sent":"NOT SENT"):"Not a photo week";
+    const today=new Date().toISOString().slice(0,10);
+    const report=[
+      `Week ${A.week} (${today})`,
+      `Weight: ${weight} lbs${val("q_waist")?` | Waist: ${val("q_waist")} in`:""}${val("q_steps")?` | Steps: ${val("q_steps")}/day`:""}`,
+      `Workouts: ${R.q_workouts}/4 | Nutrition: ${R.q_nutrition}/7 | Protein: ${R.q_protein}/7 | Stack: ${R.q_stack}`,
+      `Sleep: ${R.q_sleep} | Energy: ${R.q_energy}/10 | Hunger: ${R.q_hunger}/10 | Training: ${R.q_strength}`,
+      `Photos: ${photos}`,
+      `Win: ${wins}`, `Hardest: ${struggles}`, `Questions: ${questions}`
+    ].join("\n");
+    const b=document.getElementById("next"); b.disabled=true; b.textContent="Sending…";
+    const ok=await sendToKit({checkin_week:A.week, checkin_date:today, checkin_weight:weight, checkin_report:report});
+    if(!ok){ b.disabled=false; b.textContent="Send My Check-in →"; return fail("Something went wrong. Check your connection and try again."); }
+    done(photoWeek && photos!=="Sent");
+  };
+}
+
+async function sendToKit(fields){
+  try{
+    const r=await fetch(`https://api.convertkit.com/v3/forms/${KIT_FORM_ID}/subscribe`,{method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({api_key:KIT_API_KEY,email:A.email,first_name:A.name,fields})});
+    if(r.ok) return true; throw new Error("api");
+  }catch(e){
+    try{ const fd=new FormData(); fd.append("email_address",A.email); fd.append("fields[first_name]",A.name);
+      Object.entries(fields).forEach(([k,v])=>fd.append(`fields[${k}]`,v));
+      await fetch(`https://app.kit.com/forms/${KIT_FORM_ID}/subscriptions`,{method:"POST",mode:"no-cors",body:fd}); return true;
+    }catch(e2){ return false; }
+  }
+}
+
+function done(photosMissing){
+  app.innerHTML=`<section class="done">
+    <div class="check" aria-hidden="true">✓</div>
+    <h2>Got it, ${esc(A.name)}. Week ${esc(A.week)} is in.</h2>
+    <p class="soft" style="max-width:32em">I'll go through it and send your adjustments within 24 hours. Keep stacking good weeks.</p>
+    ${photosMissing?`<div class="card stack" style="gap:8px"><b>📸 Don't forget your photos</b><p class="soft small">It's a photo week. Send front, side and back photos to <b style="color:#fff">${WHATSAPP}</b> on WhatsApp today. They're required for your guarantee.</p></div>`:""}
+  </section>`;
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+render();
+</script>
+</body>
+</html>
