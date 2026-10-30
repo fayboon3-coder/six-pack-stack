@@ -111,7 +111,7 @@ p{margin:0}
 /* ======== SETTINGS ======== */
 const KIT_API_KEY = "rWMhWOuYNu8lJKKWoWIfsg";   // Kit PUBLIC API key
 const KIT_FORM_ID = "10088364";                   // "Six-Pack Stack Check-in" form
-const WHATSAPP    = "boonfaypt";
+const PHOTO_EMAIL = "bfay@boonfay-pt.com";
 const PHOTO_WEEKS = [1,3,5,7,9,11,12];          // front, side and back photos due these weeks
 /* ========================== */
 
@@ -134,8 +134,8 @@ function render(){
       <select id="q_week">${["",1,2,3,4,5,6,7,8,9,10,11,12].map(w=>`<option value="${w}" ${String(w)===A.week?"selected":""}>${w===""?"Choose your week":"Week "+w}</option>`).join("")}</select></div>
     <div class="card stack" id="photoBox" hidden style="gap:8px">
       <b>📸 Photo week</b>
-      <p class="soft small">Send your front, side and back photos to me on WhatsApp (<b style="color:#fff">${WHATSAPP}</b>) today. Same spot, same lighting, same time of day as last time. Photos every 2 weeks are required for your guarantee.</p>
-      <label class="chk" style="border-radius:8px"><input type="checkbox" id="q_photos"><span class="box"></span><span>I've sent my photos on WhatsApp</span></label>
+      <p class="soft small">Reply to your check-in reminder email with your front, side and back photos today (or email them to <b style="color:#fff">${PHOTO_EMAIL}</b>). Same spot, same lighting, same time of day as last time. Photos every 2 weeks are required for your guarantee.</p>
+      <label class="chk" style="border-radius:8px"><input type="checkbox" id="q_photos"><span class="box"></span><span>I've emailed my photos</span></label>
     </div>
 
     <h2 style="margin-top:8px">The numbers</h2>
@@ -220,7 +220,7 @@ function done(photosMissing){
     <div class="check" aria-hidden="true">✓</div>
     <h2>Got it, ${esc(A.name)}. Week ${esc(A.week)} is in.</h2>
     <p class="soft" style="max-width:32em">I'll go through it and send your adjustments within 24 hours. Keep stacking good weeks.</p>
-    ${photosMissing?`<div class="card stack" style="gap:8px"><b>📸 Don't forget your photos</b><p class="soft small">It's a photo week. Send front, side and back photos to <b style="color:#fff">${WHATSAPP}</b> on WhatsApp today. They're required for your guarantee.</p></div>`:""}
+    ${photosMissing?`<div class="card stack" style="gap:8px"><b>📸 Don't forget your photos</b><p class="soft small">It's a photo week. Email your front, side and back photos to <b style="color:#fff">${PHOTO_EMAIL}</b> today (just reply to your check-in reminder). They're required for your guarantee.</p></div>`:""}
   </section>`;
   window.scrollTo({top:0,behavior:"smooth"});
 }
