@@ -326,6 +326,8 @@ function computeResult(a, stack){
   return {score, band, bandText, wasteYear, leak, verdicts};
 }
 
+/* Lead source: ?src=video-name (or utm_source) from a video link, remembered for this visitor */
+const LEAD_SOURCE = (()=>{ let v=""; try{ const q=new URLSearchParams(location.search); v=q.get("src")||q.get("utm_source")||""; if(v) localStorage.setItem("sps_src",v); else v=localStorage.getItem("sps_src")||""; }catch(e){} if(!v){ try{ v=document.referrer?new URL(document.referrer).hostname:""; }catch(e){} } return (v||"direct").slice(0,80); })();
 /* ---------- Kit signup ---------- */
 async function sendToKit(email, r){
   const VL = {keep:"KEEP",depends:"DEPENDS",cut:"CUT",risk:"CUT NOW"};
@@ -337,7 +339,7 @@ async function sendToKit(email, r){
     stack_band:r.band,
     stack_leak:`${r.leak.t}. ${r.leak.d}`,
     stack_waste:r.wasteYear>0?`About $${r.wasteYear.toLocaleString("en-US")} a year`:"Little to none",
-    stack_report:reportLines.join("\n")};
+    stack_report:reportLines.join("\n"), lead_source:LEAD_SOURCE};
   try{
     const res = await fetch(`https://api.convertkit.com/v3/forms/${KIT_FORM_ID}/subscribe`,{
       method:"POST",headers:{"Content-Type":"application/json"},
@@ -483,13 +485,13 @@ function renderStack(i){
   <section class="screen stack">
     <h2>What do you take right now?</h2>
     <p class="muted">Tick everything. Be honest, it's just you and the results.</p>
+    <label class="chk" style="align-self:flex-start"><input type="checkbox" id="p-none" ${state.stack.size===0 && state.answers.stack==="none"?"checked":""}><span class="box"></span><span>I don't take anything yet</span></label>
     <input class="search" id="filter" type="search" placeholder="Search products…" value="${esc(state.filter)}" aria-label="Search products">
     ${catHtml || `<p class="muted">No match. Add it under "Other" below.</p>`}
     <div class="field">
       <label for="other">Other (type it in)</label>
       <input type="text" id="other" placeholder="e.g. a specific brand or product" value="${esc(state.other)}">
     </div>
-    <label class="chk" style="align-self:flex-start"><input type="checkbox" id="p-none" ${state.stack.size===0 && state.answers.stack==="none"?"checked":""}><span class="box"></span><span>Nothing yet</span></label>
   </section>
   <div class="sticky-next">
     <button class="btn ghost" id="back" style="width:auto">←</button>

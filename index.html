@@ -350,7 +350,7 @@ details p{padding:0 18px 16px;color:var(--soft)}
     <p style="font-weight:800">Here's what happens next:</p>
     <ol class="next">
       <li><div><b>Apply:</b> <span class="soft">10 quick questions. Takes 2 minutes.</span></div></li>
-      <li><div><b>Get reviewed:</b> <span class="soft">I personally read every application, usually within a few hours.</span></div></li>
+      <li><div><b>Get reviewed:</b> <span class="soft">I personally read every application, within 24 hours.</span></div></li>
       <li><div><b>Get approved:</b> <span class="soft">you'll get a short video I recorded about your current stack, plus a link to claim your spot.</span></div></li>
     </ol>
     <p style="font-weight:900;font-size:20px">You have two choices.</p>
@@ -419,5 +419,6 @@ if(FOUNDING){
 }
 </script>
 
+<script>/* remember which video sent this visitor (?src=...) */try{const q=new URLSearchParams(location.search);const v=q.get("src")||q.get("utm_source");if(v)localStorage.setItem("sps_src",v);}catch(e){}</script>
 </body>
 </html>
