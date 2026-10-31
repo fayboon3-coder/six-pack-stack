@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Six-Pack Stack Training</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0d1b33">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Six-Pack Stack">
+<meta name="description" content="Your Six-Pack Stack training: every workout, every exercise video and cue, and your logbook.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&display=swap">
+<style>
+:root{--navy:#0d1b33;--navy-2:#142645;--navy-3:#1d3459;--line:#2b4470;--white:#fff;--soft:#c9d3e3;--red:#e2433b;--red-2:#ff5a50;--keep:#3fbf7f;--warn:#f0b43c;--font:"Montserrat","Helvetica Neue",Arial,sans-serif;color-scheme:dark}
+*{box-sizing:border-box}
+html,body{background:var(--navy);color:var(--white);margin:0}
+body{font-family:var(--font);font-size:16px;font-weight:500;line-height:1.5;padding:0 max(16px,env(safe-area-inset-left,0px)) 0 max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:720px;margin:0 auto;padding:22px 0 90px}
+.brand{display:flex;justify-content:space-between;align-items:center;font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--soft)}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--red);margin-right:8px;vertical-align:middle}
+h1{font-size:clamp(30px,7.5vw,46px);line-height:1.04;font-weight:900;text-transform:uppercase;letter-spacing:-.02em;margin:14px 0 4px}
+h1 em{font-style:normal;color:var(--red-2)}
+h2{font-size:20px;font-weight:900;margin:0}
+p{margin:0}
+.soft{color:var(--soft)}.small{font-size:13px}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.weekbar{display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--navy-2);border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin-top:16px}
+.weekbar button{appearance:none;border:1px solid var(--line);background:var(--navy-3);color:#fff;font:inherit;font-weight:800;width:40px;height:40px;border-radius:8px;cursor:pointer}
+.weekbar .wk{text-align:center}
+.weekbar .wk b{display:block;font-size:18px;font-weight:900}
+.phase{margin-top:10px;font-size:13px;color:var(--soft)}
+.tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:16px}
+.tab{appearance:none;border:1px solid var(--line);background:var(--navy-2);color:var(--soft);font:inherit;font-size:12px;font-weight:800;padding:10px 4px;border-radius:10px;cursor:pointer;text-transform:uppercase;letter-spacing:.04em;line-height:1.25}
+.tab b{display:block;color:#fff;font-size:14px}
+.tab[aria-selected=true]{background:var(--red);border-color:var(--red);color:#fff}
+.tab.done::after{content:" ✓";color:var(--keep)}
+.tab[aria-selected=true].done::after{color:#fff}
+.card{background:var(--navy-2);border:1px solid var(--line);border-radius:14px;padding:14px;margin-top:12px}
+.warm{font-size:14px;color:var(--soft)}
+.ex .top{display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+.num{flex:none;width:30px;height:30px;border-radius:50%;background:var(--red);display:grid;place-items:center;font-weight:900;font-size:14px}
+.ex h3{margin:0;font-size:17px;font-weight:800;line-height:1.25}
+.target{font-weight:900;color:var(--red-2);white-space:nowrap;font-size:15px}
+.note{font-size:13px;color:var(--warn);margin-top:4px}
+.vid{position:relative;margin-top:12px;border-radius:10px;overflow:hidden;background:#000;aspect-ratio:16/9;cursor:pointer;border:0;padding:0;width:100%;display:block}
+.vid img{width:100%;height:100%;object-fit:cover;display:block;opacity:.85}
+.vid .play{position:absolute;inset:0;display:grid;place-items:center}
+.vid .play span{background:var(--red);color:#fff;font-weight:900;font-size:13px;letter-spacing:.06em;text-transform:uppercase;padding:10px 16px;border-radius:999px}
+.vid iframe{width:100%;height:100%;border:0;display:block}
+.yt{font-size:12px;color:var(--soft);display:inline-block;margin-top:6px}
+.cues{margin:10px 0 0;padding:0;list-style:none;display:grid;gap:6px}
+.cues li{font-size:14px;display:grid;grid-template-columns:18px 1fr;gap:6px}
+.cues li::before{content:"›";color:var(--red-2);font-weight:900}
+.sets{margin-top:12px;display:grid;gap:6px}
+.set{display:grid;grid-template-columns:52px 1fr 1fr 44px;gap:6px;align-items:center}
+.set label{font-size:12px;font-weight:800;color:var(--soft);text-transform:uppercase}
+.set input[type=number]{width:100%;background:var(--navy);border:1px solid var(--line);color:#fff;font:inherit;font-weight:700;font-size:16px;border-radius:8px;padding:9px 8px}
+.set input::placeholder{color:#6f7f9a;font-weight:600}
+.tick{appearance:none;width:44px;height:42px;border-radius:8px;border:1px solid var(--line);background:var(--navy);cursor:pointer;display:grid;place-items:center;font-weight:900;color:var(--soft)}
+.tick[aria-pressed=true]{background:var(--keep);border-color:var(--keep);color:#06210f}
+.last{font-size:12px;color:var(--soft);margin-top:8px}
+.rest{appearance:none;border:1px solid var(--line);background:transparent;color:#fff;font:inherit;font-size:13px;font-weight:800;border-radius:999px;padding:8px 14px;cursor:pointer;margin-top:10px}
+.btn{appearance:none;border:0;cursor:pointer;font-family:var(--font);font-weight:900;font-size:17px;letter-spacing:.03em;text-transform:uppercase;background:var(--red);color:#fff;padding:17px 22px;border-radius:10px;width:100%;margin-top:16px}
+.btn.ghost{background:transparent;border:1px solid var(--line)}
+.timer{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);background:var(--red);color:#fff;font-weight:900;font-size:20px;padding:12px 22px;border-radius:999px;box-shadow:0 8px 24px rgba(0,0,0,.4);display:none;gap:12px;align-items:center;z-index:5}
+.timer button{appearance:none;border:0;background:rgba(0,0,0,.25);color:#fff;font:inherit;font-size:13px;border-radius:999px;padding:6px 10px;cursor:pointer}
+.info h2{margin-bottom:8px}
+.info ul{margin:0;padding-left:18px;display:grid;gap:6px;font-size:14px}
+a{color:#fff}
+.err{margin-top:40px}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(--warn);outline-offset:2px}
+</style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+<div class="timer" id="timer" role="status" aria-live="polite"><span id="tleft">1:30</span><button type="button" id="tstop">Skip</button></div>
+<script>
+/* Exercise library: id -> [name, YouTube video id, cues] */
+const LIB = {
+ incline_db_press:["Incline dumbbell press","OC7Qs_SAO2E",["Bench at 30°, feet planted, shoulder blades squeezed back","Lower until the dumbbells are level with your chest, elbows about 45° from your body","Press up and slightly in; don't clank the dumbbells"]],
+ lat_pulldown:["Lat pulldown","CAwf7n6Luuc",["Grip just outside shoulder width, thighs locked under the pad","Lean back slightly and pull the bar to your upper chest, elbows down to your sides","Control it up until your arms are straight; no swinging"]],
+ seated_cable_row:["Seated cable row","oFtfkSElE0s",["Sit tall, slight bend in the knees, chest up","Pull the handle to your belly button, squeeze your shoulder blades together","Let your arms straighten all the way without rounding your lower back"]],
+ machine_shoulder_press:["Machine shoulder press","Anu8s_nkNpM",["Seat so the handles start at shoulder height","Press up without locking out hard or arching your back","Lower slowly to the start"]],
+ cable_lateral_raise:["Cable lateral raise","Z5FA9aq3L6A",["Cable at the lowest setting, handle in the far hand","Raise out to the side to shoulder height, leading with the elbow","Lower for a slow 2 count; keep your torso still"]],
+ rope_pushdown:["Triceps rope pushdown","vPeQu_L-1n0",["Elbows pinned to your sides","Push down and spread the rope at the bottom","Only your forearms move; control it back up"]],
+ cable_curl:["Cable curl","pEVXvlVKm80",["Stand tall, elbows by your sides","Curl up and squeeze at the top","Lower all the way down slowly; no body swing"]],
+ leg_press:["Leg press","cDGOn-yfKJA",["Feet shoulder width, mid-platform","Lower until your knees are around 90° without your lower back lifting off the pad","Push through your whole foot; don't lock your knees out hard"]],
+ goblet_squat:["Goblet squat","nfX7IFK9UNI",["Hold the dumbbell at your chest, elbows down","Sit down between your heels, chest up, knees track over toes","Drive up through your whole foot"]],
+ rdl:["Romanian deadlift","yjqRj72AuaE",["Soft knees, push your hips straight back","Bar or dumbbells slide down your thighs; stop when you feel a big hamstring stretch","Squeeze your glutes to stand; back stays flat the whole time"]],
+ walking_lunge:["Walking lunge","YYWhkctnP2o",["Long step forward, torso tall","Back knee drops to just above the floor","Push through the front heel into the next step"]],
+ seated_leg_curl:["Seated leg curl","Z5pRnXaCjpM",["Line your knees up with the machine's pivot, lap pad tight","Curl all the way down and squeeze","Let it back up slowly to a full stretch"]],
+ standing_calf_raise:["Standing calf raise","4HQ8Am9IuME",["Balls of your feet on the edge, heels hanging","Drop into a deep stretch and pause 1 second","Rise as high as you can and squeeze for 1 second"]],
+ cable_crunch:["Kneeling cable crunch","0KEP6A1deBE",["Kneel, rope by your ears, hips stay still","Curl your ribs down toward your hips by rounding your spine","Don't pull with your arms; exhale hard at the bottom"]],
+ barbell_bench:["Barbell bench press","rT7DgCr-3pg",["Eyes under the bar, shoulder blades pinched, feet planted","Lower to your lower chest with elbows about 45°","Press back up over your shoulders"]],
+ db_bench:["Dumbbell bench press","5Y3VZsLb1Ys",["Kick the dumbbells up, shoulder blades back and down","Lower to chest level, elbows about 45°","Press up and slightly in"]],
+ neutral_db_bench:["Neutral-grip dumbbell bench press","5Y3VZsLb1Ys",["Palms face each other the whole set (easier on the shoulder)","Lower to chest level with elbows tucked","Press up; stop if the shoulder pinches"]],
+ chest_supported_row:["Chest-supported row","QpLTp2AJ_cI",["Chest stays on the pad the whole set","Pull your elbows back past your body","Pause, then let your arms fully straighten"]],
+ chest_supported_db_row:["Chest-supported dumbbell row","ro2vfHfD0DQ",["Lie chest-down on an incline bench","Row the dumbbells to your hips, squeeze your shoulder blades","Lower to a full stretch"]],
+ pull_up:["Pull-up","Y44dJcTEhJE",["Hands just outside shoulders, start from a dead hang","Pull your chest to the bar, elbows down","Lower all the way under control; stop 1–2 reps short of failure"]],
+ assisted_pull_up:["Assisted pull-up","gnElpp3Fm50",["Pick assistance that lets you hit the rep range","Full hang at the bottom, chest to the bar at the top","Use less assistance as you get stronger"]],
+ db_shoulder_press:["Seated dumbbell shoulder press","WKEl69bIGus",["Back against an upright bench","Press from shoulder height to just above your head","Lower to ear level under control"]],
+ landmine_press:["Landmine press","7eb_ziZFduE",["Bar end at shoulder height, staggered stance","Press up and forward along the bar's path","Shoulder-friendly swap for overhead pressing; lower slowly"]],
+ face_pull:["Face pull","eTCBSFlCJ_s",["Rope at face height, thumbs toward you","Pull to your forehead, elbows high and wide","Pause and squeeze the back of your shoulders"]],
+ incline_curl:["Incline dumbbell curl","t24mTZKfpGg",["Bench at 45–60°, arms hang straight down","Curl without letting your elbows drift forward","Lower all the way to a full stretch"]],
+ oh_cable_ext:["Overhead cable triceps extension","AUsSlsBu5eg",["Face away from the cable, rope behind your head","Extend your arms overhead, elbows pointing forward","Lower to a deep stretch behind your head"]],
+ hack_squat:["Hack squat","-lAnEGH2blE",["Back flat on the pad, feet mid-platform","Lower as deep as you can with heels down","Drive up; don't lock your knees hard"]],
+ ffe_split_squat:["Front-foot-elevated split squat","gpqdz-4g8n4",["Front foot on a small plate or step","Drop the back knee straight down toward the floor","Push through the front foot; torso tall"]],
+ hip_thrust:["Hip thrust","eutQE64svRE",["Upper back on the bench edge, bar padded on your hips","Drive through your heels until your hips are level with your knees","Chin tucked, squeeze your glutes 1 second at the top"]],
+ leg_extension:["Leg extension","xAUvXdHu1sI",["Knees line up with the machine's pivot","Kick up until your legs are straight, squeeze your quads","Lower slowly"]],
+ lying_leg_curl:["Lying leg curl","SbSNUXPRkc8",["Hips pressed into the pad","Curl your heels toward your glutes","Slow on the way down"]],
+ hanging_knee_raise:["Hanging knee raise","FxbUkA7jhsM",["Dead hang, no swinging","Curl your knees up toward your chest by tilting your pelvis","Lower under control"]],
+ plank:["Plank","mwlp75MS6Rg",["Elbows under shoulders","Squeeze your glutes and brace your abs; body in one straight line","Breathe; stop when your hips sag"]],
+ one_arm_db_row:["One-arm dumbbell row","vbechsUCn24",["Hand and knee on a bench, back flat","Row the dumbbell to your hip","Lower to a full stretch"]],
+ band_pulldown:["Band pulldown","94A3JVWqpdg",["Anchor the band high","Pull elbows down to your sides","Control the band back up"]],
+ db_lateral_raise:["Dumbbell lateral raise","ssAo_xwFt5c",["Slight bend in the elbows","Raise out to the side to shoulder height","Lower slowly; no swinging"]],
+ db_curl:["Dumbbell curl","93R8V6uvwHc",["Elbows by your sides","Curl and squeeze at the top","Lower all the way down slowly"]],
+ oh_db_ext:["Overhead dumbbell extension","O7e8j8K3cJo",["Hold one dumbbell overhead with both hands","Lower behind your head, elbows pointing forward","Extend back up"]],
+ db_rdl:["Dumbbell Romanian deadlift","hQgFixeXdZo",["Soft knees, hips back","Dumbbells slide down your thighs to a deep hamstring stretch","Squeeze your glutes to stand"]],
+ bulgarian_split_squat:["Bulgarian split squat","VPhhE6bBzZE",["Back foot on a bench, front foot far enough out","Drop straight down, front knee over the toes","Push through the front foot"]],
+ sl_hip_thrust:["Single-leg hip thrust","kpkg8r7dex4",["Upper back on the bench, one foot planted","Drive the hips up through the heel","Squeeze at the top, keep hips level"]],
+ sl_calf_raise:["Single-leg calf raise","IphGZ8OlfYg",["Ball of one foot on a step, hold something for balance","Deep stretch at the bottom","Rise high and squeeze"]],
+ dead_bug:["Dead bug","bxn9FBrt4-A",["Lower back pressed into the floor","Lower opposite arm and leg slowly","Exhale and return; lower back never lifts"]],
+ push_up:["Push-up","WDIpL0pjun0",["Hands under shoulders, body in one line","Lower your chest to just above the floor","Push the floor away; elevate your hands if needed"]],
+ chin_up:["Chin-up","53kV7Ou7oZo",["Palms facing you, shoulder width","Pull your chest to the bar","Lower all the way down"]],
+ band_row:["Band row","LSkyinhmA8k",["Anchor the band at chest height","Row the elbows back past your body","Control it forward"]],
+ arnold_press:["Arnold press","TUHL8dXFvTg",["Start with palms facing you at chin height","Rotate the palms out as you press up","Reverse on the way down"]],
+ rear_delt_fly:["Rear-delt fly","Lec8GC1SiS8",["Hinge forward, flat back","Raise the dumbbells out wide with soft elbows","Squeeze the back of your shoulders"]],
+ hammer_curl:["Hammer curl","CFBZ4jN1CMI",["Palms face each other","Curl without swinging","Lower slowly"]],
+ close_grip_push_up:["Close-grip push-up","rG-rAMxA9Lo",["Hands just inside shoulder width","Elbows brush your ribs on the way down","Press up through your triceps"]],
+ db_reverse_lunge:["Dumbbell reverse lunge","Q2k3kYbtOcI",["Step back into the lunge","Back knee drops toward the floor","Push through the front heel to stand"]],
+ db_hip_thrust:["Dumbbell hip thrust","nIkB9vckPHU",["Dumbbell on your hips, upper back on the bench","Drive up through your heels","Squeeze 1 second at the top"]],
+ db_step_up:["Dumbbell step-up","9ZknEYboBOQ",["Whole foot on the box","Drive through the top leg; don't push off the bottom foot","Lower slowly"]],
+ sl_db_deadlift:["Dumbbell stiff-leg deadlift","KE2A7G_nDc8",["Legs nearly straight, soft knees","Hinge at the hips to a deep hamstring stretch","Back flat; squeeze glutes to stand"]],
+ lying_leg_raise:["Lying leg raise","SuIxXbKnwx4",["Lower back pressed into the floor","Raise straight legs to vertical","Lower slowly without your back arching"]],
+ back_extension:["Back extension","vx0jZBEmZcE",["Pad just below your hips","Lower with a flat back","Squeeze your glutes to come up to a straight line"]],
+ box_squat:["Goblet box squat","Aub3U8uHNQk",["Box at a depth that's pain-free","Sit back to touch the box lightly","Stand up through your whole foot"]]
+};
+const PHASES={1:"Weeks 1–4: build the habit. Hit all 4 sessions and learn the moves.",2:"Weeks 5–8: build. Beat last week's weight or reps on every exercise.",3:"Weeks 9–12: finish strong. Keep the weights heavy while you get leaner."};
+const app=document.getElementById("app");
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+function decode(h){try{const b=h.replace(/-/g,"+").replace(/_/g,"/");const s=atob(b+"===".slice((b.length+3)%4));return JSON.parse(decodeURIComponent(escape(s)));}catch(e){return null}}
+const raw=(location.hash||"").replace(/^#p=/,"");
+const P=decode(raw);
+function store(){try{return window.localStorage}catch(e){return null}}
+const LS=store();
+const KEY="sps:"+(raw?raw.slice(-24):"x");
+function load(k){try{return JSON.parse(LS.getItem(KEY+":"+k))}catch(e){return null}}
+function save(k,v){try{LS.setItem(KEY+":"+k,JSON.stringify(v))}catch(e){}}
+if(!P){app.innerHTML=`<div class="err"><p class="brand"><span><span class="dot"></span>Six-Pack Stack</span></p><h1>Your <em>training</em></h1><p class="soft" style="margin-top:12px">This page needs your personal link. Open it from the email I sent with your plan, or text me on WhatsApp at (323) 229-0609 and I'll resend it.</p></div>`;}
+else{
+const start=new Date((P.s||"2026-01-04")+"T00:00:00");
+const today=new Date();
+let week=Math.min(12,Math.max(1,Math.floor((today-start)/864e5/7)+1));
+if(today<start) week=1;
+const dayNames=["sun","mon","tue","wed","thu","fri","sat"];
+let day=0; const td=dayNames[today.getDay()];
+P.d.forEach((d,i)=>{ if((d.t||"").toLowerCase().startsWith(td)) day=i; });
+function setsFor(target,i){let n=parseInt(target,10)||3; if(P.e && week>=5 && i===0) n+=1; return n;}
+function render(){
+  const ph=week<=4?1:week<=8?2:3;
+  const D=P.d[day];
+  const logKey=w=>`log:${w}:${day}`;
+  const log=load(logKey(week))||{};
+  const prev=week>1?(load(logKey(week-1))||null):null;
+  const doneDays=P.d.map((_,i)=>!!(load(`log:${week}:${i}`)||{}).done);
+  app.innerHTML=`
+  <p class="brand"><span><span class="dot"></span>Six-Pack Stack</span><span>Coach: Boon</span></p>
+  <h1>${esc(P.n)}'s <em>training</em></h1>
+  <p class="soft small">${P.d.length} days a week. Tap a video to watch the form, log every set, beat last week.</p>
+  <div class="weekbar"><button type="button" id="wprev" aria-label="Previous week">‹</button><div class="wk"><span class="small soft">WEEK</span><b>${week} of 12</b></div><button type="button" id="wnext" aria-label="Next week">›</button></div>
+  <p class="phase">${PHASES[ph]}${P.e&&week>=5?" First exercise of each day: 4 sets.":""}</p>
+  <div class="tabs" role="tablist">${P.d.map((d,i)=>{const [a,b]=(d.t||"").split("·");return `<button class="tab ${doneDays[i]?"done":""}" role="tab" aria-selected="${i===day}" data-d="${i}"><b>${esc((a||"").trim().slice(0,3))}</b>${esc((b||"").trim())}</button>`}).join("")}</div>
+  ${P.note?`<div class="card" style="border-color:#9a5b00"><p class="small">${esc(P.note)}</p></div>`:""}
+  <div class="card warm"><b style="color:#fff">Warm-up (5 min):</b> 3 minutes easy cardio, then 2 light sets of the first exercise.</div>
+  ${D.x.map((x,i)=>{const L=LIB[x[0]]||[x[0],"",[]];const n=setsFor(x[1],i);const reps=String(x[1]).replace(/^\d+\s*×\s*/,"");const e=log["e"+i]||[];const pe=prev&&prev["e"+i]?prev["e"+i].filter(s=>s&&(s.w||s.r)):[];
+    return `<div class="card ex"><div class="top"><div class="row" style="flex-wrap:nowrap;align-items:flex-start"><span class="num">${i+1}</span><div><h3>${esc(L[0])}</h3>${x[2]?`<p class="note">${esc(x[2])}</p>`:""}</div></div><span class="target">${n} × ${esc(reps)}</span></div>
+    ${L[1]?`<button class="vid" type="button" data-v="${L[1]}" aria-label="Play ${esc(L[0])} demo video"><img loading="lazy" alt="" src="https://i.ytimg.com/vi/${L[1]}/hqdefault.jpg"><span class="play"><span>▶ Watch form</span></span></button><a class="yt" href="https://www.youtube.com/watch?v=${L[1]}" target="_blank" rel="noopener">Open in YouTube ↗</a>`:""}
+    <ul class="cues">${L[2].map(c=>`<li>${esc(c)}</li>`).join("")}</ul>
+    <div class="sets">${Array.from({length:n},(_,s)=>{const v=e[s]||{};return `<div class="set"><label>Set ${s+1}</label><input type="number" inputmode="decimal" placeholder="lbs" aria-label="Set ${s+1} weight" data-e="${i}" data-s="${s}" data-k="w" value="${v.w??""}"><input type="number" inputmode="numeric" placeholder="reps" aria-label="Set ${s+1} reps" data-e="${i}" data-s="${s}" data-k="r" value="${v.r??""}"><button type="button" class="tick" aria-label="Set ${s+1} done" aria-pressed="${!!v.d}" data-e="${i}" data-s="${s}">✓</button></div>`}).join("")}</div>
+    ${pe.length?`<p class="last">Last week: ${pe.map(s=>`${s.w||"–"}×${s.r||"–"}`).join(", ")}</p>`:""}
+    <button type="button" class="rest" data-t="${i<2?150:75}">⏱ Rest ${i<2?"2:30":"1:15"}</button></div>`}).join("")}
+  <button class="btn" type="button" id="finish">${log.done?"Workout logged ✓":"Finish workout"}</button>
+  <div class="card info"><h2>How to progress</h2><ul>
+    <li>Every set ends 1–3 reps short of failure. If you could do 5 more, it's too light.</li>
+    <li>Hit the top of the rep range on every set? Add the smallest weight jump next session.</li>
+    <li>Rest 2–3 minutes on the first two exercises, 60–90 seconds on the rest.</li>
+    <li>Anything sharp or painful: stop that exercise and text me.</li></ul></div>
+  <div class="card info"><h2>Need me?</h2><ul>
+    ${P.p?`<li><a href="${esc(P.p)}" target="_blank" rel="noopener">Open your full plan (food, stack, goal)</a></li>`:""}
+    <li><a href="https://six-pack-stack.vercel.app/checkin?week=${week}&name=${encodeURIComponent(P.n)}">Sunday check-in</a></li>
+    <li>Text me on WhatsApp anytime: <a href="https://wa.me/13232290609">(323) 229-0609</a></li>
+    <li class="soft">Tip: add this page to your home screen (Share → Add to Home Screen) so it opens like an app.</li></ul></div>`;
+  bind();
+}
+function bind(){
+  document.getElementById("wprev").onclick=()=>{if(week>1){week--;render();}};
+  document.getElementById("wnext").onclick=()=>{if(week<12){week++;render();}};
+  document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{day=+b.dataset.d;render();window.scrollTo({top:0})});
+  document.querySelectorAll(".vid").forEach(b=>b.onclick=()=>{const id=b.dataset.v;b.outerHTML=`<div class="vid"><iframe src="https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0&modestbranding=1&playsinline=1" title="Exercise demo" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe></div>`;});
+  const k=`log:${week}:${day}`;
+  const get=()=>load(k)||{};
+  document.querySelectorAll(".set input").forEach(inp=>inp.oninput=()=>{const L=get();const e="e"+inp.dataset.e;L[e]=L[e]||[];const s=+inp.dataset.s;L[e][s]=L[e][s]||{};L[e][s][inp.dataset.k]=inp.value;save(k,L);});
+  document.querySelectorAll(".tick").forEach(b=>b.onclick=()=>{const L=get();const e="e"+b.dataset.e;L[e]=L[e]||[];const s=+b.dataset.s;L[e][s]=L[e][s]||{};L[e][s].d=!L[e][s].d;save(k,L);b.setAttribute("aria-pressed",L[e][s].d);if(L[e][s].d){const r=b.closest(".ex").querySelector(".rest");startTimer(+r.dataset.t);}});
+  document.querySelectorAll(".rest").forEach(b=>b.onclick=()=>startTimer(+b.dataset.t));
+  document.getElementById("finish").onclick=()=>{const L=get();L.done=true;save(k,L);render();window.scrollTo({top:0,behavior:"smooth"});};
+}
+let tInt=null;const T=document.getElementById("timer");
+function startTimer(sec){clearInterval(tInt);let left=sec;T.style.display="flex";const show=()=>{document.getElementById("tleft").textContent=`${Math.floor(left/60)}:${String(left%60).padStart(2,"0")}`};show();tInt=setInterval(()=>{left--;show();if(left<=0){clearInterval(tInt);T.style.display="none";try{navigator.vibrate&&navigator.vibrate([200,100,200])}catch(e){}}},1000);}
+document.getElementById("tstop").onclick=()=>{clearInterval(tInt);T.style.display="none"};
+render();
+}
+</script>
+</body>
+</html>
