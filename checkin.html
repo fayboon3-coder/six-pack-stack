@@ -140,7 +140,7 @@ function render(){
 
     <h2 style="margin-top:8px">The numbers</h2>
     <div class="row3">
-      <div class="field"><label for="q_weight">Weight this morning (lbs)</label><input id="q_weight" inputmode="decimal" placeholder="e.g. 196.4" maxlength="10"></div>
+      <div class="field"><label for="q_weight">Weight (lbs): your 7-day average <span style="font-weight:400;opacity:.7">(or this morning's if you didn't weigh daily)</span></label><input id="q_weight" inputmode="decimal" placeholder="e.g. 196.4" maxlength="10"></div>
       <div class="field"><label for="q_waist">Waist at belly button (in)</label><input id="q_waist" inputmode="decimal" placeholder="optional" maxlength="10"></div>
       <div class="field"><label for="q_steps">Average daily steps</label><input id="q_steps" inputmode="numeric" placeholder="e.g. 8000" maxlength="10"></div>
     </div>
@@ -178,7 +178,7 @@ function render(){
     if(!A.name) return fail("Add your first name.", document.getElementById("q_name"));
     if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(A.email)) return fail("Enter the email you signed up with.", document.getElementById("q_email"));
     if(!A.week) return fail("Choose which week this is.", wk);
-    const weight=val("q_weight"); if(!/^\d{2,3}(\.\d)?$/.test(weight)) return fail("Add this morning's weight, like 196.4.", document.getElementById("q_weight"));
+    const weight=val("q_weight"); if(!/^\d{2,3}(\.\d)?$/.test(weight)) return fail("Add your weight, like 196.4.", document.getElementById("q_weight"));
     const req=[["q_workouts","workouts"],["q_nutrition","nutrition days"],["q_protein","protein days"],["q_stack","your stack"],["q_sleep","sleep"],["q_energy","energy"],["q_hunger","hunger"],["q_strength","training performance"]];
     const R={}; for(const [n,l] of req){ R[n]=pick(n); if(!R[n]) return fail(`Choose an answer for ${l}.`, app.querySelector(`input[name="${n}"]`)); }
     const wins=val("q_wins"), struggles=val("q_struggles"), questions=val("q_questions");
