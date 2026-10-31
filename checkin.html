@@ -136,6 +136,7 @@ function render(){
       <b>📸 Photo week</b>
       <p class="soft small">Reply to your check-in reminder email with your front, side and back photos today (or email them to <b style="color:#fff">${PHOTO_EMAIL}</b>). Same spot, same lighting, same time of day as last time. Photos every 2 weeks are required for your guarantee.</p>
       <label class="chk" style="border-radius:8px"><input type="checkbox" id="q_photos"><span class="box"></span><span>I've emailed my photos</span></label>
+      <label class="chk" style="border-radius:8px"><input type="checkbox" id="q_photoshare"><span class="box"></span><span>You can share my before/after photos (face cropped if I ask)</span></label>
     </div>
 
     <h2 style="margin-top:8px">The numbers</h2>
@@ -156,7 +157,7 @@ function render(){
     <fieldset class="field fs"><legend>Training performance</legend>${chips("q_strength",["Stronger","Same","Weaker"])}</fieldset>
 
     <h2 style="margin-top:8px">The real stuff</h2>
-    <div class="field"><label for="q_wins">Your biggest win this week</label><textarea id="q_wins" rows="2" maxlength="500" placeholder="Big or small. It counts."></textarea></div>
+    <div class="field"><label for="q_wins">Your biggest win this week</label><textarea id="q_wins" rows="2" maxlength="500" placeholder="Big or small. It counts."></textarea><label class="chk" style="border-radius:8px;margin-top:8px"><input type="checkbox" id="q_winshare"><span class="box"></span><span>OK to share this win (first name only)</span></label></div>
     <div class="field"><label for="q_struggles">What was hardest?</label><textarea id="q_struggles" rows="2" maxlength="500" placeholder="Weekend, cravings, work, travel, anything"></textarea></div>
     <div class="field"><label for="q_questions">Questions for me</label><textarea id="q_questions" rows="2" maxlength="500" placeholder="Type &quot;none&quot; if none"></textarea></div>
 
@@ -186,14 +187,15 @@ function render(){
     if(!struggles) return fail("Tell me what was hardest.", document.getElementById("q_struggles"));
     if(!questions) return fail("Add your questions, or type \"none\".", document.getElementById("q_questions"));
     const photoWeek=PHOTO_WEEKS.includes(parseInt(A.week,10)); const photos=photoWeek?(document.getElementById("q_photos").checked?"Sent":"NOT SENT"):"Not a photo week";
-    const today=new Date().toISOString().slice(0,10);
+    const today=new Date(Date.now()-new Date().getTimezoneOffset()*60000).toISOString().slice(0,10);
+    const photoShare=photoWeek&&document.getElementById("q_photoshare")?.checked?"Yes":"No"; const winShare=document.getElementById("q_winshare")?.checked?"Yes":"No";
     const report=[
       `Week ${A.week} (${today})`,
       `Weight: ${weight} lbs${val("q_waist")?` | Waist: ${val("q_waist")} in`:""}${val("q_steps")?` | Steps: ${val("q_steps")}/day`:""}`,
       `Workouts: ${R.q_workouts}/4 | Nutrition: ${R.q_nutrition}/7 | Protein: ${R.q_protein}/7 | Stack: ${R.q_stack}`,
       `Sleep: ${R.q_sleep} | Energy: ${R.q_energy}/10 | Hunger: ${R.q_hunger}/10 | Training: ${R.q_strength}`,
       `Photos: ${photos}`,
-      `Win: ${wins}`, `Hardest: ${struggles}`, `Questions: ${questions}`
+      `Win: ${wins}`, `Share win: ${winShare}`, `Share photos: ${photoWeek?photoShare:"n/a"}`, `Hardest: ${struggles}`, `Questions: ${questions}`
     ].join("\n");
     const b=document.getElementById("next"); b.disabled=true; b.textContent="Sending…";
     const ok=await sendToKit({checkin_week:A.week, checkin_date:today, checkin_weight:weight, checkin_report:report});
