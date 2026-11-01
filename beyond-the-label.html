@@ -122,6 +122,17 @@
     <div class="micro"><span>One-time payment</span><span>Instant PDF</span><span>30-day refund</span></div>
   </section>
 
+  <section class="sec" id="free">
+    <p class="eyebrow">Not ready to buy?</p>
+    <h2>Start with the <em>free version.</em></h2>
+    <p class="soft">10 of the most hyped fitness products, investigated. Same research, same honest verdicts. Free PDF, instant download.</p>
+    <form id="ff" class="card" style="display:flex;flex-direction:column;gap:14px" novalidate>
+      <div class="field"><label for="ffemail">Email</label><input id="ffemail" type="email" autocomplete="email" inputmode="email" placeholder="you@email.com" required></div>
+      <p class="err" id="fferr" role="alert"></p>
+      <button class="btn" id="ffgo" type="submit" style="background:#fff;color:var(--navy)">Send Me The Free Guide →</button>
+    </form>
+  </section>
+
   <footer class="legal"><a href="/terms">Terms</a><a href="/privacy">Privacy</a><a href="/disclaimer">Disclaimer</a></footer>
 </div>
 
@@ -130,6 +141,13 @@
 <script>
 const CHECKOUT_URL="https://boon-fay.kit.com/products/beyond-the-label-a-full-investigation-of-40-fit";
 document.querySelectorAll("[data-buy]").forEach(a=>a.href=CHECKOUT_URL);
+const ff=document.getElementById("ff");
+ff.addEventListener("submit",async e=>{e.preventDefault();const em=document.getElementById("ffemail").value.trim(),er=document.getElementById("fferr"),go=document.getElementById("ffgo");er.textContent="";
+ if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){er.textContent="Please enter a valid email.";return;}
+ go.disabled=true;go.textContent="Sending…";let ok=false;
+ try{const r=await fetch("https://api.convertkit.com/v3/forms/10034224/subscribe",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({api_key:"rWMhWOuYNu8lJKKWoWIfsg",email:em,fields:{lead_source:"btl-page"}})});ok=r.ok;}catch(_){}
+ if(!ok){go.disabled=false;go.textContent="Send Me The Free Guide →";er.textContent="Something went wrong. Check your connection and try again.";return;}
+ location.href="/free-guide-thanks";});
 </script>
 </body>
 </html>

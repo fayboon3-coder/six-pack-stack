@@ -35,7 +35,7 @@
       <div class="mock"><img src="/f1.jpg" alt="Cover of the Fad Free Guide" width="720" height="932"></div>
     </div>
     <form id="form" class="card" style="display:flex;flex-direction:column;gap:14px" novalidate>
-      <div class="field"><label for="name">First name <span style="opacity:.6">(optional)</span></label><input id="name" name="name" autocomplete="given-name" placeholder="Your first name"></div>
+      
       <div class="field"><label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="you@email.com" required></div>
       <p class="err" id="err" role="alert"></p>
       <button class="btn" id="go" type="submit">Send Me The Free Guide →</button>
@@ -86,7 +86,7 @@ const SRC=new URLSearchParams(location.search).get("src")||"";
 const f=document.getElementById("form"), err=document.getElementById("err"), go=document.getElementById("go");
 f.addEventListener("submit",async e=>{
   e.preventDefault(); err.textContent="";
-  const email=document.getElementById("email").value.trim(), name=document.getElementById("name").value.trim();
+  const email=document.getElementById("email").value.trim(), name=(document.getElementById("name")?.value||"").trim();
   if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){err.textContent="Please enter a valid email.";return;}
   go.disabled=true; go.textContent="Sending…";
   const fields=SRC?{lead_source:SRC}:{};
