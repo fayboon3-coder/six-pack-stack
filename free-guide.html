@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Free Guide: 10 Fitness Products Investigated</title>
+<meta name="description" content="The 10 most hyped fitness products, investigated. The claim, the research, my verdict and the cheaper swap. Free PDF, no sponsors.">
+<meta property="og:title" content="Free Guide: 10 Fitness Products Investigated">
+<meta property="og:image" content="https://six-pack-stack.vercel.app/img/lt/f1.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&display=swap">
+<link rel="stylesheet" href="/lt.css">
+<style>
+.heroGrid{display:grid;grid-template-columns:1fr 230px;gap:22px;align-items:center}
+.heroGrid .mock img{transform:rotate(2deg)}
+.list{display:grid;gap:0;border-top:1px solid var(--line)}
+.list div{display:grid;grid-template-columns:34px 1fr;gap:10px;padding:11px 2px;border-bottom:1px solid var(--line);font-weight:800;text-transform:uppercase;font-size:15px;letter-spacing:.02em}
+.list span{color:var(--red-2);font-weight:900}
+.lock{font-size:13px;color:var(--soft);font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+@media (max-width:620px){.heroGrid{grid-template-columns:1fr 96px;gap:14px;align-items:start}.heroGrid .mock{padding:4px 0}.heroGrid .mock img{transform:rotate(3deg)}h1{font-size:30px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="brand"><span><span class="dot"></span>Fad Free by Boon Fay</span><span>Free guide</span></div>
+
+  <section class="sec hero">
+    <p class="eyebrow">Free PDF · No sponsors · No affiliate links</p>
+    <div class="heroGrid">
+      <div style="display:flex;flex-direction:column;gap:18px">
+        <h1>10 Fitness Products Investigated. <em>Which Ones Actually Work?</em></h1>
+        <p class="sub">The research, my honest verdict and the cheaper thing that does the same job. Read it before you buy anything else.</p>
+      </div>
+      <div class="mock"><img src="/img/lt/f1.jpg" alt="Cover of the Fad Free Guide" width="720" height="932"></div>
+    </div>
+    <form id="form" class="card" style="display:flex;flex-direction:column;gap:14px" novalidate>
+      <div class="field"><label for="name">First name <span style="opacity:.6">(optional)</span></label><input id="name" name="name" autocomplete="given-name" placeholder="Your first name"></div>
+      <div class="field"><label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="you@email.com" required></div>
+      <p class="err" id="err" role="alert"></p>
+      <button class="btn" id="go" type="submit">Send Me The Free Guide →</button>
+      <div class="micro"><span>Instant download</span><span>Free</span><span>Unsubscribe anytime</span></div>
+    </form>
+  </section>
+
+  <section class="sec">
+    <p class="eyebrow">Every product gets the same four checks</p>
+    <ul class="checks">
+      <li><span class="tick">1</span><div><b>The claim.</b> <span class="soft">What the label promises you.</span></div></li>
+      <li><span class="tick">2</span><div><b>The research.</b> <span class="soft">What the studies actually show.</span></div></li>
+      <li><span class="tick">3</span><div><b>The verdict.</b> <span class="soft">Worth it, situational or a waste of money.</span></div></li>
+      <li><span class="tick">4</span><div><b>The swap.</b> <span class="soft">The cheaper thing that does the same job.</span></div></li>
+    </ul>
+    <div class="pair"><img src="/img/lt/f8.jpg" alt="Pre-workout page from the guide" loading="lazy"><img src="/img/lt/f9.jpg" alt="Pre-workout research and verdict page" loading="lazy"></div>
+  </section>
+
+  <section class="sec">
+    <h2>The 10 products <em>inside</em></h2>
+    <div class="list">
+      <div><span>01</span>High-protein snacks</div><div><span>02</span>Electrolyte packets</div><div><span>03</span>Pre-workout</div>
+      <div><span>04</span>Ozempic</div><div><span>05</span>Creatine</div><div><span>06</span>Greens powders</div>
+      <div><span>07</span>Fat burners &amp; gadgets</div><div><span>08</span>Testosterone boosters</div>
+      <div><span>09</span>Sweat belts &amp; waist trainers</div><div><span>10</span>Cold plunge tubs</div>
+    </div>
+    <p class="lock">🔒 The verdicts are in the guide</p>
+  </section>
+
+  <section class="sec">
+    <p class="eyebrow">Why I made this</p>
+    <h2>I was one of the guys being <em>sold to.</em></h2>
+    <p class="soft">At 20 I was 225 pounds and buying whatever the internet told me to. Fat burners. Greens. Test boosters. Almost none of it worked.</p>
+    <p class="soft">What got me to 175 was boring: eating right, training, enough protein and being consistent. Now I read the research so you don't have to, and I tell you straight.</p>
+    <p class="quote">"Nothing I bought got me from 225 to 175. The basics did." <span class="soft" style="font-weight:700;font-size:15px">— Boon</span></p>
+    <a class="btn" href="#form">Get The Free Guide →</a>
+  </section>
+
+  <footer class="legal"><a href="/terms">Terms</a><a href="/privacy">Privacy</a><a href="/disclaimer">Disclaimer</a></footer>
+</div>
+
+<div class="sticky"><div class="in"><p>10 products. Honest verdicts. Free.</p><a class="btn" href="#form">Get The Free Guide →</a></div></div>
+
+<script>
+const KIT_API_KEY="rWMhWOuYNu8lJKKWoWIfsg";   // Kit PUBLIC key
+const KIT_FORM_ID="10034224";                  // "Fad Free Squeeze Page" form (starts the welcome emails)
+const SRC=new URLSearchParams(location.search).get("src")||"";
+const f=document.getElementById("form"), err=document.getElementById("err"), go=document.getElementById("go");
+f.addEventListener("submit",async e=>{
+  e.preventDefault(); err.textContent="";
+  const email=document.getElementById("email").value.trim(), name=document.getElementById("name").value.trim();
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){err.textContent="Please enter a valid email.";return;}
+  go.disabled=true; go.textContent="Sending…";
+  const fields=SRC?{lead_source:SRC}:{};
+  let ok=false;
+  try{const r=await fetch(`https://api.convertkit.com/v3/forms/${KIT_FORM_ID}/subscribe`,{method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({api_key:KIT_API_KEY,email,first_name:name,fields})}); ok=r.ok;}catch(_){}
+  if(!ok){try{const fd=new FormData();fd.append("email_address",email);fd.append("fields[first_name]",name);
+      await fetch(`https://app.kit.com/forms/${KIT_FORM_ID}/subscriptions`,{method:"POST",mode:"no-cors",body:fd});ok=true;}catch(_){}}
+  if(!ok){go.disabled=false;go.textContent="Send Me The Free Guide →";err.textContent="Something went wrong. Check your connection and try again.";return;}
+  location.href="/free-guide-thanks"+(name?`?name=${encodeURIComponent(name)}`:"");
+});
+</script>
+</body>
+</html>

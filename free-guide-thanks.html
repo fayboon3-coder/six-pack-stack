@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Your Free Guide Is Ready</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&display=swap">
+<link rel="stylesheet" href="/lt.css">
+<style>.up{display:grid;grid-template-columns:150px 1fr;gap:18px;align-items:center}.up img{width:100%;border-radius:6px;box-shadow:0 12px 30px rgba(0,0,0,.45)}@media(max-width:520px){.up{grid-template-columns:1fr}.up img{max-width:180px}}</style>
+</head>
+<body>
+<div class="wrap" style="padding-bottom:40px">
+  <div class="brand"><span><span class="dot"></span>Fad Free by Boon Fay</span><span>You're in</span></div>
+
+  <section class="sec hero">
+    <p class="eyebrow">✓ Done</p>
+    <h1 id="h">Your guide <em>is ready.</em></h1>
+    <p class="sub">Download it now. I also sent a copy to your inbox, so you'll have it later.</p>
+    <a class="btn" href="/fad-free-guide.pdf" target="_blank" rel="noopener">Download The Fad Free Guide →</a>
+    <p class="small soft">Don't see my email? Check spam or promotions and drag it to your main inbox. Over the next few days I'll send you a few things I couldn't fit in the guide.</p>
+  </section>
+
+  <section class="sec">
+    <p class="eyebrow">Want the full investigation?</p>
+    <div class="up">
+      <img src="/img/lt/b1.jpg" alt="Beyond the Label cover">
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <h2>The free guide covers 10 products. <em>Beyond the Label covers 47.</em></h2>
+        <p class="soft">Plus the 7 biggest fitness trends, my exact stack and a one-page cheat sheet you can use in the store. $39.99, one time.</p>
+      </div>
+    </div>
+    <a class="btn" href="/beyond-the-label">See What's Inside →</a>
+    <div class="micro"><span>Instant PDF</span><span>30-day money-back guarantee</span><span>No sponsors</span></div>
+  </section>
+
+  <footer class="legal" style="padding-bottom:24px"><a href="/terms">Terms</a><a href="/privacy">Privacy</a><a href="/disclaimer">Disclaimer</a></footer>
+</div>
+<script>
+const n=new URLSearchParams(location.search).get("name");
+if(n){document.getElementById("h").innerHTML=`${n.replace(/[<>&"]/g,"")}, your guide <em>is ready.</em>`;}
+</script>
+</body>
+</html>

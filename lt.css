@@ -1,0 +1,76 @@
+/* Shared look for the Fad Free + Beyond the Label pages. Same tokens as the Six-Pack Stack pages. */
+:root{
+  --navy:#0d1b33;--navy-2:#142645;--navy-3:#1d3459;--line:#2b4470;
+  --white:#ffffff;--soft:#e3e9f2;--red:#e2433b;--red-2:#ff5a50;--keep:#3fbf7f;
+  --font:"Montserrat","Helvetica Neue",Arial,sans-serif;color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{background:var(--navy);color:var(--white);margin:0}
+body{font-family:var(--font);font-size:17px;font-weight:500;line-height:1.6;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:700px;margin:0 auto;padding-block:24px 120px}
+h1,h2,h3{font-family:var(--font);text-wrap:balance;margin:0;font-weight:900}
+h1{font-size:clamp(32px,8vw,54px);line-height:1.05;letter-spacing:-.02em;text-transform:uppercase}
+h1 em,h2 em{font-style:normal;color:var(--red-2)}
+h2{font-size:clamp(26px,6.2vw,38px);line-height:1.1;letter-spacing:-.015em}
+h3{font-size:20px;line-height:1.25}
+p{margin:0}
+a{color:inherit}
+.soft{color:var(--soft)}.small{font-size:14px}
+.brand{display:flex;justify-content:space-between;gap:12px;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--soft)}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--red);margin-right:8px;vertical-align:middle}
+.eyebrow{font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--red-2)}
+.sec{display:flex;flex-direction:column;gap:20px;padding-block:48px;border-top:1px solid var(--line)}
+.sec:first-of-type{border-top:0}
+.hero{gap:22px;padding-top:30px}
+.sub{font-size:19px;line-height:1.5;font-weight:600}
+.btn{appearance:none;border:0;cursor:pointer;font-family:var(--font);font-weight:900;font-size:19px;letter-spacing:.03em;text-transform:uppercase;
+  background:var(--red);color:#fff;padding:20px 26px;border-radius:6px;display:flex;align-items:center;justify-content:center;gap:10px;
+  text-decoration:none;transition:background .15s,transform .15s;width:100%;text-align:center}
+.btn:hover{background:var(--red-2)}.btn:active{transform:translateY(1px)}
+.btn[disabled]{opacity:.7;cursor:wait}
+.btn:focus-visible,a:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid #f0b43c;outline-offset:2px}
+.micro{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 16px;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--soft)}
+.micro span::before{content:"✓ ";color:var(--keep)}
+.card{background:var(--navy-2);border:1px solid var(--line);border-radius:10px;padding:18px 20px}
+.checks{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.checks li{display:flex;gap:12px;align-items:flex-start}
+.tick{flex:none;width:22px;height:22px;border-radius:4px;background:var(--red);display:grid;place-items:center;font-weight:900;font-size:13px;color:#fff;margin-top:3px}
+.tick.g{background:var(--keep)}
+.field{display:flex;flex-direction:column;gap:8px}
+.field label{font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--soft)}
+.field input{font-family:var(--font);font-size:18px;font-weight:600;padding:16px 16px;border-radius:6px;border:1px solid var(--line);background:#fff;color:var(--navy);width:100%}
+.err{color:var(--red-2);font-weight:700;font-size:14px;min-height:1em}
+.mock{position:relative;display:grid;place-items:center;padding:18px 0}
+.mock img{display:block;width:100%;height:auto;border-radius:8px;box-shadow:0 18px 40px rgba(0,0,0,.45)}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.pair img{width:100%;height:auto;display:block;border-radius:8px;box-shadow:0 12px 30px rgba(0,0,0,.4)}
+.verdicts{display:grid;gap:10px}
+.v{display:grid;grid-template-columns:1fr auto;gap:6px 14px;align-items:center;background:var(--navy-2);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.v b{font-weight:900;text-transform:uppercase;letter-spacing:.02em}
+.v p{grid-column:1/-1;color:var(--soft);font-size:15px;line-height:1.45}
+.pill{font-size:11px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;padding:6px 10px;border-radius:5px;white-space:nowrap}
+.p-worth{background:var(--keep);color:var(--navy)}.p-sit{background:#fff;color:var(--navy)}.p-waste{background:var(--red);color:#fff}
+.parts{display:grid;gap:10px}
+.part{display:grid;grid-template-columns:46px 1fr;gap:14px;background:var(--navy-2);border:1px solid var(--line);border-radius:10px;padding:16px}
+.part .n{font-weight:900;font-size:22px;color:var(--red-2)}
+.part p{color:var(--soft);font-size:15px;line-height:1.5;margin-top:4px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.quote{border-left:4px solid var(--red);padding:6px 0 6px 18px;font-size:21px;font-weight:800;line-height:1.35}
+.seal{display:grid;grid-template-columns:96px 1fr;gap:18px;align-items:center}
+.badge{width:96px;height:96px;border-radius:50%;border:3px solid var(--keep);display:grid;place-items:center;text-align:center;font-weight:900;font-size:12px;line-height:1.15;text-transform:uppercase;padding:10px;background:radial-gradient(circle,var(--navy-3),var(--navy-2))}
+.badge b{display:block;font-size:24px;color:var(--keep)}
+.faq{display:grid;gap:10px}
+details{background:var(--navy-2);border:1px solid var(--line);border-radius:8px}
+summary{cursor:pointer;list-style:none;padding:16px 18px;font-weight:800;display:flex;justify-content:space-between;gap:12px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-weight:900;color:var(--red-2);font-size:22px;line-height:1}
+details[open] summary::after{content:"–"}
+details p{padding:0 18px 16px;color:var(--soft)}
+.sticky{position:fixed;left:0;right:0;bottom:0;z-index:20;background:rgba(13,27,51,.96);border-top:1px solid var(--line);padding:12px max(16px,env(safe-area-inset-left,0px)) calc(12px + env(safe-area-inset-bottom,0px))}
+.sticky .in{max-width:700px;margin:0 auto;display:flex;gap:14px;align-items:center}
+.sticky p{flex:1;font-size:13px;font-weight:700;line-height:1.3;min-width:0}
+.sticky .btn{width:auto;padding:14px 18px;font-size:15px;flex:none}
+.legal{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 18px;margin:48px auto 0;padding-bottom:96px;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.legal a{color:#9fb0c8;text-decoration:none}.legal a:hover{color:#fff}
+@media (max-width:520px){.two,.pair{grid-template-columns:1fr}.sticky p{display:none}.sticky .btn{width:100%}.seal{grid-template-columns:1fr;justify-items:start}}
