@@ -82,7 +82,7 @@
 <script>
 const KIT_API_KEY="rWMhWOuYNu8lJKKWoWIfsg";   // Kit PUBLIC key
 const KIT_FORM_ID="10034224";                  // "Fad Free Squeeze Page" form (starts the welcome emails)
-const SRC=new URLSearchParams(location.search).get("src")||"";
+const SRC=(()=>{let v="";try{const q=new URLSearchParams(location.search);v=q.get("src")||q.get("utm_source")||"";if(v)localStorage.setItem("sps_src",v);else v=localStorage.getItem("sps_src")||"";}catch(e){}return v;})();
 const f=document.getElementById("form"), err=document.getElementById("err"), go=document.getElementById("go");
 f.addEventListener("submit",async e=>{
   e.preventDefault(); err.textContent="";

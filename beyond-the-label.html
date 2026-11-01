@@ -139,13 +139,14 @@
 <div class="sticky"><div class="in"><p>47 products. Honest verdicts. $39.99.</p><a class="btn" data-buy href="#">Get The Guide →</a></div></div>
 
 <script>
+const BTL_SRC=(()=>{let v="";try{const q=new URLSearchParams(location.search);v=q.get("src")||q.get("utm_source")||"";if(v)localStorage.setItem("sps_src",v);else v=localStorage.getItem("sps_src")||"";}catch(e){}return v;})();
 const CHECKOUT_URL="https://boon-fay.kit.com/products/beyond-the-label-a-full-investigation-of-40-fit";
 document.querySelectorAll("[data-buy]").forEach(a=>a.href=CHECKOUT_URL);
 const ff=document.getElementById("ff");
 ff.addEventListener("submit",async e=>{e.preventDefault();const em=document.getElementById("ffemail").value.trim(),er=document.getElementById("fferr"),go=document.getElementById("ffgo");er.textContent="";
  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){er.textContent="Please enter a valid email.";return;}
  go.disabled=true;go.textContent="Sending…";let ok=false;
- try{const r=await fetch("https://api.convertkit.com/v3/forms/10034224/subscribe",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({api_key:"rWMhWOuYNu8lJKKWoWIfsg",email:em,fields:{lead_source:"btl-page"}})});ok=r.ok;}catch(_){}
+ try{const r=await fetch("https://api.convertkit.com/v3/forms/10034224/subscribe",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({api_key:"rWMhWOuYNu8lJKKWoWIfsg",email:em,fields:{lead_source:(BTL_SRC||"btl-page")}})});ok=r.ok;}catch(_){}
  if(!ok){go.disabled=false;go.textContent="Send Me The Free Guide →";er.textContent="Something went wrong. Check your connection and try again.";return;}
  location.href="/free-guide-thanks";});
 </script>
