@@ -420,7 +420,8 @@ document.querySelectorAll("[data-apply]").forEach(a=>a.setAttribute("href",APPLY
 const v = document.getElementById("video");
 v.innerHTML = VIDEO_URL
   ? `<iframe src="${VIDEO_URL}" title="Six-Pack Stack intro video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`
-  : `<div class="ph"><div class="play" aria-hidden="true"></div><span>Watch: how the Six-Pack Stack works</span><span class="small">(Intro video goes here)</span></div>`;
+  : "";
+if (!VIDEO_URL) v.hidden = true; // no intro video yet: hide the empty box
 
 const setImg=(id,url)=>{ if(url){const el=document.getElementById(id);el.style.backgroundImage=`url('${url}')`;el.textContent="";} };
 setImg("beforeImg",BEFORE_PHOTO); setImg("afterImg",AFTER_PHOTO);
