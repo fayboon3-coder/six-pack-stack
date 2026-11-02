@@ -8,7 +8,7 @@ html{background:#09142a!important}
 body{background:transparent!important;position:relative;isolation:isolate}
 body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
   background:
-    radial-gradient(ellipse 95% 55% at 85% 0%,rgba(138,42,51,.75) 0%,rgba(90,34,54,.35) 50%,rgba(15,31,60,0) 100%),
+    radial-gradient(ellipse 45% 45% at 85% 0%,rgba(138,42,51,.75) 0%,rgba(90,34,54,.35) 50%,rgba(15,31,60,0) 100%),
     linear-gradient(180deg,#172c55 0%,#0f1f3c 45%,#09142a 100%)}
 
 /* Header strip: tile logo instead of the red dot, white like the app */
