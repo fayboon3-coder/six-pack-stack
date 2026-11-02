@@ -19,4 +19,4 @@ __d(function(g,r,i,a,m,e,d){"use strict";m.exports={uri:"/app/assets/assets/meal
 __d(function(t,e,s,i,a,r,p){"use strict";a.exports={uri:"/app/assets/assets/meals/pizza.f17220b5a42d6b02c696958eaec372ee.jpg",width:1200,height:750,toString(){return this.uri}}},828,[]);
 __d(function(g,r,i,a,m,e,d){"use strict";m.exports={uri:"/app/assets/assets/meals/burger.7d5d22b403f33504bfb651f31e44029b.jpg",width:1200,height:750,toString(){return this.uri}}},829,[]);
 __d(function(g,r,i,a,m,e,d){"use strict";m.exports={uri:"/app/assets/assets/meals/beer.a5f0edb4aa511f0cb9db179b44ab2bbc.jpg",width:1200,height:750,toString(){return this.uri}}},830,[]);
-__d(function(g,r,i,a,m,e,d){"use strict";m.exports={uri:"/app/assets/assets/hero/stack_full.55677e966d576464cdc54f742e010349.jpg",width:1200,height:1104,toString(){return this.uri}}},831,[]);
+__d(function(t,s,e,i,r,a,u){"use strict";r.exports={uri:"/app/assets/assets/hero/stack_full.e22c73a76639547e311e17495da453f8.jpg",width:1200,height:1104,toString(){return this.uri}}},831,[]);
