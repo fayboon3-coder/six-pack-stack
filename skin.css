@@ -1,0 +1,36 @@
+/*
+ * Six-Pack Stack: the app's look, shared by every page on this site.
+ * Loaded last on each page, so it sits on top of the page's own styles.
+ * Same background as the app (navy fading down, soft red glow top right),
+ * dark form fields, rounded cards and the tile logo in the header strip.
+ */
+html{background:#09142a!important}
+body{background:transparent!important;position:relative;isolation:isolate}
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:
+    radial-gradient(ellipse 95% 55% at 85% 0%,rgba(138,42,51,.75) 0%,rgba(90,34,54,.35) 50%,rgba(15,31,60,0) 100%),
+    linear-gradient(180deg,#172c55 0%,#0f1f3c 45%,#09142a 100%)}
+
+/* Header strip: tile logo instead of the red dot, white like the app */
+.brand{align-items:center;font-family:"Montserrat","Helvetica Neue",Arial,sans-serif!important;font-weight:800;color:#fff!important}
+.brand a,.brand b{color:#fff!important}
+.brand .dot{width:26px!important;height:26px!important;border-radius:7px!important;background:url(/logo-b.png) center/cover no-repeat!important;margin-right:10px!important}
+
+/* Bands and bars go see-through so the glow shows */
+.sec.alt{background:rgba(20,38,69,.5)!important;box-shadow:0 0 0 100vmax rgba(20,38,69,.5)!important}
+.sticky{background:rgba(9,20,42,.88)!important;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+.sticky-next{background:linear-gradient(to top,#09142a 70%,rgba(9,20,42,0))!important}
+
+/* Cards and buttons: the app's rounded corners */
+.card,.box,.step,.callout,.guarantee,.cta,.results,.part,.example,.me,.video,.vid,.lock,.faq div,.proof div,.stat div,.choice div,details{border-radius:18px!important}
+.btn{border-radius:14px!important}
+
+/* Form fields: dark, like the app (the Stack Score report label stays white on purpose) */
+input[type=text],input[type=email],input[type=tel],input[type=number],input[type=search],input:not([type]),select,textarea{
+  background:#142645!important;color:#fff!important;border:1.5px solid #2b4470!important;border-radius:14px!important}
+input::placeholder,textarea::placeholder{color:rgba(255,255,255,.45)!important}
+input:focus,select:focus,textarea:focus{outline:none!important;border-color:#ff5a50!important;box-shadow:0 0 0 3px rgba(226,67,59,.25)!important}
+select option{background:#142645;color:#fff}
+
+/* Keep the header strip on one line on phones */
+@media (max-width:480px){.brand{font-size:10.5px!important;letter-spacing:.08em!important;gap:8px!important}.brand>*:last-child{white-space:nowrap}}
