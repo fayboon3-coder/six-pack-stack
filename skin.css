@@ -34,3 +34,9 @@ select option{background:#142645;color:#fff}
 
 /* Keep the header strip on one line on phones */
 @media (max-width:480px){.brand{font-size:10.5px!important;letter-spacing:.08em!important;gap:8px!important}.brand>*:last-child{white-space:nowrap}}
+
+/* Author line with Boon's photo, under each page's main promise */
+.byline{display:flex;align-items:center;gap:12px;margin:16px 0 4px}
+.byline img{width:46px;height:46px;border-radius:50%;object-fit:cover;flex-shrink:0;border:2px solid rgba(255,255,255,.9)}
+.byline b{display:block;color:#fff;font-family:"Montserrat","Helvetica Neue",Arial,sans-serif;font-weight:800;font-size:15px;line-height:1.2}
+.byline span{display:block;color:rgba(255,255,255,.7);font-size:13px;line-height:1.35}
