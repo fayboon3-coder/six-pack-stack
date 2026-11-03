@@ -3,8 +3,8 @@
   "trailingSlash": false,
   "rewrites": [
     {
-      "source": "/app/:path*",
-      "destination": "/app/index.html"
+      "source": "/app/:path((?!_expo/|assets/|favicon\\.ico|og\\.jpg|apple-touch-icon\\.png|metadata\\.json).*)",
+      "destination": "/app"
     }
   ]
 }
