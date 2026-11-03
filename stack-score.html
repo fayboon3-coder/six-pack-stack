@@ -210,7 +210,7 @@ p{margin:0}
 const KIT_API_KEY = "rWMhWOuYNu8lJKKWoWIfsg";   // Kit PUBLIC API key
 const KIT_FORM_ID = "10078143";                  // "Stack Score" form in Kit
 const APPLY_URL   = "/";                         // Six-Pack Stack sales page
-const APP_URL     = "/app/lead?want=plan&src=stack-score";  // The Free Stack in the web app
+const APP_URL     = "/free-stack?src=stack-score";  // App landing page (The Free Stack)
 const BTL_URL     = "https://six-pack-stack.vercel.app/beyond-the-label";         // <-- paste your Beyond the Label sales page link
 const PHOTO_URL   = "/boon.jpg";                          // <-- optional: link to a photo of you (e.g. your after photo)
 /* ====================================== */
@@ -576,13 +576,16 @@ function renderResults(){
   const noCreatine = !state.stack.has("creatine")?`<div class="vrow"><span class="nm">Creatine (missing)</span><span class="pill p-keep">Add</span><span class="why">The one supplement I'd never cut. Plain monohydrate, 3–5g a day.</span></div>`:"";
   const wasteTxt = r.wasteYear>0?`About $${r.wasteYear.toLocaleString("en-US")}`:"Little to none";
   const cta = (id)=>`<div class="cta">
-      <h2>Want me to fix all of it for you?</h2>
-      <p>Your stack isn't the only thing holding you back. Fixing it on your own takes trial and error. It took me 3 years.</p>
-      <p>I'll audit your full stack, build your plan around foods you like, and check in every week until you see your abs.</p>
-      <div class="guarantee"><b>Abs in 12 weeks, or I coach you free until you do.</b><span class="small muted">Follow the plan, check in weekly, send progress photos every 2 weeks.</span></div>
-      <a class="btn" id="${id}" href="${APPLY_URL}">See If I Qualify →</a>
-      <p class="muted small" style="text-align:center">2-minute application. No sales call.</p>
-      <p class="quote">"In one month, Anthony lost 11 lbs." Results vary with effort and consistency.</p>
+      <h2>Now fix it, free.</h2>
+      <p>Your score shows what to cut. My app shows you what to do instead, built from the answers you just gave me.</p>
+      <ul style="margin:0;padding-left:20px;display:grid;gap:6px">
+        <li>Your exact calories and protein</li>
+        <li>A meal plan made only from foods you already eat</li>
+        <li>Workouts on the days you choose, with a form video on every move</li>
+        <li>Stack Check: look up any supplement before you buy it</li>
+      </ul>
+      <a class="btn" id="${id}" href="${APP_URL}">Build My Free Plan →</a>
+      <p class="muted small" style="text-align:center">2 minutes. First 2 weeks free. No card.</p>
     </div>`;
   app.innerHTML = `
   <section class="screen res-grid" style="margin-top:32px">
@@ -592,8 +595,9 @@ function renderResults(){
       <div class="bignum" style="color:var(--red-2)">${r.score}<span style="color:var(--muted)">/100</span></div>
     </div>
     <div class="leak"><span class="k">🚨 Your #1 leak</span><span class="t">${esc(r.leak.t)}</span><p>${esc(r.leak.d)}</p></div>
-    <a class="btn" href="${APPLY_URL}">Fix It With Me: See If I Qualify →</a>
+    <a class="btn" href="${APP_URL}">Fix It With My Free Plan →</a>
     ${cta("apply2")}
+    <p class="small muted" style="text-align:center">Want me to do it with you? <a href="${APPLY_URL}" style="color:var(--cream)">See if you qualify for 1:1 coaching</a>. Abs in 12 weeks, or I coach you free until you do.</p>
   </div>
   <div class="stack" style="gap:22px">
     <span class="eyebrow">Your full report</span>
@@ -616,14 +620,8 @@ function renderResults(){
     </div>
 
     <p class="sent">${state.sent?`Not ready? Your full report is on its way to <b>${esc(state.email)}</b>.`:`Not ready? Keep an eye on your inbox at <b>${esc(state.email)}</b>.`}</p>
-    <div class="stack" style="gap:10px;border:1.5px solid var(--red-2);border-radius:16px;padding:18px">
-      <span class="eyebrow">Not ready for coaching yet?</span>
-      <h3 style="margin:0">Start The Free Stack</h3>
-      <p style="margin:0">A 12-week plan built from the answers you just gave me: your calories, a meal plan made only from foods you pick, what to order at Chipotle, Chick-fil-A and more, and workouts on the days you choose (gym, home or no equipment) with a form video on every move. The first 2 weeks are free, in my app.</p>
-      <a class="btn" href="${APP_URL}">Get My Free Plan →</a>
-      <p class="muted small" style="text-align:center;margin:0">Your answers carry over. No card needed.</p>
-    </div>
-    <p class="small muted">Want the do-it-yourself version? <a href="${BTL_URL}" target="_blank" rel="noopener" style="color:var(--cream)">Beyond the Label</a> breaks down every major supplement: what works and what's marketing.</p>
+    <a class="btn" href="${APP_URL}">Get My Free Plan →</a>
+    <p class="muted small" style="text-align:center;margin:0">Your answers carry over. No card needed.</p>
     <div><button class="link" id="redo">Retake the audit</button></div>
   </div>
   </section>`;
