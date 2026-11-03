@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Six-Pack Stack App: Personalized Programs, First 2 Weeks Free</title>
+<title>Six-Pack Stack: The Plan That Actually Works, First 2 Weeks Free</title>
 <meta name="description" content="Your calories, meals made from foods you already eat, and workouts on the days you choose, with a form video on every move. Built by Boon Fay. First 2 weeks free.">
 <meta property="og:title" content="Six-Pack Stack: where personalized programs meet affordable prices">
 <meta property="og:description" content="Your whole plan in 2 minutes. First 2 weeks free, no card.">
@@ -56,7 +56,7 @@ a:focus-visible{outline:3px solid #d0362f;outline-offset:3px}
 <div class="sps-hero-in" style="position: relative; z-index: 2; max-width: 1104px; margin: 0 auto; padding: 0 24px; display: flex; flex-wrap: wrap; align-items: stretch; min-height: 812px">
 <div class="sps-hero-text" style="flex: 1 1 340px; min-width: 0; max-width: 360px; display: flex; flex-direction: column; justify-content: space-between; padding: 150px 0 38px">
 <div style="display: flex; flex-direction: column; gap: 14px">
-<h1 class="sps-h1" style="margin: 0; font-size: 52px; line-height: 1.08; font-weight: 800; letter-spacing: -1px">Where Personalized Programs Meet Affordable Prices</h1>
+<h1 id="sps-headline" class="sps-h1" style="margin: 0; font-size: 52px; line-height: 1.08; font-weight: 800; letter-spacing: -1px">You've Seen What's a Waste. Here's What Actually Works.</h1>
 <p style="margin: 6px 0 0; font-size: 28px; font-weight: 800; color: #d0362f">First 2 weeks free</p>
 <p style="margin: 0; font-size: 13px; font-weight: 500; color: #2b3450">Your calories, meals and workouts in 2 minutes. No credit card required.</p>
 <div style="display: flex; flex-wrap: wrap; gap: 14px; padding-top: 18px">
@@ -306,6 +306,7 @@ a:focus-visible{outline:3px solid #d0362f;outline-offset:3px}
 (function(){
   try{
     var q=new URLSearchParams(location.search), src=q.get('src');
+    if(src&&/^stack-score/.test(src)){document.getElementById('sps-headline').textContent='Your Score Shows What to Cut. Your Plan Shows What to Do.';}
     if(src){document.querySelectorAll('[data-go]').forEach(function(a){var u=new URL(a.getAttribute('href'),location.origin);u.searchParams.set('src',src.slice(0,80));a.setAttribute('href',u.pathname+u.search);});}
   }catch(e){}
 })();
