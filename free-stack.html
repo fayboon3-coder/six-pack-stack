@@ -3,152 +3,290 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>The Free Stack: Your Plan in 2 Minutes</title>
-<meta name="description" content="Tell the Six-Pack Stack app what you eat and when you can train. In 2 minutes you get your calories, meals and workouts. First 2 weeks free.">
-<meta property="og:title" content="The Free Stack: your plan in 2 minutes">
-<meta property="og:description" content="Your calories, meals from foods you already eat, and workouts with a form video on every move. First 2 weeks free.">
-<meta property="og:image" content="https://six-pack-stack.vercel.app/img/app-meals.jpg">
+<title>Six-Pack Stack App: Personalized Programs, First 2 Weeks Free</title>
+<meta name="description" content="Your calories, meals made from foods you already eat, and workouts on the days you choose, with a form video on every move. Built by Boon Fay. First 2 weeks free.">
+<meta property="og:title" content="Six-Pack Stack: where personalized programs meet affordable prices">
+<meta property="og:description" content="Your whole plan in 2 minutes. First 2 weeks free, no card.">
+<meta property="og:image" content="https://six-pack-stack.vercel.app/img/lp/bike1.jpg">
+<link rel="icon" href="/logo-b.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&display=swap">
-<link rel="stylesheet" href="/lt.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap">
 <style>
-.phones{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;align-items:end}
-.phone{border-radius:26px;overflow:hidden;border:6px solid #0a1428;box-shadow:0 22px 50px rgba(0,0,0,.5);background:#0a1428}
-.phone img{display:block;width:100%;height:auto}
-.phones .phone:nth-child(2){transform:translateY(-18px)}
-.feat{display:grid;grid-template-columns:150px 1fr;gap:20px;align-items:center}
-.feat .phone{border-width:5px;border-radius:22px}
-.feat:nth-child(even){grid-template-columns:1fr 150px}
-.feat:nth-child(even) .phone{order:2}
-.feat h3{margin-bottom:6px}
-.feats{display:grid;gap:34px}
-.steps{list-style:none;margin:0;padding:0;display:grid;gap:12px;counter-reset:s}
-.steps li{counter-increment:s;display:grid;grid-template-columns:44px 1fr;gap:14px;align-items:start;background:var(--navy-2);border:1px solid var(--line);border-radius:14px;padding:16px}
-.steps li::before{content:counter(s);width:40px;height:40px;border-radius:50%;background:var(--red);display:grid;place-items:center;font-weight:900;font-size:18px}
-.steps b{display:block;font-weight:900}
-.steps span{color:var(--soft);font-size:15px;line-height:1.5}
-.price{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.tier{background:var(--navy-2);border:1px solid var(--line);border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:8px}
-.tier.main{border:2px solid var(--red)}
-.tier .k{font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--red-2)}
-.tier .p{font-size:30px;font-weight:900;line-height:1}
-.tier .p small{font-size:14px;font-weight:700;color:var(--soft)}
-.tier ul{margin:4px 0 0;padding-left:18px;display:grid;gap:6px;font-size:15px;color:var(--soft)}
-.coach{display:grid;grid-template-columns:110px 1fr;gap:18px;align-items:center}
-.coach img{width:110px;height:110px;border-radius:50%;object-fit:cover;border:3px solid #fff}
-@media(max-width:560px){
-  .phones{grid-template-columns:repeat(3,1fr);gap:8px}.phone{border-width:4px;border-radius:18px}
-  .feat,.feat:nth-child(even){grid-template-columns:110px 1fr}.feat:nth-child(even) .phone{order:0}
-  .price{grid-template-columns:1fr}.coach{grid-template-columns:80px 1fr}.coach img{width:80px;height:80px}
+body{margin:0;background:#ffffff}
+a{color:#1b2440}a:hover{color:#c22f28}
+@keyframes sps-up{from{transform:translateY(0)}to{transform:translateY(-50%)}}
+@keyframes sps-down{from{transform:translateY(-50%)}to{transform:translateY(0)}}
+.sps-col-up{animation:sps-up 40s linear infinite}
+.sps-col-down{animation:sps-down 46s linear infinite}
+@media (prefers-reduced-motion: reduce){.sps-col-up,.sps-col-down{animation:none}}
+@media (max-width: 900px){
+.sps-hero-in{min-height:0 !important;padding:0 20px !important}
+.sps-hero-text{max-width:none !important;padding:44px 0 28px !important}
+.sps-h1{font-size:38px !important}
+.sps-built{margin-top:20px !important}
+.sps-wall{position:relative !important;left:0 !important;right:auto !important;top:auto !important;bottom:auto !important;height:540px !important;grid-template-columns:repeat(2,minmax(0,1fr)) !important;padding:0 10px}
+.sps-phone{top:auto !important;bottom:-40px !important;left:50% !important;width:280px !important;transform:translateX(-50%) rotate(16deg) scale(.66) !important;transform-origin:center bottom}
+.sps-sec{padding:64px 20px 32px !important}
+.sps-h2{font-size:28px !important;margin-bottom:56px !important}
+.sps-row{gap:32px !important;margin-bottom:72px !important}
+.sps-photo{height:230px !important}
+.sps-card{transform:scale(.8);transform-origin:left bottom;left:14px !important;bottom:14px !important}
+.sps-h3{margin-top:26px !important}
+.sps-join{padding:56px 20px 72px !important}
+.sps-tall{min-height:600px !important;padding:30px 22px !important}
+.sps-big{font-size:32px !important}
+.sps-chat{left:16px !important;right:16px !important;bottom:16px !important}
+.sps-swoosh{left:-700px !important}
 }
+
+img{max-width:100%}
+a:focus-visible{outline:3px solid #d0362f;outline-offset:3px}
 </style>
-<link rel="stylesheet" href="/skin.css">
 </head>
 <body>
-<div class="wrap">
-  <div class="brand"><span><span class="dot"></span>The Six-Pack Stack app</span><span>by Boon Fay</span></div>
 
-  <section class="sec hero">
-    <p class="eyebrow" id="kick">You know what to cut. Here's what to do instead.</p>
-    <h1>Your whole plan. <em>In 2 minutes.</em></h1>
-    <p class="sub">Tell my app the foods you already eat and the days you can train. It builds your calories, your meals and your workouts, then keeps you on it for 12 weeks.</p>
-    <div class="byline"><img src="/boon.jpg" alt="Boon Fay"><div><b>Boon Fay</b><span>Went from 225 to 175 lbs. No sponsors, no affiliate links.</span></div></div>
-    <a class="btn" data-go href="/app/lead?want=plan&amp;src=free-stack">Build My Free Plan →</a>
-    <div class="micro"><span>First 2 weeks free</span><span>No card</span><span>Then $1.90 a week</span></div>
-    <div class="phones" aria-hidden="true">
-      <div class="phone"><img src="/img/app-today.jpg" alt=""></div>
-      <div class="phone"><img src="/img/app-meals.jpg" alt=""></div>
-      <div class="phone"><img src="/img/app-workout.jpg" alt=""></div>
-    </div>
-  </section>
+<div style="font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif; color: #141c33; background: #ffffff; width: 100%; overflow: hidden">
 
-  <section class="sec">
-    <p class="eyebrow">Why most plans fail</p>
-    <h2>You don't need more information. <em>You need a plan built for you.</em></h2>
-    <p class="soft">Most guys copy someone else's diet, quit by week 3 and buy another supplement hoping it fixes things. The app does it the other way round: it starts with the food you already like and the time you actually have, so it's a plan you'll stick to.</p>
-  </section>
-
-  <section class="sec">
-    <p class="eyebrow">What you get</p>
-    <h2>Everything I'd build you, <em>on your phone.</em></h2>
-    <div class="feats">
-      <div class="feat">
-        <div class="phone"><img src="/img/app-meals.jpg" alt="Meal plan screen with photos of each food"></div>
-        <div><h3>Meals made only from foods you picked</h3><p class="soft">Pick from 150+ foods or add your own. Every portion is sized to hit your calories and protein. Plus exactly what to order at Chipotle, Starbucks, Subway, Chick-fil-A, Panda Express and McDonald's, and a grocery list.</p></div>
-      </div>
-      <div class="feat">
-        <div class="phone"><img src="/img/app-training.jpg" alt="Training week with a Swap button on every exercise"></div>
-        <div><h3>Workouts on the days you choose</h3><p class="soft">3 to 6 days a week, the gym, home with dumbbells or no equipment. Pick a proven split. Don't like a move, or it hurts? Swap it in one tap for one that works the same muscles.</p></div>
-      </div>
-      <div class="feat">
-        <div class="phone"><img src="/img/app-workout.jpg" alt="Workout screen with a form video and set logging"></div>
-        <div><h3>A form video on every exercise</h3><p class="soft">Three simple cues, last week's numbers on screen and a rest timer. Beat last time and you get a personal-record alert. It's how you keep your muscle while the fat comes off.</p></div>
-      </div>
-      <div class="feat">
-        <div class="phone"><img src="/img/app-stack.jpg" alt="Stack Check screen with product verdicts"></div>
-        <div><h3>Stack Check and Stack, your AI coach</h3><p class="soft">Look up any supplement before you buy it: 47 products I investigated, each with a verdict. Stuck on anything? Stack knows your plan and answers in seconds.</p></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="sec">
-    <p class="eyebrow">How it works</p>
-    <h2>Three steps. <em>No guessing.</em></h2>
-    <ol class="steps">
-      <li><div><b>Answer a 2-minute quiz</b><span>Your goal, your weight, where you train, how many days you can do and the foods you'd happily eat.</span></div></li>
-      <li><div><b>Get your plan instantly</b><span>Calories, protein, 3 options for every meal, your eating-out orders and a full training week.</span></div></li>
-      <li><div><b>Follow it, check in on Sunday</b><span>2 minutes a week. Your calories re-set at weeks 4 and 8 as you lose, so your progress doesn't stall.</span></div></li>
-    </ol>
-  </section>
-
-  <section class="sec">
-    <p class="eyebrow">What it costs</p>
-    <h2>Start free. <em>Keep going for less than a tub of pre-workout.</em></h2>
-    <div class="price">
-      <div class="tier main"><span class="k">The Free Stack</span><span class="p">$0 <small>weeks 1–2</small></span>
-        <ul><li>Your calories and protein</li><li>Your full meal plan and grocery list</li><li>Your first 2 weeks of training</li><li>No card needed</li></ul></div>
-      <div class="tier"><span class="k">The Full Stack</span><span class="p">$1.90 <small>a week</small></span>
-        <ul><li>All 12 weeks of training</li><li>Calorie re-sets at weeks 4 and 8</li><li>All 47 Stack Check verdicts</li><li>$99 a year, or $19.99 a month. Cancel any time.</li></ul></div>
-    </div>
-    <a class="btn" data-go href="/app/lead?want=plan&amp;src=free-stack">Start My Free 2 Weeks →</a>
-  </section>
-
-  <section class="sec">
-    <p class="eyebrow">Who built it</p>
-    <div class="coach"><img src="/boon.jpg" alt="Boon Fay"><div><h3>225 to 175 lbs. Same guy, different system.</h3><p class="soft">I spent years buying fat burners and test boosters that did nothing. What worked was boring: the right calories, enough protein, lifting and being consistent. The app is that system, built around you.</p></div></div>
-    <p class="soft">Want me in your corner too? Inside the app you can apply for 1:1 coaching, where I review your check-in every Sunday and adjust your plan myself.</p>
-  </section>
-
-  <section class="sec">
-    <p class="eyebrow">Questions</p>
-    <div class="faq">
-      <details><summary>Is it really free?</summary><p>Yes. Your first 2 weeks are free with no card. After that, weeks 3 to 12 are part of The Full Stack. If you don't want it, you keep using nothing and pay nothing.</p></details>
-      <details><summary>Do I have to count calories?</summary><p>No. Your portions are already sized for you. Pick one option per meal and you're on plan.</p></details>
-      <details><summary>Can I still eat out?</summary><p>Yes. You get the exact order at six of the most common spots, with the calories and protein for each.</p></details>
-      <details><summary>I don't have a gym.</summary><p>Pick "home with dumbbells" or "no equipment" in the quiz and your workouts are built for that. You can change it any time.</p></details>
-      <details><summary>Do I need to buy supplements?</summary><p>No. Most guys end up buying less. The app tells you the short list that's worth it, and Stack Check tells you what to skip.</p></details>
-    </div>
-  </section>
-
-  <section class="sec">
-    <h2>Stop guessing. <em>Start your plan today.</em></h2>
-    <a class="btn" data-go href="/app/lead?want=plan&amp;src=free-stack">Build My Free Plan →</a>
-    <div class="micro"><span>2 minutes</span><span>First 2 weeks free</span><span>No card</span></div>
-  </section>
-
-  <footer class="legal"><a href="/terms">Terms</a><a href="/privacy">Privacy</a><a href="/disclaimer">Disclaimer</a></footer>
+<!-- HERO -->
+<section style="background: #f3f4f8; position: relative; overflow: hidden">
+<div class="sps-hero-in" style="position: relative; z-index: 2; max-width: 1104px; margin: 0 auto; padding: 0 24px; display: flex; flex-wrap: wrap; align-items: stretch; min-height: 812px">
+<div class="sps-hero-text" style="flex: 1 1 360px; min-width: 0; max-width: 400px; display: flex; flex-direction: column; justify-content: space-between; padding: 150px 0 38px">
+<div style="display: flex; flex-direction: column; gap: 14px">
+<h1 class="sps-h1" style="margin: 0; font-size: 52px; line-height: 1.08; font-weight: 800; letter-spacing: -1px">Where Personalized Programs Meet Affordable Prices</h1>
+<p style="margin: 6px 0 0; font-size: 28px; font-weight: 800; color: #d0362f">First 2 weeks free</p>
+<p style="margin: 0; font-size: 13px; font-weight: 500; color: #2b3450">Your full plan in the app. No credit card required.</p>
+<div style="display: flex; flex-wrap: wrap; gap: 14px; padding-top: 18px">
+<a href="/app/lead?want=plan&amp;src=free-stack" data-go="1" style="display: inline-flex; align-items: center; gap: 10px; background: #141c33; color: #ffffff; text-decoration: none; border-radius: 6px; padding: 0 18px 0 14px; height: 50px; box-sizing: border-box">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="3"></rect><path d="M11 18h2"></path></svg>
+<span style="display: flex; flex-direction: column; line-height: 1.1"><span style="font-size: 10px; font-weight: 500">Download on the</span><span style="font-size: 17px; font-weight: 700">App Store</span></span>
+</a>
 </div>
-<div class="sticky" role="region" aria-label="Start free">
-  <div class="in"><p>Your plan in 2 minutes. First 2 weeks free.</p><a class="btn" data-go href="/app/lead?want=plan&amp;src=free-stack">Build My Free Plan →</a></div>
 </div>
+<p class="sps-built" style="margin: 0; font-size: 12px; font-weight: 500; color: #4a5470">Built by <b style="color: #141c33">Boon Fay</b></p>
+</div>
+</div>
+
+<div class="sps-wall" style="position: absolute; top: 0; bottom: 0; right: 0; left: calc(50% + 10px); display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; overflow: hidden; z-index: 1" aria-label="Real client results">
+<div style="overflow: hidden; height: 812px"><div class="sps-col-up" style="display: flex; flex-direction: column; gap: 8px"><div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3px; flex: 0 0 auto; border-radius: 6px; overflow: hidden; background: #ffffff"><img src="/img/lp/robert-b.jpg" alt="Robert, before" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"><img src="/img/lp/robert-a.jpg" alt="Robert, after" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"></div><div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3px; flex: 0 0 auto; border-radius: 6px; overflow: hidden; background: #ffffff"><img src="/img/lp/c4-b.jpg" alt="Client, before" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"><img src="/img/lp/c4-a.jpg" alt="Client, after" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"></div><div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3px; flex: 0 0 auto; border-radius: 6px; overflow: hidden; background: #ffffff"><img src="/img/lp/gerardo-b.jpg" alt="Gerardo, before" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"><img src="/img/lp/gerardo-a.jpg" alt="Gerardo, after" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"></div><div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3px; flex: 0 0 auto; border-radius: 6px; overflow: hidden; background: #ffffff"><img src="/img/lp/c5-front.jpg" alt="Client progress, before" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"><img src="/img/lp/c5-back.jpg" alt="Client progress, after" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"></div><div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3px; flex: 0 0 auto; border-radius: 6px; overflow: hidden; background: #ffffff"><img src="/img/lp/james-b.jpg" alt="James, before" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"><img src="/img/lp/james-a.jpg" alt="James, after" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"></div><div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3px; flex: 0 0 auto; border-radius: 6px; overflow: hidden; background: #ffffff"><img src="/img/lp/robert-b.jpg" alt="Robert, before" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"><img src="/img/lp/robert-a.jpg" alt="Robert, after" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"></div><div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3px; flex: 0 0 auto; border-radius: 6px; overflow: hidden; background: #ffffff"><img src="/img/lp/c4-b.jpg" alt="Client, before" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"><img src="/img/lp/c4-a.jpg" alt="Client, after" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"></div><div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3px; flex: 0 0 auto; border-radius: 6px; overflow: hidden; background: #ffffff"><img src="/img/lp/gerardo-b.jpg" alt="Gerardo, before" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"><img src="/img/lp/gerardo-a.jpg" alt="Gerardo, after" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"></div><div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3px; flex: 0 0 auto; border-radius: 6px; overflow: hidden; background: #ffffff"><img src="/img/lp/robert-b.jpg" alt="" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"><img src="/img/lp/robert-a.jpg" alt="" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"></div><div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3px; flex: 0 0 auto; border-radius: 6px; overflow: hidden; background: #ffffff"><img src="/img/lp/c4-b.jpg" alt="" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"><img src="/img/lp/c4-a.jpg" alt="" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"></div><div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3px; flex: 0 0 auto; border-radius: 6px; overflow: hidden; background: #ffffff"><img src="/img/lp/gerardo-b.jpg" alt="" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"><img src="/img/lp/gerardo-a.jpg" alt="" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"></div><div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3px; flex: 0 0 auto; border-radius: 6px; overflow: hidden; background: #ffffff"><img src="/img/lp/c5-front.jpg" alt="" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"><img src="/img/lp/c5-back.jpg" alt="" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"></div><div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3px; flex: 0 0 auto; border-radius: 6px; overflow: hidden; background: #ffffff"><img src="/img/lp/james-b.jpg" alt="" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"><img src="/img/lp/james-a.jpg" alt="" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"></div><div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3px; flex: 0 0 auto; border-radius: 6px; overflow: hidden; background: #ffffff"><img src="/img/lp/robert-b.jpg" alt="" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"><img src="/img/lp/robert-a.jpg" alt="" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"></div><div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3px; flex: 0 0 auto; border-radius: 6px; overflow: hidden; background: #ffffff"><img src="/img/lp/c4-b.jpg" alt="" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"><img src="/img/lp/c4-a.jpg" alt="" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"></div><div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3px; flex: 0 0 auto; border-radius: 6px; overflow: hidden; background: #ffffff"><img src="/img/lp/gerardo-b.jpg" alt="" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"><img src="/img/lp/gerardo-a.jpg" alt="" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"></div></div></div><div style="overflow: hidden; height: 812px"><div class="sps-col-down" style="display: flex; flex-direction: column; gap: 8px"><div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3px; flex: 0 0 auto; border-radius: 6px; overflow: hidden; background: #ffffff"><img src="/img/lp/gerardo-b.jpg" alt="Gerardo, before" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"><img src="/img/lp/gerardo-a.jpg" alt="Gerardo, after" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"></div><div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3px; flex: 0 0 auto; border-radius: 6px; overflow: hidden; background: #ffffff"><img src="/img/lp/james-b.jpg" alt="James, before" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"><img src="/img/lp/james-a.jpg" alt="James, after" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"></div><div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3px; flex: 0 0 auto; border-radius: 6px; overflow: hidden; background: #ffffff"><img src="/img/lp/c5-front.jpg" alt="Client progress, before" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"><img src="/img/lp/c5-back.jpg" alt="Client progress, after" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"></div><div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3px; flex: 0 0 auto; border-radius: 6px; overflow: hidden; background: #ffffff"><img src="/img/lp/robert-b.jpg" alt="Robert, before" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"><img src="/img/lp/robert-a.jpg" alt="Robert, after" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"></div><div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3px; flex: 0 0 auto; border-radius: 6px; overflow: hidden; background: #ffffff"><img src="/img/lp/c4-b.jpg" alt="Client, before" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"><img src="/img/lp/c4-a.jpg" alt="Client, after" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"></div><div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3px; flex: 0 0 auto; border-radius: 6px; overflow: hidden; background: #ffffff"><img src="/img/lp/james-b.jpg" alt="James, before" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"><img src="/img/lp/james-a.jpg" alt="James, after" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"></div><div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3px; flex: 0 0 auto; border-radius: 6px; overflow: hidden; background: #ffffff"><img src="/img/lp/c5-front.jpg" alt="Client progress, before" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"><img src="/img/lp/c5-back.jpg" alt="Client progress, after" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"></div><div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3px; flex: 0 0 auto; border-radius: 6px; overflow: hidden; background: #ffffff"><img src="/img/lp/robert-b.jpg" alt="Robert, before" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"><img src="/img/lp/robert-a.jpg" alt="Robert, after" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"></div><div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3px; flex: 0 0 auto; border-radius: 6px; overflow: hidden; background: #ffffff"><img src="/img/lp/gerardo-b.jpg" alt="" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"><img src="/img/lp/gerardo-a.jpg" alt="" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"></div><div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3px; flex: 0 0 auto; border-radius: 6px; overflow: hidden; background: #ffffff"><img src="/img/lp/james-b.jpg" alt="" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"><img src="/img/lp/james-a.jpg" alt="" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"></div><div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3px; flex: 0 0 auto; border-radius: 6px; overflow: hidden; background: #ffffff"><img src="/img/lp/c5-front.jpg" alt="" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"><img src="/img/lp/c5-back.jpg" alt="" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"></div><div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3px; flex: 0 0 auto; border-radius: 6px; overflow: hidden; background: #ffffff"><img src="/img/lp/robert-b.jpg" alt="" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"><img src="/img/lp/robert-a.jpg" alt="" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"></div><div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3px; flex: 0 0 auto; border-radius: 6px; overflow: hidden; background: #ffffff"><img src="/img/lp/c4-b.jpg" alt="" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"><img src="/img/lp/c4-a.jpg" alt="" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"></div><div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3px; flex: 0 0 auto; border-radius: 6px; overflow: hidden; background: #ffffff"><img src="/img/lp/james-b.jpg" alt="" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"><img src="/img/lp/james-a.jpg" alt="" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"></div><div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3px; flex: 0 0 auto; border-radius: 6px; overflow: hidden; background: #ffffff"><img src="/img/lp/c5-front.jpg" alt="" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"><img src="/img/lp/c5-back.jpg" alt="" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"></div><div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3px; flex: 0 0 auto; border-radius: 6px; overflow: hidden; background: #ffffff"><img src="/img/lp/robert-b.jpg" alt="" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"><img src="/img/lp/robert-a.jpg" alt="" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"></div></div></div><div style="overflow: hidden; height: 812px"><div class="sps-col-up" style="display: flex; flex-direction: column; gap: 8px"><div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3px; flex: 0 0 auto; border-radius: 6px; overflow: hidden; background: #ffffff"><img src="/img/lp/c4-b.jpg" alt="Client, before" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"><img src="/img/lp/c4-a.jpg" alt="Client, after" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"></div><div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3px; flex: 0 0 auto; border-radius: 6px; overflow: hidden; background: #ffffff"><img src="/img/lp/c5-front.jpg" alt="Client progress, before" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"><img src="/img/lp/c5-back.jpg" alt="Client progress, after" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"></div><div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3px; flex: 0 0 auto; border-radius: 6px; overflow: hidden; background: #ffffff"><img src="/img/lp/robert-b.jpg" alt="Robert, before" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"><img src="/img/lp/robert-a.jpg" alt="Robert, after" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"></div><div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3px; flex: 0 0 auto; border-radius: 6px; overflow: hidden; background: #ffffff"><img src="/img/lp/james-b.jpg" alt="James, before" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"><img src="/img/lp/james-a.jpg" alt="James, after" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"></div><div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3px; flex: 0 0 auto; border-radius: 6px; overflow: hidden; background: #ffffff"><img src="/img/lp/gerardo-b.jpg" alt="Gerardo, before" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"><img src="/img/lp/gerardo-a.jpg" alt="Gerardo, after" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"></div><div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3px; flex: 0 0 auto; border-radius: 6px; overflow: hidden; background: #ffffff"><img src="/img/lp/c4-b.jpg" alt="Client, before" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"><img src="/img/lp/c4-a.jpg" alt="Client, after" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"></div><div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3px; flex: 0 0 auto; border-radius: 6px; overflow: hidden; background: #ffffff"><img src="/img/lp/james-b.jpg" alt="James, before" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"><img src="/img/lp/james-a.jpg" alt="James, after" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"></div><div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3px; flex: 0 0 auto; border-radius: 6px; overflow: hidden; background: #ffffff"><img src="/img/lp/c5-front.jpg" alt="Client progress, before" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"><img src="/img/lp/c5-back.jpg" alt="Client progress, after" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"></div><div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3px; flex: 0 0 auto; border-radius: 6px; overflow: hidden; background: #ffffff"><img src="/img/lp/c4-b.jpg" alt="" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"><img src="/img/lp/c4-a.jpg" alt="" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"></div><div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3px; flex: 0 0 auto; border-radius: 6px; overflow: hidden; background: #ffffff"><img src="/img/lp/c5-front.jpg" alt="" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"><img src="/img/lp/c5-back.jpg" alt="" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"></div><div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3px; flex: 0 0 auto; border-radius: 6px; overflow: hidden; background: #ffffff"><img src="/img/lp/robert-b.jpg" alt="" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"><img src="/img/lp/robert-a.jpg" alt="" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"></div><div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3px; flex: 0 0 auto; border-radius: 6px; overflow: hidden; background: #ffffff"><img src="/img/lp/james-b.jpg" alt="" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"><img src="/img/lp/james-a.jpg" alt="" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"></div><div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3px; flex: 0 0 auto; border-radius: 6px; overflow: hidden; background: #ffffff"><img src="/img/lp/gerardo-b.jpg" alt="" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"><img src="/img/lp/gerardo-a.jpg" alt="" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"></div><div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3px; flex: 0 0 auto; border-radius: 6px; overflow: hidden; background: #ffffff"><img src="/img/lp/c4-b.jpg" alt="" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"><img src="/img/lp/c4-a.jpg" alt="" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"></div><div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3px; flex: 0 0 auto; border-radius: 6px; overflow: hidden; background: #ffffff"><img src="/img/lp/james-b.jpg" alt="" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"><img src="/img/lp/james-a.jpg" alt="" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"></div><div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3px; flex: 0 0 auto; border-radius: 6px; overflow: hidden; background: #ffffff"><img src="/img/lp/c5-front.jpg" alt="" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"><img src="/img/lp/c5-back.jpg" alt="" loading="lazy" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"></div></div></div>
+</div>
+
+<div class="sps-phone" style="position: absolute; top: 50%; left: calc(50% - 185px); width: 280px; transform: translateY(-50%) rotate(24deg); z-index: 3">
+<div style="position: relative; border-radius: 54px; padding: 5px; background: linear-gradient(135deg, #f7f8fa 0%, #c9cdd4 22%, #eef0f3 48%, #a8adb6 78%, #e4e6ea 100%); box-shadow: 0 60px 90px -20px rgba(20,28,51,0.45), 0 18px 36px rgba(20,28,51,0.18)">
+<span style="position: absolute; left: -3px; top: 110px; width: 4px; height: 26px; border-radius: 3px 0 0 3px; background: linear-gradient(90deg, #9ea3ac, #d4d7dc)" aria-hidden="true"></span>
+<span style="position: absolute; left: -3px; top: 160px; width: 4px; height: 52px; border-radius: 3px 0 0 3px; background: linear-gradient(90deg, #9ea3ac, #d4d7dc)" aria-hidden="true"></span>
+<span style="position: absolute; left: -3px; top: 224px; width: 4px; height: 52px; border-radius: 3px 0 0 3px; background: linear-gradient(90deg, #9ea3ac, #d4d7dc)" aria-hidden="true"></span>
+<span style="position: absolute; right: -3px; top: 180px; width: 4px; height: 82px; border-radius: 0 3px 3px 0; background: linear-gradient(270deg, #9ea3ac, #d4d7dc)" aria-hidden="true"></span>
+<div style="border-radius: 49px; padding: 9px; background: #0b0c10">
+<div style="position: relative; border-radius: 40px; overflow: hidden; background: #ffffff">
+<div style="position: absolute; top: 15px; left: 24px; right: 22px; display: flex; justify-content: space-between; align-items: center; font-size: 11px; font-weight: 700; color: #141c33; z-index: 2"><span>9:41</span><span style="display: inline-flex; gap: 3px; align-items: flex-end"><span style="width: 3px; height: 5px; background: #141c33; border-radius: 1px"></span><span style="width: 3px; height: 7px; background: #141c33; border-radius: 1px"></span><span style="width: 3px; height: 9px; background: #141c33; border-radius: 1px"></span><span style="width: 18px; height: 9px; border-radius: 3px; border: 1.5px solid #141c33; box-sizing: border-box; margin-left: 4px; padding: 1px"><span style="display: block; width: 70%; height: 100%; background: #141c33; border-radius: 1px"></span></span></span></div>
+<span style="position: absolute; top: 10px; left: 50%; transform: translateX(-50%); width: 84px; height: 25px; border-radius: 20px; background: #000000; z-index: 3" aria-hidden="true"></span>
+<div style="height: 560px; background: #ffffff; display: flex; flex-direction: column; padding: 54px 16px 0; box-sizing: border-box; gap: 12px" role="img" aria-label="The Today screen in the Six-Pack Stack app">
+<div style="display: flex; justify-content: space-between; align-items: center"><b style="font-size: 22px; font-weight: 800; font-style: italic">Today</b><img src="/img/lp/boon-white.jpg" alt="" style="width: 26px; height: 26px; border-radius: 50%; object-fit: cover; object-position: center top"></div>
+<div style="border: 1px solid #eef0f4; border-radius: 12px; padding: 11px 12px; display: flex; flex-direction: column; gap: 7px"><span style="font-size: 7.5px; font-weight: 700; color: #8a92a8; letter-spacing: 0.8px">MOMENTUM SCORE</span><div style="display: flex; justify-content: space-between; align-items: center"><b style="font-size: 12px">This week's score</b><b style="font-size: 20px; color: #141c33">8.4</b></div><div style="height: 5px; border-radius: 3px; background: linear-gradient(90deg, #e2433b, #f08c00 45%, #1f9d55)"></div></div>
+<span style="font-size: 7.5px; font-weight: 700; color: #8a92a8; letter-spacing: 0.8px; margin-top: 2px">TODAY</span>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 10px">
+<div style="display: flex; align-items: center; gap: 8px"><span style="width: 28px; height: 28px; border-radius: 50%; border: 3px solid #f08c00; box-sizing: border-box"></span><span style="display: flex; flex-direction: column"><b style="font-size: 11px">1,240</b><span style="font-size: 8px; color: #8a92a8">Calories</span></span></div>
+<div style="display: flex; align-items: center; gap: 8px"><span style="width: 28px; height: 28px; border-radius: 50%; border: 3px solid #d0362f; box-sizing: border-box"></span><span style="display: flex; flex-direction: column"><b style="font-size: 11px">96 g</b><span style="font-size: 8px; color: #8a92a8">Protein</span></span></div>
+<div style="display: flex; align-items: center; gap: 8px"><span style="width: 28px; height: 28px; border-radius: 50%; border: 3px solid #2f80ed; box-sizing: border-box"></span><span style="display: flex; flex-direction: column"><b style="font-size: 11px">2 of 4</b><span style="font-size: 8px; color: #8a92a8">Workouts</span></span></div>
+<div style="display: flex; align-items: center; gap: 8px"><span style="width: 28px; height: 28px; border-radius: 50%; border: 3px solid #1f9d55; box-sizing: border-box"></span><span style="display: flex; flex-direction: column"><b style="font-size: 11px">Sunday</b><span style="font-size: 8px; color: #8a92a8">Next check-in</span></span></div>
+</div>
+<span style="font-size: 7.5px; font-weight: 700; color: #8a92a8; letter-spacing: 0.8px; margin-top: 4px">YOUR PLAN</span>
+<div style="border: 1px solid #eef0f4; border-radius: 12px; padding: 11px 12px; display: flex; justify-content: space-between; align-items: center"><span style="display: flex; flex-direction: column; gap: 2px"><b style="font-size: 11px">12-Week Transformation</b><span style="font-size: 8px; color: #8a92a8">Strip phase · Week 1</span></span><span style="background: #1f9d55; color: #ffffff; font-size: 9px; font-weight: 700; border-radius: 999px; padding: 4px 10px">Start</span></div>
+<div style="border: 1px solid #eef0f4; border-radius: 12px; padding: 11px 12px; display: flex; justify-content: space-between; align-items: center"><span style="display: flex; flex-direction: column; gap: 2px"><b style="font-size: 11px">Today's workout</b><span style="font-size: 8px; color: #8a92a8">Push · 45 min</span></span><span style="background: #d0362f; color: #ffffff; font-size: 9px; font-weight: 700; border-radius: 999px; padding: 4px 10px">Go</span></div>
+<div style="margin: auto -16px 0; display: flex; justify-content: space-around; padding: 10px 0 20px; border-top: 1px solid #eef0f4"><span style="width: 16px; height: 16px; border-radius: 4px; background: #d0362f"></span><span style="width: 16px; height: 16px; border-radius: 4px; border: 1.5px solid #c3c8d4; box-sizing: border-box"></span><span style="width: 16px; height: 16px; border-radius: 50%; border: 1.5px solid #c3c8d4; box-sizing: border-box"></span><span style="width: 16px; height: 16px; border-radius: 4px; border: 1.5px solid #c3c8d4; box-sizing: border-box"></span></div>
+</div>
+<div style="position: absolute; inset: 0; background: linear-gradient(118deg, rgba(255,255,255,0.32) 0%, rgba(255,255,255,0) 34%); pointer-events: none; z-index: 4" aria-hidden="true"></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- EVERYTHING YOU NEED -->
+<section style="position: relative">
+<div class="sps-swoosh" style="position: absolute; left: -520px; top: 330px; width: 1500px; height: 1150px; border-radius: 50%; background: linear-gradient(90deg, #f9dedb 0%, #fcefed 45%, rgba(255,255,255,0) 75%)" aria-hidden="true"></div>
+<div class="sps-sec" style="position: relative; max-width: 1104px; margin: 0 auto; padding: 108px 24px 40px; display: flex; flex-direction: column">
+
+<h2 class="sps-h2" style="margin: 0 auto 100px; max-width: 560px; text-align: center; font-size: 38px; line-height: 1.22; font-weight: 800; letter-spacing: -0.6px">Everything you need to finally see your abs</h2>
+
+<!-- Row 1 -->
+<div class="sps-row" style="display: flex; flex-wrap: wrap; align-items: flex-start; gap: 56px; margin-bottom: 128px">
+<div style="flex: 1 1 520px; min-width: 0; max-width: 708px; display: flex; flex-direction: column">
+<div class="sps-photo" style="position: relative; height: 335px; border-radius: 10px; overflow: hidden; background: #dfe3ec">
+<img src="/img/lp/bike1.jpg" alt="A man training on an air bike in the gym" style="width: 100%; height: 100%; object-fit: cover; display: block">
+<div style="position: absolute; inset: 0; background: linear-gradient(90deg, rgba(208,54,47,0.38) 0%, rgba(208,54,47,0.16) 40%, rgba(208,54,47,0) 75%), linear-gradient(0deg, rgba(255,240,238,0.35), rgba(255,240,238,0) 40%); mix-blend-mode: multiply" aria-hidden="true"></div>
+<div class="sps-card" style="position: absolute; left: 26px; bottom: 26px; width: 286px; background: #ffffff; border-radius: 4px; box-shadow: 0 6px 20px rgba(20,28,51,0.14); padding: 12px 14px; display: flex; align-items: center; gap: 14px; box-sizing: border-box">
+<div style="width: 46px; height: 58px; border-radius: 4px; background: #fbe9e7; color: #d0362f; display: flex; align-items: center; justify-content: center"><svg width="26" height="34" viewBox="0 0 20 26" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true"><circle cx="10" cy="3.5" r="2.5"></circle><path d="M5 9h10l-1 8h-2l-1 8H9l-1-8H6z"></path><path d="M5 9 2 15M15 9l3 6"></path></svg></div>
+<div style="display: flex; flex-direction: column; gap: 3px"><span style="font-size: 10px; font-weight: 500; color: #6a7390; letter-spacing: 0.4px">DAY 1</span><b style="font-size: 15px; font-weight: 700">Push</b><span style="font-size: 12px; color: #4a5470">6 Exercises · 45 min</span></div>
+</div>
+</div>
+<h3 class="sps-h3" style="margin: 44px 0 0; font-size: 23px; font-weight: 800"><span style="color: #d0362f">Personalised</span> training and meals</h3>
+<p style="margin: 18px 0 0; max-width: 560px; font-size: 16px; line-height: 1.6; color: #2b3450">You get a personalised gym or home training plan on the days you choose, with a form video on every move, and meals made only from food you already like. A plan you'll enjoy and actually stick to.</p>
+</div>
+<div style="flex: 0 0 290px; margin: 0 auto">
+<div style="width: 290px; border-radius: 44px; border: 12px solid #ffffff; outline: 4px solid #f6d7d3; overflow: hidden; background: #ffffff; box-shadow: 0 24px 50px rgba(20,28,51,0.12)">
+<div style="display: flex; justify-content: space-between; align-items: center; padding: 6px 18px 8px; font-size: 11px; font-weight: 700; color: #141c33; background: #ffffff"><span>9:41</span><span style="display: inline-flex; gap: 3px; align-items: flex-end"><span style="width: 3px; height: 5px; background: #141c33; border-radius: 1px"></span><span style="width: 3px; height: 7px; background: #141c33; border-radius: 1px"></span><span style="width: 3px; height: 9px; background: #141c33; border-radius: 1px"></span><span style="width: 18px; height: 9px; border-radius: 3px; border: 1.5px solid #141c33; box-sizing: border-box; margin-left: 4px"></span></span></div>
+<div style="height: 540px; background: #f6f7fa; display: flex; flex-direction: column" role="img" aria-label="Programs screen with your training plan and meal plan">
+<div style="background: #d0362f; color: #ffffff; padding: 10px 14px 74px; display: flex; justify-content: space-between; align-items: center"><b style="font-size: 17px; font-weight: 800">Programs</b><span style="background: #ffffff; color: #d0362f; font-size: 9px; font-weight: 700; border-radius: 999px; padding: 5px 10px">Edit plan +</span></div>
+<div style="margin-top: -62px; padding: 0 12px; display: flex; flex-direction: column; gap: 14px">
+<div style="border-radius: 12px; overflow: hidden; background: #ffffff; box-shadow: 0 8px 20px rgba(20,28,51,0.14)">
+<div style="position: relative; height: 138px; background: #141c33"><img src="/img/lp/bike1.jpg" alt="" style="position: absolute; right: 0; top: 0; width: 70%; height: 100%; object-fit: cover; display: block"><div style="position: absolute; inset: 0; background: linear-gradient(90deg, #141c33 32%, rgba(20,28,51,0.55) 62%, rgba(20,28,51,0.1))"></div><div style="position: absolute; left: 12px; top: 12px; bottom: 12px; color: #ffffff; display: flex; flex-direction: column; gap: 5px; width: 60%"><span style="align-self: flex-start; font-size: 8px; font-weight: 700; background: rgba(255,255,255,0.16); border-radius: 4px; padding: 3px 6px">Weeks 1–4</span><b style="font-size: 15px; font-weight: 800; line-height: 1.15">Strip phase: Gym, 4 days</b><span style="margin-top: auto; font-size: 9px; display: inline-flex; align-items: center; gap: 6px"><span style="width: 12px; height: 12px; border: 2px solid #ffffff; border-right-color: rgba(255,255,255,0.3); border-radius: 50%; box-sizing: border-box"></span>Week 1 of 4</span></div></div>
+<div style="display: flex; justify-content: space-between; align-items: center; padding: 9px 12px"><span style="font-size: 9.5px; color: #4a5470">Next: <b style="color: #141c33">Push day</b></span><span style="background: #d0362f; color: #ffffff; font-size: 9.5px; font-weight: 700; border-radius: 5px; padding: 4px 10px">View ›</span></div>
+</div>
+<div style="border-radius: 12px; overflow: hidden; background: #ffffff; box-shadow: 0 8px 20px rgba(20,28,51,0.14)">
+<div style="position: relative; height: 138px; background: #141c33"><img src="/img/lp/meal.jpg" alt="" style="position: absolute; right: 0; top: 0; width: 70%; height: 100%; object-fit: cover; display: block"><div style="position: absolute; inset: 0; background: linear-gradient(90deg, #141c33 32%, rgba(20,28,51,0.55) 62%, rgba(20,28,51,0.1))"></div><div style="position: absolute; left: 12px; top: 12px; bottom: 12px; color: #ffffff; display: flex; flex-direction: column; gap: 5px; width: 60%"><span style="align-self: flex-start; font-size: 8px; font-weight: 700; background: rgba(255,255,255,0.16); border-radius: 4px; padding: 3px 6px">Your meals</span><b style="font-size: 15px; font-weight: 800; line-height: 1.15">Meal plan: 2,150 cal</b><span style="margin-top: auto; font-size: 9px">3 options for every meal</span></div></div>
+<div style="display: flex; justify-content: space-between; align-items: center; padding: 9px 12px"><span style="font-size: 9.5px; color: #4a5470">Next: <b style="color: #141c33">Lunch</b></span><span style="background: #d0362f; color: #ffffff; font-size: 9.5px; font-weight: 700; border-radius: 5px; padding: 4px 10px">View ›</span></div>
+</div>
+</div>
+<div style="margin-top: auto; display: flex; justify-content: space-around; padding: 10px 0 14px; background: #ffffff; border-top: 1px solid #eceef3"><span style="width: 18px; height: 18px; border-radius: 5px; background: #d0362f"></span><span style="width: 18px; height: 18px; border-radius: 5px; border: 1.5px solid #a3abc0; box-sizing: border-box"></span><span style="width: 18px; height: 18px; border-radius: 50%; border: 1.5px solid #a3abc0; box-sizing: border-box"></span><span style="width: 18px; height: 18px; border-radius: 5px; border: 1.5px solid #a3abc0; box-sizing: border-box"></span><span style="width: 18px; height: 18px; border-radius: 50%; border: 1.5px solid #a3abc0; box-sizing: border-box"></span></div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Row 2 -->
+<div class="sps-row" style="display: flex; flex-wrap: wrap; align-items: flex-start; gap: 56px; margin-bottom: 128px">
+<div style="flex: 1 1 520px; min-width: 0; max-width: 708px; display: flex; flex-direction: column">
+<div class="sps-photo" style="position: relative; height: 335px; border-radius: 10px; overflow: hidden; background: #dfe3ec">
+<img src="/img/lp/ag1-scene.jpg" alt="AG1 greens powder products on a counter" style="width: 100%; height: 100%; object-fit: cover; display: block">
+<div style="position: absolute; inset: 0; background: linear-gradient(90deg, rgba(208,54,47,0.38) 0%, rgba(208,54,47,0.16) 40%, rgba(208,54,47,0) 75%), linear-gradient(0deg, rgba(255,240,238,0.35), rgba(255,240,238,0) 40%); mix-blend-mode: multiply" aria-hidden="true"></div>
+<div class="sps-card" style="position: absolute; left: 26px; bottom: 26px; width: 262px; background: #ffffff; border-radius: 4px; box-shadow: 0 6px 20px rgba(20,28,51,0.14); padding: 12px 14px; display: flex; flex-direction: column; gap: 6px; box-sizing: border-box">
+<b style="font-size: 12px; font-weight: 700">Boon</b>
+<span style="font-size: 12px; line-height: 1.45; color: #2b3450">That greens powder is $79–99 a month. A bag of frozen veg does more.</span>
+<span style="display: flex; align-items: center; gap: 8px"><img src="/img/lp/boon-white.jpg" alt="" style="width: 22px; height: 22px; border-radius: 50%; object-fit: cover; object-position: center top"><span style="font-size: 10px; color: #6a7390">10:13 AM</span></span>
+</div>
+</div>
+<h3 class="sps-h3" style="margin: 44px 0 0; font-size: 23px; font-weight: 800">Know what's <span style="color: #d0362f">worth buying</span></h3>
+<p style="margin: 18px 0 0; max-width: 560px; font-size: 16px; line-height: 1.6; color: #2b3450">Look up any supplement before you spend a dollar. 47 products investigated, each with a verdict. Stuck on anything? Ask Boon, the AI coach built on my plans and research, answers any time.</p>
+</div>
+<div style="flex: 0 0 290px; margin: 0 auto">
+<div style="width: 290px; border-radius: 44px; border: 12px solid #ffffff; outline: 4px solid #f6d7d3; overflow: hidden; background: #ffffff; box-shadow: 0 24px 50px rgba(20,28,51,0.12)">
+<div style="display: flex; justify-content: space-between; align-items: center; padding: 6px 18px 8px; font-size: 11px; font-weight: 700; color: #141c33; background: #ffffff"><span>9:41</span><span style="display: inline-flex; gap: 3px; align-items: flex-end"><span style="width: 3px; height: 5px; background: #141c33; border-radius: 1px"></span><span style="width: 3px; height: 7px; background: #141c33; border-radius: 1px"></span><span style="width: 3px; height: 9px; background: #141c33; border-radius: 1px"></span><span style="width: 18px; height: 9px; border-radius: 3px; border: 1.5px solid #141c33; box-sizing: border-box; margin-left: 4px"></span></span></div>
+<div style="height: 540px; background: #ffffff; display: flex; flex-direction: column" role="img" aria-label="Ask Boon chat about a greens powder">
+<div style="display: flex; align-items: center; justify-content: space-between; padding: 8px 14px 10px; border-bottom: 1px solid #eceef3"><span style="font-size: 14px; color: #d0362f">←</span><span style="display: flex; flex-direction: column; align-items: center; gap: 1px"><b style="font-size: 12px">Ask Boon</b><span style="font-size: 8px; color: #6a7390">AI coach · trained on my plans</span></span><span style="width: 14px; height: 14px; border-radius: 50%; border: 1.5px solid #a3abc0; box-sizing: border-box"></span></div>
+<div style="flex: 1; padding: 12px; display: flex; flex-direction: column; gap: 9px; background: #f6f7fa">
+<span style="align-self: center; font-size: 9px; color: #6a7390">Today 10:12</span>
+<div style="display: flex; gap: 6px; align-items: flex-end"><img src="/img/lp/boon-white.jpg" alt="" style="width: 20px; height: 20px; border-radius: 50%; object-fit: cover; object-position: center top; flex: 0 0 auto"><div style="background: #ffffff; border: 1px solid #e6e8ef; border-radius: 12px 12px 12px 3px; padding: 8px 10px; font-size: 10.5px; line-height: 1.45; max-width: 190px">Hey! Ask me anything about your plan, or check a supplement before you buy it.</div></div>
+<div style="align-self: flex-end; background: #d0362f; color: #ffffff; border-radius: 12px 12px 3px 12px; padding: 8px 10px; font-size: 10.5px; line-height: 1.45; max-width: 180px">Is AG1 worth it?</div>
+<div style="display: flex; gap: 6px; align-items: flex-end"><img src="/img/lp/boon-white.jpg" alt="" style="width: 20px; height: 20px; border-radius: 50%; object-fit: cover; object-position: center top; flex: 0 0 auto"><div style="background: #ffffff; border: 1px solid #e6e8ef; border-radius: 12px 12px 12px 3px; padding: 9px 10px; max-width: 190px; display: flex; flex-direction: column; gap: 6px"><span style="align-self: flex-start; background: #fbe9e7; color: #a8261f; font-size: 9px; font-weight: 800; border-radius: 999px; padding: 3px 8px">VERDICT: WASTE OF MONEY</span><span style="font-size: 10.5px; line-height: 1.45">It's an expensive multivitamin. Most doses are hidden in a blend, so you can't tell what you're getting.</span><span style="font-size: 10px; font-weight: 700; color: #1f7a4d">Save $79–99 a month</span></div></div>
+<div style="align-self: flex-end; background: #d0362f; color: #ffffff; border-radius: 12px 12px 3px 12px; padding: 8px 10px; font-size: 10.5px; line-height: 1.45; max-width: 180px">What should I do instead?</div>
+<div style="display: flex; gap: 6px; align-items: flex-end"><img src="/img/lp/boon-white.jpg" alt="" style="width: 20px; height: 20px; border-radius: 50%; object-fit: cover; object-position: center top; flex: 0 0 auto"><div style="background: #ffffff; border: 1px solid #e6e8ef; border-radius: 12px 12px 12px 3px; padding: 8px 10px; font-size: 10.5px; line-height: 1.45; max-width: 190px">A bag of frozen veggies. If your diet really has gaps, a basic multivitamin.</div></div>
+</div>
+<div style="display: flex; align-items: center; gap: 8px; padding: 10px 12px 14px; border-top: 1px solid #eceef3"><span style="flex: 1; font-size: 10px; color: #8a92a8; background: #f6f7fa; border-radius: 999px; padding: 7px 12px">Type a message</span><span style="width: 24px; height: 24px; border-radius: 50%; background: #d0362f; color: #ffffff; font-size: 12px; display: flex; align-items: center; justify-content: center">↑</span></div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Row 3 -->
+<div class="sps-row" style="display: flex; flex-wrap: wrap; align-items: flex-start; gap: 56px; margin-bottom: 110px">
+<div style="flex: 1 1 520px; min-width: 0; max-width: 708px; display: flex; flex-direction: column">
+<div class="sps-photo" style="position: relative; height: 335px; border-radius: 10px; overflow: hidden; background: #dfe3ec">
+<img src="/img/lp/tape.jpg" alt="A tape measure around a man's waist" style="width: 100%; height: 100%; object-fit: cover; display: block">
+<div style="position: absolute; inset: 0; background: linear-gradient(90deg, rgba(208,54,47,0.38) 0%, rgba(208,54,47,0.16) 40%, rgba(208,54,47,0) 75%), linear-gradient(0deg, rgba(255,240,238,0.35), rgba(255,240,238,0) 40%); mix-blend-mode: multiply" aria-hidden="true"></div>
+<div class="sps-card" style="position: absolute; left: 26px; bottom: 26px; display: flex; flex-direction: column; gap: 8px">
+<div style="width: 300px; background: #ffffff; border-radius: 4px; box-shadow: 0 6px 20px rgba(20,28,51,0.14); padding: 10px 12px; display: flex; align-items: center; gap: 12px; box-sizing: border-box"><span style="width: 30px; height: 30px; border: 1.5px solid #141c33; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 800">1–4</span><span style="display: flex; flex-direction: column; gap: 1px"><b style="font-size: 12px; font-weight: 700">Strip</b><span style="font-size: 11px; color: #4a5470">Lose the first 8–10 lbs of fat</span></span></div>
+<div style="width: 300px; background: #ffffff; border-radius: 4px; box-shadow: 0 6px 20px rgba(20,28,51,0.14); padding: 10px 12px; display: flex; align-items: center; gap: 12px; box-sizing: border-box"><span style="width: 30px; height: 30px; border: 1.5px solid #141c33; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 800">5–8</span><span style="display: flex; flex-direction: column; gap: 1px"><b style="font-size: 12px; font-weight: 700">Stack</b><span style="font-size: 11px; color: #4a5470">Re-set calories, keep the muscle</span></span></div>
+<div style="width: 300px; background: #ffffff; border-radius: 4px; box-shadow: 0 6px 20px rgba(20,28,51,0.14); padding: 10px 12px; display: flex; align-items: center; gap: 12px; box-sizing: border-box"><span style="width: 30px; height: 30px; border: 1.5px solid #141c33; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 800">9–12</span><span style="display: flex; flex-direction: column; gap: 1px"><b style="font-size: 12px; font-weight: 700">Six-Pack</b><span style="font-size: 11px; color: #4a5470">Finish lean and see your abs</span></span></div>
+</div>
+</div>
+<h3 class="sps-h3" style="margin: 44px 0 0; font-size: 23px; font-weight: 800">Stay on <span style="color: #d0362f">track</span></h3>
+<p style="margin: 18px 0 0; max-width: 560px; font-size: 16px; line-height: 1.6; color: #2b3450">12 weeks can feel like a lot at first. A 2-minute check-in every Sunday and calorie re-sets at weeks 4 and 8 make sure you're always doing what you need to hit your goal on time.</p>
+</div>
+<div style="flex: 0 0 290px; margin: 0 auto">
+<div style="width: 290px; border-radius: 44px; border: 12px solid #ffffff; outline: 4px solid #f6d7d3; overflow: hidden; background: #ffffff; box-shadow: 0 24px 50px rgba(20,28,51,0.12)">
+<div style="display: flex; justify-content: space-between; align-items: center; padding: 6px 18px 8px; font-size: 11px; font-weight: 700; color: #141c33; background: #ffffff"><span>9:41</span><span style="display: inline-flex; gap: 3px; align-items: flex-end"><span style="width: 3px; height: 5px; background: #141c33; border-radius: 1px"></span><span style="width: 3px; height: 7px; background: #141c33; border-radius: 1px"></span><span style="width: 3px; height: 9px; background: #141c33; border-radius: 1px"></span><span style="width: 18px; height: 9px; border-radius: 3px; border: 1.5px solid #141c33; box-sizing: border-box; margin-left: 4px"></span></span></div>
+<div style="height: 540px; background: #ffffff; display: flex; flex-direction: column; align-items: center; padding: 30px 18px 18px; box-sizing: border-box; gap: 8px" role="img" aria-label="Your plan summary: calories, protein, workouts and plan length">
+<b style="font-size: 15px; font-weight: 800; text-align: center; line-height: 1.25">Your plan is built around you</b>
+<span style="font-size: 10px; color: #6a7390; text-align: center">Change your goals any time in settings.</span>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px 10px; width: 100%; margin-top: 26px">
+<div style="display: flex; flex-direction: column; align-items: center; gap: 6px"><span style="width: 52px; height: 52px; border-radius: 50%; border: 4px solid #f08c00; box-sizing: border-box; display: flex; align-items: center; justify-content: center; color: #f08c00"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M12 3c2 4 6 6 6 11a6 6 0 0 1-12 0c0-3 2-5 3-7 1 2 2 3 3 3 0-3 0-5 0-7z"></path></svg></span><b style="font-size: 15px">2,150</b><span style="font-size: 9px; color: #6a7390">Calories a day</span></div>
+<div style="display: flex; flex-direction: column; align-items: center; gap: 6px"><span style="width: 52px; height: 52px; border-radius: 50%; border: 4px solid #d0362f; box-sizing: border-box; display: flex; align-items: center; justify-content: center; color: #d0362f"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M7 4c-2 3-2 7 0 9l6 6c2 2 5 1 5-2 0-2-2-3-3-3s-2-1-2-3c0-3-3-9-6-7z"></path></svg></span><b style="font-size: 15px">180 g</b><span style="font-size: 9px; color: #6a7390">Protein a day</span></div>
+<div style="display: flex; flex-direction: column; align-items: center; gap: 6px"><span style="width: 52px; height: 52px; border-radius: 50%; border: 4px solid #2f80ed; box-sizing: border-box; display: flex; align-items: center; justify-content: center; color: #2f80ed"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 7v10M18 7v10M3 10v4M21 10v4M6 12h12"></path></svg></span><b style="font-size: 15px">4</b><span style="font-size: 9px; color: #6a7390">Workouts a week</span></div>
+<div style="display: flex; flex-direction: column; align-items: center; gap: 6px"><span style="width: 52px; height: 52px; border-radius: 50%; border: 4px solid #1f9d55; box-sizing: border-box; display: flex; align-items: center; justify-content: center; color: #1f9d55"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="2"></rect><path d="M4 10h16M9 3v4M15 3v4"></path></svg></span><b style="font-size: 15px">12 weeks</b><span style="font-size: 9px; color: #6a7390">To your goal</span></div>
+</div>
+<span style="margin-top: auto; width: 100%; text-align: center; background: #d0362f; color: #ffffff; font-size: 12px; font-weight: 700; border-radius: 8px; padding: 11px 0">Let's start!</span>
+</div>
+</div>
+</div>
+</div>
+
+<!-- MEET -->
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 56px">
+<div style="flex: 1 1 380px; min-width: 0; display: flex; flex-direction: column">
+<h2 class="sps-big" style="margin: 0; font-size: 34px; font-weight: 800; letter-spacing: -0.5px">Meet Boon!</h2>
+<p style="margin: 26px 0 0; max-width: 520px; font-size: 16px; line-height: 1.6; color: #2b3450">I went from 225 to 175 lbs, and I investigate fitness products with no sponsors and no affiliate links. I built this app around the exact system that worked for me.</p>
+<div style="display: flex; align-items: center; gap: 12px; margin-top: 26px">
+<a href="/?src=free-stack" style="display: inline-flex; align-items: center; background: #fbe9e7; color: #a8261f; text-decoration: none; border-radius: 6px; padding: 0 16px; height: 40px; font-size: 14px; font-weight: 600">Learn more ›</a>
+</div>
+</div>
+<div style="flex: 1 1 420px; min-width: 0; max-width: 520px">
+<figure style="margin: 0; position: relative; aspect-ratio: 4 / 5; border-radius: 14px; overflow: hidden; background: #e2433b; box-shadow: 0 24px 50px rgba(20,28,51,0.12)"><img src="/img/lp/boon-red.jpg" alt="Boon Fay" style="width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block"><figcaption style="position: absolute; left: 0; right: 0; bottom: 0; padding: 50px 20px 18px; background: linear-gradient(transparent, rgba(20,28,51,0.7)); color: #ffffff"><b style="display: block; font-size: 17px; font-weight: 700">Boon</b><span style="font-size: 12px">Los Angeles, California</span></figcaption></figure>
+</div>
+</div>
+
+</div>
+</section>
+
+<!-- RESULTS + COACHING -->
+<section id="start">
+<div class="sps-join" style="max-width: 1104px; margin: 0 auto; padding: 110px 24px 120px; display: flex; flex-direction: column">
+<div style="display: flex; flex-wrap: wrap; gap: 26px">
+<div class="sps-tall" style="flex: 1 1 420px; min-width: 0; min-height: 655px; position: relative; overflow: hidden; border: 1px solid #e6e8ef; padding: 40px 44px; box-sizing: border-box; display: flex; flex-direction: column; gap: 22px">
+<div style="position: absolute; left: -40px; bottom: -120px; width: 520px; height: 300px; border-radius: 50%; background: linear-gradient(180deg, #fcefed, #f9dedb)" aria-hidden="true"></div>
+<h3 class="sps-big" style="position: relative; margin: 0; font-size: 46px; line-height: 1.12; font-weight: 800; letter-spacing: -0.8px">So much more than a meal plan</h3>
+<p style="position: relative; margin: 0; max-width: 340px; font-size: 16px; line-height: 1.55; color: #2b3450">Real results from guys who followed the system.</p>
+<div style="position: relative; display: flex; flex-direction: column; gap: 16px; padding-top: 6px">
+<div style="display: grid; grid-template-columns: 132px 1fr; gap: 14px; align-items: center"><div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3px; border-radius: 6px; overflow: hidden"><img src="/img/lp/robert-b.jpg" alt="Robert, before" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"><img src="/img/lp/robert-a.jpg" alt="Robert, after" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"></div><p style="margin: 0; font-size: 15px; display: flex; flex-direction: column; gap: 2px"><b>Robert</b><span style="color: #1f7a4d; font-weight: 700">−30+ lbs in 3 months</span></p></div>
+<div style="display: grid; grid-template-columns: 132px 1fr; gap: 14px; align-items: center"><div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3px; border-radius: 6px; overflow: hidden"><img src="/img/lp/gerardo-b.jpg" alt="Gerardo, before" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"><img src="/img/lp/gerardo-a.jpg" alt="Gerardo, after" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"></div><p style="margin: 0; font-size: 15px; display: flex; flex-direction: column; gap: 2px"><b>Gerardo, 22</b><span style="color: #1f7a4d; font-weight: 700">−40 lbs in 4 months</span></p></div>
+<div style="display: grid; grid-template-columns: 132px 1fr; gap: 14px; align-items: center"><div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3px; border-radius: 6px; overflow: hidden"><img src="/img/lp/james-b.jpg" alt="James, before" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"><img src="/img/lp/james-a.jpg" alt="James, after" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block"></div><p style="margin: 0; font-size: 15px; display: flex; flex-direction: column; gap: 2px"><b>James, 24</b><span style="color: #1f7a4d; font-weight: 700">+10 lbs of muscle in 4 months</span></p></div>
+<p style="margin: 0; font-size: 11px; color: #4a5470">Results vary and depend on following the plan.</p>
+</div>
+</div>
+<div class="sps-tall" style="flex: 1 1 420px; min-width: 0; min-height: 655px; position: relative; overflow: hidden; background: linear-gradient(160deg, #141c33 0%, #1f2b4d 55%, #8f2a25 130%); box-sizing: border-box; padding: 40px 44px">
+<div class="sps-chat" style="position: absolute; left: 44px; right: 44px; bottom: 40px; background: #ffffff; border-radius: 18px; box-shadow: 0 24px 50px rgba(0,0,0,0.3); overflow: hidden" role="img" aria-label="Example coaching chat with Boon">
+<div style="display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-bottom: 1px solid #eceef3"><img src="/img/lp/boon-white.jpg" alt="" style="width: 34px; height: 34px; border-radius: 50%; object-fit: cover; object-position: center top"><span style="display: flex; flex-direction: column"><b style="font-size: 13px; color: #141c33">Boon</b><span style="font-size: 11px; color: #1f7a4d; font-weight: 600">Your coach · online</span></span></div>
+<div style="padding: 16px; display: flex; flex-direction: column; gap: 10px; background: #f6f7fa">
+<div style="align-self: flex-end; max-width: 78%; background: #d0362f; color: #ffffff; border-radius: 14px 14px 4px 14px; padding: 9px 12px; font-size: 13px; line-height: 1.45">Weekend got away from me. Pizza Saturday and drinks Sunday.</div>
+<div style="align-self: flex-start; max-width: 82%; background: #ffffff; color: #141c33; border: 1px solid #e6e8ef; border-radius: 14px 14px 14px 4px; padding: 9px 12px; font-size: 13px; line-height: 1.45">All good. One weekend doesn't undo your week. Back on plan today, and add a 20-minute walk after dinner this week.</div>
+<div style="align-self: flex-start; max-width: 82%; background: #ffffff; color: #141c33; border: 1px solid #e6e8ef; border-radius: 14px 14px 14px 4px; padding: 9px 12px; font-size: 13px; line-height: 1.45">Send me your Sunday check-in and I'll adjust your calories.</div>
+<div style="align-self: flex-end; max-width: 78%; background: #d0362f; color: #ffffff; border-radius: 14px 14px 4px 14px; padding: 9px 12px; font-size: 13px; line-height: 1.45">Got it. Thanks man.</div>
+</div>
+</div>
+<div style="position: relative; padding: 0; display: flex; flex-direction: column; gap: 22px; color: #ffffff">
+<h3 class="sps-big" style="margin: 0; font-size: 46px; line-height: 1.12; font-weight: 800; letter-spacing: -0.8px">Want me in your corner?</h3>
+<p style="margin: 0; max-width: 380px; font-size: 16px; line-height: 1.55">Apply for 1:1 coaching right inside the app. I review your check-in every Sunday and adjust your plan myself.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- FOOTER -->
+<footer style="border-top: 1px solid #eceef3">
+<div style="max-width: 1104px; margin: 0 auto; padding: 48px 24px 28px; display: flex; flex-wrap: wrap; gap: 36px 40px">
+<div style="flex: 1 1 240px; display: flex; flex-direction: column; gap: 14px"><b style="font-size: 15px; font-weight: 800; color: #9aa1b4; line-height: 1.1">SIX-PACK<br>STACK</b><span style="font-size: 11px; color: #4a5470">© 2026 Boon Fay. All rights reserved.</span></div>
+<nav aria-label="Legal" style="flex: 0 0 140px; display: flex; flex-direction: column; gap: 10px; font-size: 12px"><b style="font-size: 11px; color: #4a5470; font-weight: 500; margin-bottom: 4px">Company</b><a href="/terms" style="text-decoration: none">Terms of Service</a><a href="/privacy" style="text-decoration: none">Privacy Policy</a><a href="/disclaimer" style="text-decoration: none">Disclaimer</a></nav>
+<nav aria-label="Support" style="flex: 0 0 140px; display: flex; flex-direction: column; gap: 10px; font-size: 12px"><b style="font-size: 11px; color: #4a5470; font-weight: 500; margin-bottom: 4px">Support</b><a href="mailto:bfay@boonfay-pt.com" style="text-decoration: none">Contact Us</a><span style="font-size: 11px; color: #4a5470; user-select: all">bfay@boonfay-pt.com</span><a href="/?src=free-stack" style="text-decoration: none">1:1 Coaching</a></nav>
+<div style="flex: 0 0 170px; display: flex; flex-direction: column; gap: 10px"><b style="font-size: 11px; color: #4a5470; font-weight: 500; margin-bottom: 4px">Download our app</b>
+<a href="/app/lead?want=plan&amp;src=free-stack" data-go="1" style="display: inline-flex; align-items: center; gap: 10px; background: #141c33; color: #ffffff; text-decoration: none; border-radius: 6px; padding: 0 16px 0 12px; height: 46px; box-sizing: border-box; align-self: flex-start"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="3"></rect><path d="M11 18h2"></path></svg><span style="display: flex; flex-direction: column; line-height: 1.1"><span style="font-size: 9px">Download on the</span><span style="font-size: 15px; font-weight: 700">App Store</span></span></a>
+</div>
+<nav aria-label="Social media" style="flex: 0 0 120px; display: flex; flex-direction: column; gap: 10px; font-size: 12px"><b style="font-size: 11px; color: #4a5470; font-weight: 500; margin-bottom: 4px">Social media</b><a href="https://www.youtube.com/@BoonFay" style="text-decoration: none">YouTube</a></nav>
+</div>
+<div style="max-width: 1104px; margin: 0 auto; padding: 18px 24px 48px; border-top: 1px solid #eceef3">
+<p style="margin: 0; max-width: 820px; font-size: 11px; line-height: 1.6; color: #4a5470">Your first 2 weeks are free with no card. After that, The Full Stack is $19.99 a month or $99 a year, billed through the App Store, and you can cancel any time in your Apple ID settings. Results vary and depend on following the plan; the results shown are from real clients and aren't typical of every person. The Six-Pack Stack app gives general fitness and nutrition guidance and is not medical advice. Check with your doctor before starting a new diet, training program or supplement, especially if you have a medical condition or take medication. Ask Boon is an AI coach and can make mistakes. Product names and brands shown are the property of their owners and appear for review purposes only. Apple and App Store are trademarks of Apple Inc.</p>
+</div>
+</footer>
+
+</div>
+
 <script>
 // Carry the source through (e.g. ?src=stack-score or a video slug) so we know where app sign-ups came from.
 (function(){
   try{
-    const q=new URLSearchParams(location.search); const src=q.get('src');
-    if(src){document.querySelectorAll('[data-go]').forEach(a=>{const u=new URL(a.getAttribute('href'),location.origin);u.searchParams.set('src',src.slice(0,80));a.setAttribute('href',u.pathname+u.search);});}
-    if(src==='stack-score'){document.getElementById('kick').textContent='Your score shows what to cut. Here’s what to do instead.';}
+    var q=new URLSearchParams(location.search), src=q.get('src');
+    if(src){document.querySelectorAll('[data-go]').forEach(function(a){var u=new URL(a.getAttribute('href'),location.origin);u.searchParams.set('src',src.slice(0,80));a.setAttribute('href',u.pathname+u.search);});}
   }catch(e){}
 })();
 </script>
