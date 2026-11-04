@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Six-Pack Stack Application</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<meta name="description" content="Apply for the Six-Pack Stack. 10 quick questions, about 2 minutes.">
+<meta name="description" content="Apply for the Six-Pack Stack. 8 quick questions, about 2 minutes.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <style>
@@ -106,8 +106,6 @@ const STEPS = [
   {id:"contact", type:"contact", q:"First, where can I reach you?"},
   {id:"stats", type:"stats", q:"Your age, height and current weight"},
   {id:"goal_12_weeks", type:"text", q:"What do you want your body to look like in 12 weeks?", ph:"e.g. Lose my gut, see my top abs, fit into my old jeans"},
-  {id:"cost_of_staying", type:"text", q:"What's it costing you to stay where you are right now?", ph:"Confidence, dating, energy, money… be honest, only I read this"},
-  {id:"tried_before", type:"multi", q:"What have you already tried that didn't work?", opts:["Fat burners","Pre-workouts","Test boosters","Diets","Apps","Programs","Other"]},
   {id:"monthly_spend", type:"one", q:"About how much do you spend on supplements a month?", opts:["Under $50","$50–$100","$100–$200","$200+"]},
   {id:"train_days", type:"one", q:"How many days a week do you train right now?", opts:["0","1–2","3–4","5+"]},
   {id:"start_timing", type:"one", q:"How soon do you want to start?", opts:["This week","Within 2 weeks","Within a month","Just looking"]},
@@ -155,7 +153,7 @@ function renderIntro(){
     <div class="me">${PHOTO_URL?`<img src="${PHOTO_URL}" alt="Boon Fay">`:`<div></div>`}<p class="soft small"><b style="color:#1b2440">I read every application myself.</b> Answer honestly. The more you tell me, the better I can tell you exactly what I'd change.</p></div>
     <p style="font-weight:800">Here's what happens next:</p>
     <ol class="next">
-      <li><div><b>Apply:</b> <span class="soft">10 quick questions. About 2 minutes.</span></div></li>
+      <li><div><b>Apply:</b> <span class="soft">8 quick questions. About 2 minutes.</span></div></li>
       <li><div><b>Get reviewed:</b> <span class="soft">I personally read it, within 24 hours.</span></div></li>
       <li><div><b>Get approved:</b> <span class="soft">you get a short video I recorded about your current stack, plus a link to claim your spot.</span></div></li>
     </ol>
@@ -170,14 +168,12 @@ function renderContact(i){
     <h2>${esc(STEPS[i].q)}</h2>
     <div class="field"><label for="name">First name</label><input id="name" autocomplete="given-name" value="${esc(A.name)}"></div>
     <div class="field"><label for="email">Email</label><input id="email" type="email" inputmode="email" autocomplete="email" value="${esc(A.email)}"></div>
-    <div class="field"><label for="phone">Phone number <span style="font-weight:400;opacity:.7">(optional)</span></label><input id="phone" type="tel" inputmode="tel" autocomplete="tel" value="${esc(A.phone)}"></div>
     ${nav()}</form>`;
   document.getElementById("back").onclick=()=>go(0);
   document.getElementById("f").onsubmit=e=>{e.preventDefault();
-    A.name=document.getElementById("name").value.trim(); A.email=document.getElementById("email").value.trim(); A.phone=document.getElementById("phone").value.trim();
+    A.name=document.getElementById("name").value.trim(); A.email=document.getElementById("email").value.trim();
     if(!A.name) return fail("Add your first name.");
     if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(A.email)) return fail("Enter a valid email so I can send your video.");
-    if(A.phone && A.phone.replace(/\D/g,"").length<7) return fail("That phone number looks too short. Fix it or leave it blank.");
     startedToKit();
     go(step+1);};
 }
@@ -257,8 +253,8 @@ function renderMedical(S,i){
 }
 
 async function sendToKit(){
-  const fields={phone:A.phone,age:A.age,height:A.height,current_weight:A.current_weight,goal_12_weeks:A.goal_12_weeks||"",cost_of_staying:A.cost_of_staying||"",
-    tried_before:[...A.tried].join(", "),monthly_spend:A.monthly_spend||"",train_days:A.train_days||"",start_timing:A.start_timing||"",ready_to_invest:A.ready_to_invest||"",
+  const fields={age:A.age,height:A.height,current_weight:A.current_weight,goal_12_weeks:A.goal_12_weeks||"",
+    monthly_spend:A.monthly_spend||"",train_days:A.train_days||"",start_timing:A.start_timing||"",ready_to_invest:A.ready_to_invest||"",
     medical:A.medicalYes?("Yes: "+A.medicalText):"No",lead_source:LEAD_SOURCE};
   try{
     const r=await fetch(`https://api.convertkit.com/v3/forms/${KIT_FORM_ID}/subscribe`,{method:"POST",headers:{"Content-Type":"application/json"},
