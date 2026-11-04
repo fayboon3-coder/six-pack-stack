@@ -106,7 +106,7 @@ const STEPS = [
   {id:"contact", type:"contact", q:"First, where can I reach you?"},
   {id:"stats", type:"stats", q:"Your age, height and current weight"},
   {id:"goal_12_weeks", type:"text", q:"What do you want your body to look like in 12 weeks?", ph:"e.g. Lose my gut, see my top abs, fit into my old jeans"},
-  {id:"monthly_spend", type:"one", q:"About how much do you spend on supplements a month?", opts:["Under $50","$50–$100","$100–$200","$200+"]},
+  {id:"monthly_spend", type:"one", q:"How much do you spend on your body each month?", sub:"Supplements, gym, trainers, programs. All of it.", opts:["Under $50","$50–$100","$100–$200","$200+"]},
   {id:"train_days", type:"one", q:"How many days a week do you train right now?", opts:["0","1–2","3–4","5+"]},
   {id:"start_timing", type:"one", q:"How soon do you want to start?", opts:["This week","Within 2 weeks","Within a month","Just looking"]},
   {id:"ready_to_invest", type:"one", q:"This is a premium 1:1 program. If we're a fit, are you ready to invest in yourself?", opts:["Yes","Yes, with a payment plan","Not right now"]},
@@ -223,7 +223,7 @@ function renderMulti(S,i){
 function renderOne(S,i){
   const cur=A[S.id];
   app.innerHTML=`${progress(i)}<section class="screen stack">
-    <h2>${esc(S.q)}</h2>
+    <h2>${esc(S.q)}</h2>${S.sub?`<p class="soft" style="margin-top:-8px">${esc(S.sub)}</p>`:""}
     <div class="opts">${S.opts.map((o,k)=>`<button class="opt" data-k="${k}" aria-pressed="${cur===o}"><span>${esc(o)}</span><span class="soft">→</span></button>`).join("")}</div>
     <div><button class="link" id="back">← Back</button></div></section>`;
   bindBack();
