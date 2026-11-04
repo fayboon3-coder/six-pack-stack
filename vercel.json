@@ -6,5 +6,16 @@
       "source": "/app/:path((?!_expo/|assets/|favicon\\.ico|og\\.jpg|apple-touch-icon\\.png|metadata\\.json).*)",
       "destination": "/app"
     }
+  ],
+  "headers": [
+    {
+      "source": "/store-assets/(.*)",
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        }
+      ]
+    }
   ]
 }
