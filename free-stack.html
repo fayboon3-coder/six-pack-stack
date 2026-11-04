@@ -66,15 +66,15 @@ box-shadow:inset 0 0 0 .22em rgba(255,255,255,.75),inset 0 0 0 .5em rgba(60,64,7
 .iph-btn{position:absolute;width:1em;border-radius:.5em 0 0 .5em;background:linear-gradient(90deg,#7e838b,#d9dce0 60%,#a5a9b0)}
 .iph-btn.l1{left:-.75em;top:19%;height:6.5%}.iph-btn.l2{left:-.75em;top:28%;height:11%}.iph-btn.l3{left:-.75em;top:41%;height:11%}
 .iph-btn.r1{right:-.75em;top:31%;height:16%;border-radius:0 .5em .5em 0;background:linear-gradient(270deg,#7e838b,#d9dce0 60%,#a5a9b0)}
-.iph-tilt .iph-body{transform:rotateY(-16deg) rotateX(7deg) rotateZ(2deg)}
+.iph-tilt .iph-body{transform:none;box-shadow:inset 0 0 0 .22em rgba(255,255,255,.75),inset 0 0 0 .5em rgba(60,64,72,.35),inset 0 .6em 1em rgba(255,255,255,.35),0 4em 7em rgba(20,28,51,.22),0 1.2em 2.4em rgba(20,28,51,.14)}
 .iph-tilt-l .iph-body{transform:rotateY(16deg) rotateX(7deg) rotateZ(-2deg)}
 .iph-hero .iph-body{transform:rotateY(-22deg) rotateX(12deg) rotateZ(9deg)}
 @media (max-width: 900px){
-.iph-tilt .iph-body{transform:rotateY(-10deg) rotateX(5deg) rotateZ(1.5deg)}
+.iph-tilt .iph-body{transform:none}
 .iph-tilt-l .iph-body{transform:rotateY(10deg) rotateX(5deg) rotateZ(-1.5deg)}
 .iph-hero .iph-body{transform:rotateY(-16deg) rotateX(10deg) rotateZ(7deg)}
 }
-@media (prefers-reduced-motion: no-preference){.iph-body{transition:transform .6s ease}.iph:hover .iph-body{transform:rotateY(-6deg) rotateX(3deg) rotateZ(1deg)}}
+@media (prefers-reduced-motion: no-preference){.iph-body{transition:transform .6s ease}.iph-hero:hover .iph-body{transform:rotateY(-10deg) rotateX(5deg) rotateZ(3deg)}}
 
 img{max-width:100%}
 a:focus-visible{outline:3px solid #d0362f;outline-offset:3px}
