@@ -8,95 +8,87 @@
 <meta name="description" content="Apply for the Six-Pack Stack. 10 quick questions, about 2 minutes.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&display=swap">
 <style>
-/* Layout: one centered column, one question per screen with a progress bar, same navy brand as the Stack Score. */
-:root{
-  --navy:#0d1b33;
-  --navy-2:#142645;
-  --navy-3:#1d3459;
-  --line:#2b4470;
-  --white:#ffffff;
-  --soft:#e3e9f2;
-  --red:#e2433b;
-  --red-2:#ff5a50;
-  --keep:#3fbf7f;
-  --warn:#f0b43c;
-  --font:"Montserrat","Helvetica Neue",Arial,sans-serif;
-  color-scheme:dark;
-}
+/* Same look as the app: white, navy text, red buttons, Inter, one question per screen. */
+:root{--ink:#1b2440;--ink2:#4a5470;--red:#d93a31;--redD:#c22f28;--tint:#fdeceb;--card:#f5f6f9;--line:#e3e6ee;--green:#12804f;--greenT:#e7f6ee}
 *{box-sizing:border-box}
-html,body{background:var(--navy);color:var(--white)}
-body{font-family:var(--font);font-size:17px;font-weight:500;line-height:1.55;
+html,body{background:#ffffff;color:var(--ink)}
+body{margin:0;font-family:Inter,-apple-system,"Segoe UI",Arial,sans-serif;font-size:17px;font-weight:500;line-height:1.55;-webkit-font-smoothing:antialiased;
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0}
-.wrap{max-width:680px;margin:0 auto;padding-block:28px 64px}
-.brand{display:flex;justify-content:space-between;gap:12px;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--soft)}
-.brand a{color:var(--soft);text-decoration:none}
-.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--red);margin-right:8px;vertical-align:middle}
-h1,h2{font-family:var(--font);text-wrap:balance;margin:0;font-weight:900}
-h1{font-size:clamp(34px,8vw,54px);line-height:1.04;letter-spacing:-.02em;text-transform:uppercase}
-h1 em{font-style:normal;color:var(--red-2)}
-h2{font-size:clamp(24px,5.6vw,32px);line-height:1.15;letter-spacing:-.015em}
+.wrap{max-width:600px;margin:0 auto;padding-block:20px 56px;min-height:100vh;display:flex;flex-direction:column}
+.brand{display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:16px;font-weight:900;letter-spacing:-.2px;color:var(--ink);padding-bottom:16px;border-bottom:1px solid #eceef3}
+.brand a{color:var(--ink);text-decoration:none;display:flex;align-items:center;gap:10px}
+.brand span:last-child{font-size:13px;font-weight:700;color:var(--ink2)}
+.dot{display:inline-block;width:30px;height:30px;border-radius:8px;background:url(/logo-b.png) center/cover no-repeat}
+main{flex:1}
+h1,h2{text-wrap:balance;margin:0;color:var(--ink)}
+h1{font-size:clamp(34px,8vw,48px);font-weight:900;line-height:1.06;letter-spacing:-1.2px}
+h1 em{font-style:normal;color:var(--red)}
+h2{font-size:clamp(26px,6.4vw,31px);font-weight:800;line-height:1.2;letter-spacing:-.5px}
 p{margin:0}
-.soft{color:var(--soft)}
-.small{font-size:14px}
+.soft{color:var(--ink2)}
+.small{font-size:15px}
 .stack{display:flex;flex-direction:column;gap:20px}
 .screen{margin-top:28px}
-.btn{appearance:none;border:0;cursor:pointer;font-family:var(--font);font-weight:900;font-size:18px;letter-spacing:.03em;text-transform:uppercase;
-  background:var(--red);color:#fff;padding:18px 26px;border-radius:6px;display:flex;align-items:center;justify-content:center;gap:10px;width:100%;text-decoration:none;transition:background .15s}
-.btn:hover{background:var(--red-2)}
+.btn{appearance:none;border:0;cursor:pointer;font-family:inherit;font-weight:800;font-size:18px;background:var(--red);color:#fff;height:56px;padding:0 26px;border-radius:28px;display:flex;align-items:center;justify-content:center;gap:10px;width:100%;text-decoration:none;transition:background .15s,transform .15s;box-shadow:0 12px 24px -12px rgba(217,58,49,.6)}
+.btn:hover{background:var(--redD);color:#fff}
+.btn:active{transform:scale(.99)}
 .btn[disabled]{opacity:.45;cursor:not-allowed}
-.btn.ghost{background:transparent;border:1px solid var(--line);width:auto;color:var(--white)}
-.btn:focus-visible,.opt:focus-visible,.chk:focus-within,input:focus-visible,textarea:focus-visible,.link:focus-visible{outline:3px solid var(--warn);outline-offset:2px}
-.link{background:none;border:0;color:var(--soft);font:inherit;font-size:15px;cursor:pointer;padding:6px 0;text-decoration:underline;text-underline-offset:3px}
-.micro{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 16px;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--soft)}
-.micro span::before{content:"✓ ";color:var(--keep)}
-.me{display:grid;grid-template-columns:72px 1fr;gap:14px;align-items:center;background:var(--navy-2);border:1px solid var(--line);border-radius:10px;padding:14px}
-.me img{width:72px;height:72px;border-radius:50%;object-fit:cover;display:block}
-.next{list-style:none;margin:0;padding:0;display:grid;gap:12px;counter-reset:n}
+.btn.ghost{background:#fff;border:1.5px solid #d9dde7;width:56px;flex:none;padding:0;color:var(--ink);box-shadow:none;font-size:20px}
+.btn.navy{background:var(--ink);box-shadow:none}
+.btn:focus-visible,.opt:focus-visible,.chk:focus-within,input:focus-visible,textarea:focus-visible,.link:focus-visible{outline:3px solid var(--red);outline-offset:2px}
+.link{background:none;border:0;color:var(--ink2);font:inherit;font-size:15px;cursor:pointer;padding:6px 0;text-decoration:underline;text-underline-offset:3px}
+.micro{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 16px;font-size:13px;font-weight:600;color:var(--ink2)}
+.micro span::before{content:"✓ ";color:var(--green);font-weight:900}
+.me{display:grid;grid-template-columns:64px 1fr;gap:14px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px 16px}
+.me img{width:64px;height:64px;border-radius:50%;object-fit:cover;display:block;border:2px solid var(--red)}
+.next{list-style:none;margin:0;padding:0;display:grid;gap:14px;counter-reset:n}
 .next li{display:grid;grid-template-columns:36px 1fr;gap:12px;align-items:start;counter-increment:n}
-.next li::before{content:counter(n);width:36px;height:36px;border-radius:50%;background:var(--red);display:grid;place-items:center;font-weight:900}
-.progress{margin-top:24px;display:flex;flex-direction:column;gap:8px}
-.bar{height:6px;background:var(--navy-3);border-radius:99px;overflow:hidden}
-.bar i{display:block;height:100%;background:var(--red);transition:width .3s ease}
-.qmeta{display:flex;justify-content:space-between;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--soft)}
+.next li::before{content:counter(n);width:36px;height:36px;border-radius:11px;background:var(--ink);color:#fff;display:grid;place-items:center;font-weight:900}
+.progress{margin-top:22px;display:flex;flex-direction:column;gap:8px}
+.bar{height:6px;background:#e8eaf0;border-radius:3px;overflow:hidden}
+.bar i{display:block;height:100%;background:#e2433b;border-radius:3px;transition:width .3s ease}
+.qmeta{display:flex;justify-content:space-between;font-size:13px;font-weight:700;color:var(--ink2)}
 .opts{display:grid;gap:10px}
-.opt{appearance:none;text-align:left;cursor:pointer;width:100%;font:inherit;font-size:18px;font-weight:600;color:var(--white);
-  background:var(--navy-2);border:1px solid var(--line);border-radius:8px;padding:16px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px}
-.opt:hover{border-color:var(--soft)}
-.opt[aria-pressed="true"]{border-color:var(--red);background:var(--navy-3)}
+.opt{appearance:none;text-align:left;cursor:pointer;width:100%;font:inherit;font-size:17px;font-weight:600;color:var(--ink);background:#fff;border:1.5px solid var(--line);border-radius:14px;min-height:56px;padding:14px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px;transition:border-color .15s,background .15s}
+.opt:hover{border-color:#c3c8d4}
+.opt[aria-pressed="true"]{border-color:var(--red);background:var(--red);color:#fff}
 .chips{display:flex;flex-wrap:wrap;gap:8px}
-.chk{position:relative;display:inline-flex;align-items:center;gap:8px;cursor:pointer;border:1px solid var(--line);background:var(--navy-2);border-radius:99px;padding:10px 15px;font-size:16px;font-weight:600;user-select:none}
+.chk{position:relative;display:inline-flex;align-items:center;gap:8px;cursor:pointer;border:1.5px solid var(--line);background:#fff;border-radius:14px;padding:12px 16px;font-size:16px;font-weight:600;user-select:none;color:var(--ink)}
 .chk input{position:absolute;opacity:0;width:1px;height:1px}
-.chk .box{flex:none;width:16px;height:16px;border-radius:4px;border:1.5px solid var(--soft);display:grid;place-items:center;font-size:11px;line-height:1}
-.chk:has(input:checked){border-color:var(--red);background:var(--navy-3)}
-.chk:has(input:checked) .box{background:var(--red);border-color:var(--red);color:#fff}
-.chk:has(input:checked) .box::after{content:"✓"}
-.field{display:flex;flex-direction:column;gap:6px}
-.field label{font-weight:700}
-.field input,.field textarea{width:100%;font:inherit;font-size:17px;padding:15px 16px;border-radius:6px;border:1px solid var(--line);background:#fff;color:var(--navy)}
-.field textarea{min-height:120px;resize:vertical}
+.chk .box{flex:none;width:18px;height:18px;border-radius:5px;border:1.5px solid #c3c8d4;display:grid;place-items:center;font-size:12px;line-height:1;background:#fff}
+.chk:has(input:checked){border-color:var(--red);background:var(--red);color:#fff}
+.chk:has(input:checked) .box{background:#fff;border-color:#fff;color:var(--red)}
+.chk:has(input:checked) .box::after{content:"✓";font-weight:900}
+.field{display:flex;flex-direction:column;gap:8px}
+.field label{font-weight:700;font-size:15px}
+.field input,.field textarea{width:100%;font:inherit;font-size:17px;font-weight:600;min-height:56px;padding:14px 16px;border-radius:14px;border:1px solid var(--line);background:var(--card);color:var(--ink);transition:border-color .15s,background .15s}
+.field input:focus,.field textarea:focus{outline:none;border-color:var(--ink);background:#fff}
+.field input::placeholder,.field textarea::placeholder{color:#8f97b1;font-weight:500}
+.field textarea{min-height:130px;resize:vertical}
 .row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
-.hint{font-size:13px;color:var(--soft)}
-.err{color:var(--red-2);font-size:15px;font-weight:600;min-height:1.2em}
-.navrow{display:flex;gap:12px;align-items:center}
+.hint{font-size:14px;color:var(--ink2)}
+.err{color:var(--red);font-size:15px;font-weight:700;min-height:1.2em}
+.navrow{display:flex;gap:10px;align-items:center}
 .done{display:flex;flex-direction:column;gap:20px;margin-top:48px;text-align:center;align-items:center}
-.check{width:76px;height:76px;border-radius:50%;background:var(--keep);display:grid;place-items:center;font-size:40px;font-weight:900;color:var(--navy)}
-.card{background:var(--navy-2);border:1px solid var(--line);border-radius:10px;padding:18px;text-align:left;width:100%}
+.check{width:76px;height:76px;border-radius:50%;background:var(--green);display:grid;place-items:center;font-size:38px;font-weight:900;color:#fff;box-shadow:0 0 0 8px var(--greenT)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px;text-align:left;width:100%}
 @media (max-width:420px){.row3{grid-template-columns:1fr}}
-@media (min-width:900px){body{font-size:18px}.wrap{padding-block:40px 80px}}
+@media (min-width:900px){.wrap{padding-block:28px 72px}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
-.legal{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 18px;margin:48px auto 0;padding-bottom:24px;font-family:"Montserrat","Helvetica Neue",Arial,sans-serif;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
-.legal a{color:#9fb0c8;text-decoration:none}
-.legal a:hover{color:#fff}
+.legal{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 20px;margin:48px auto 0;padding-bottom:16px;font-size:13px;font-weight:600}
+.legal a{color:var(--ink2);text-decoration:none}
+.legal a:hover{color:var(--ink)}
+h1:focus,h2:focus{outline:none}
+.opt[aria-pressed="true"] .soft{color:#fff}
 </style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap">
 <script defer src="/_vercel/insights/script.js"></script>
-<link rel="stylesheet" href="/skin.css">
 </head>
 <body>
 
 <div class="wrap">
-  <div class="brand"><a href="/"><span class="dot"></span>The Six-Pack Stack</a><span>Application</span></div>
+  <div class="brand"><a href="/"><span class="dot"></span>Six-Pack Stack</a><span>1:1 coaching application</span></div>
   <main id="app" aria-live="polite"></main>
   <footer class="legal"><a href="/terms">Terms</a><a href="/privacy">Privacy</a><a href="/disclaimer">Disclaimer</a></footer>
 </div>
@@ -160,14 +152,14 @@ function renderIntro(){
   <section class="screen stack" style="margin-top:40px;gap:22px">
     <h1>Apply for the <em>Six-Pack Stack</em></h1>
     <p style="font-size:20px;font-weight:600">Lose 10–15 lbs of fat and finally see your abs in 12 weeks, or I coach you for free until you do.</p>
-    <div class="me">${PHOTO_URL?`<img src="${PHOTO_URL}" alt="Boon Fay">`:`<div></div>`}<p class="soft small"><b style="color:#fff">I read every application myself.</b> Answer honestly. The more you tell me, the better I can tell you exactly what I'd change.</p></div>
+    <div class="me">${PHOTO_URL?`<img src="${PHOTO_URL}" alt="Boon Fay">`:`<div></div>`}<p class="soft small"><b style="color:#1b2440">I read every application myself.</b> Answer honestly. The more you tell me, the better I can tell you exactly what I'd change.</p></div>
     <p style="font-weight:800">Here's what happens next:</p>
     <ol class="next">
       <li><div><b>Apply:</b> <span class="soft">10 quick questions. About 2 minutes.</span></div></li>
       <li><div><b>Get reviewed:</b> <span class="soft">I personally read it, within 24 hours.</span></div></li>
       <li><div><b>Get approved:</b> <span class="soft">you get a short video I recorded about your current stack, plus a link to claim your spot.</span></div></li>
     </ol>
-    <div class="stack" style="gap:10px"><button class="btn" id="start">Start My Application →</button>
+    <div class="stack" style="gap:10px"><button class="btn" id="start">Start my application →</button>
     <div class="micro"><span>Takes 2 minutes</span><span>No sales call</span><span>No payment now</span></div></div>
   </section>`;
   document.getElementById("start").onclick=()=>go(1);
@@ -251,7 +243,7 @@ function renderMedical(S,i){
     </div>
     <div class="field" id="mBox" ${A.medicalYes?"":"hidden"}><label for="mt">Briefly, what is it?</label><textarea id="mt" style="min-height:90px">${esc(A.medicalText)}</textarea>
       <p class="hint">If you have a medical condition, you'll need your doctor's OK before starting. I'll build your plan around their advice.</p></div>
-    ${nav("Submit My Application →")}</form>`;
+    ${nav("Submit my application →")}</form>`;
   bindBack();
   const setM=v=>{A.medicalYes=v;document.getElementById("mNo").setAttribute("aria-pressed",String(v===false));document.getElementById("mYes").setAttribute("aria-pressed",String(v===true));document.getElementById("mBox").hidden=!v;};
   document.getElementById("mNo").onclick=()=>setM(false);
@@ -285,7 +277,7 @@ function renderDone(){
   app.innerHTML=`<section class="done">
     <div class="check" aria-hidden="true">✓</div>
     <h2>Got it, ${esc(A.name)}. Your application is in.</h2>
-    <p class="soft" style="max-width:32em">I read every application myself, within 24 hours. Watch your inbox at <b style="color:#fff">${esc(A.email)}</b>. If you're a fit, you'll get a short video I recorded about your stack and a link to claim your spot.</p>
+    <p class="soft" style="max-width:32em">I read every application myself, within 24 hours. Watch your inbox at <b style="color:#1b2440">${esc(A.email)}</b>. If you're a fit, you'll get a short video I recorded about your stack and a link to claim your spot.</p>
     <div class="card stack" style="gap:10px">
       <b>While you wait:</b>
       <p class="soft small">Check your spam or promotions folder and move my email to your main inbox, so you don't miss your video.</p>
