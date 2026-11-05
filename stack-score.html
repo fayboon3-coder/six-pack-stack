@@ -5,282 +5,241 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Stack Score</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<meta name="description" content="The free 60-second audit that shows guys exactly what to cut, keep and swap.">
+<meta name="description" content="The free 60-second audit that shows you what to keep, what to skip and how much your supplements are really costing you. By Boon Fay.">
+<meta property="og:title" content="What's your Stack Score?">
+<meta property="og:description" content="Free 60-second audit: a verdict on every supplement you take, and how much you're wasting a year.">
+<meta property="og:image" content="https://six-pack-stack.vercel.app/og-coaching.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&display=swap">
 <style>
-/* Layout: one centered column, a quiz that moves screen to screen; results render as a "Supplement Facts" label. Single navy brand look. */
+/* One centered column. The quiz moves screen to screen; the report renders as a "Supplement Facts" label. Single navy brand look, same as the app. */
 :root{
-  --navy:#0d1b33;
-  --navy-2:#142645;
-  --navy-3:#1d3459;
-  --line:#2b4470;
-  --cream:#ffffff;
-  --muted:#e3e9f2;
-  --red:#e2433b;
-  --red-2:#ff5a50;
-  --keep:#3fbf7f;
-  --warn:#f0b43c;
-  --label-bg:#ffffff;
-  --label-ink:#0d1b33;
-  --display:"Montserrat","Arial Black","Helvetica Neue",Arial,sans-serif;
-  --body:"Montserrat","Helvetica Neue",Arial,sans-serif;
-  --mono:"Montserrat","Helvetica Neue",Arial,sans-serif;
+  --navy:#0d1b33;--navy-2:#142645;--navy-3:#1d3459;--line:#2b4470;
+  --ink:#ffffff;--muted:#c9d3e3;--dim:#93a3bd;
+  --red:#e2433b;--red-2:#ff5a50;--keep:#3fbf7f;--warn:#f2b234;
+  --label-bg:#ffffff;--label-ink:#0d1b33;--label-mute:#3a4a66;
+  --f:"Montserrat","Helvetica Neue",Arial,sans-serif;
   color-scheme:dark;
 }
 *{box-sizing:border-box}
-html,body{background:var(--navy);color:var(--cream)}
-body{font-family:var(--body);font-size:16px;font-weight:500;line-height:1.55;font-variant-numeric:tabular-nums;min-height:100%;
-  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0}
-.wrap{max-width:640px;margin:0 auto;padding-block:28px 56px}
-.brand{display:flex;align-items:center;justify-content:space-between;gap:12px;font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
-.brand b{color:var(--cream);font-weight:700}
+html,body{background:var(--navy);color:var(--ink)}
+body{font-family:var(--f);font-size:16px;font-weight:500;line-height:1.55;font-variant-numeric:tabular-nums;min-height:100%;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0;margin:0}
+.wrap{max-width:640px;margin:0 auto;padding-block:24px 40px}
+.brand{display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.brand b{color:var(--ink);font-weight:800}
 .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--red);margin-right:8px;vertical-align:middle}
-h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0}
-h1{font-size:clamp(40px,9vw,64px);line-height:1;font-weight:900;letter-spacing:-.02em;text-transform:uppercase}
+h1,h2,h3{font-family:var(--f);text-wrap:balance;margin:0}
+h1{font-size:clamp(38px,10vw,68px);line-height:1;font-weight:900;letter-spacing:-.02em;text-transform:uppercase}
 h1 em{font-style:normal;color:var(--red-2)}
-h2{font-size:clamp(24px,6vw,32px);line-height:1.12;font-weight:900;letter-spacing:-.015em}
+h2{font-size:clamp(24px,6.4vw,32px);line-height:1.12;font-weight:900;letter-spacing:-.015em}
 p{margin:0}
-.lede{font-size:19px;color:var(--cream);max-width:34em}
 .muted{color:var(--muted)}
 .small{font-size:14px}
 .stack{display:flex;flex-direction:column;gap:20px}
-.hero{display:flex;flex-direction:column;gap:22px;margin-top:40px}
-.bullets{list-style:none;padding:0;margin:0;display:grid;gap:10px}
-.bullets li{display:flex;gap:12px;align-items:flex-start}
-.tick{flex:none;width:22px;height:22px;border-radius:4px;background:var(--red);display:grid;place-items:center;font-weight:800;font-size:13px;color:#fff;margin-top:2px}
-.btn{appearance:none;border:0;cursor:pointer;font-family:var(--display);font-weight:900;font-size:18px;letter-spacing:.02em;text-transform:uppercase;
-  background:var(--red);color:#fff;padding:18px 26px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;gap:10px;
-  text-decoration:none;transition:background .15s, transform .15s;width:100%}
+.eyebrow{font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--red-2)}
+.btn{appearance:none;border:0;cursor:pointer;font-family:var(--f);font-weight:900;font-size:17px;letter-spacing:.02em;text-transform:uppercase;
+  background:var(--red);color:#fff;padding:18px 22px;border-radius:14px;display:flex;align-items:center;justify-content:center;gap:10px;
+  text-decoration:none;transition:background .15s,transform .15s;width:100%;text-align:center;line-height:1.2;
+  box-shadow:0 10px 24px -10px rgba(226,67,59,.7)}
 .btn:hover{background:var(--red-2)}
 .btn:active{transform:translateY(1px)}
-.btn:focus-visible,.opt:focus-visible,.chk:focus-within,.link:focus-visible,input:focus-visible{outline:3px solid var(--warn);outline-offset:2px}
-.btn[disabled]{opacity:.45;cursor:not-allowed}
-.btn.ghost{background:transparent;color:var(--cream);border:1px solid var(--line)}
+.btn[disabled]{opacity:.5;cursor:not-allowed}
+.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line);box-shadow:none}
 .btn.ghost:hover{background:var(--navy-2)}
+.btn.sm{font-size:14px;padding:12px 16px}
+.btn:focus-visible,.opt:focus-visible,.chk:focus-within,.link:focus-visible,input:focus-visible,.more:focus-visible{outline:3px solid var(--warn);outline-offset:2px}
 .link{background:none;border:0;color:var(--muted);font:inherit;font-size:15px;cursor:pointer;padding:6px 0;text-decoration:underline;text-underline-offset:3px}
-.byline{display:flex;gap:14px;align-items:flex-start;border-top:1px solid var(--line);padding-top:18px}
-.byline .av{flex:none;width:44px;height:44px;border-radius:50%;background:var(--navy-3);display:grid;place-items:center;font-family:var(--display);font-weight:900;color:var(--red-2)}
+.micro{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 16px;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.micro span::before{content:"✓ ";color:var(--keep)}
 
-/* example card on start screen */
-.example{position:relative;border:1px dashed var(--line);border-radius:8px;padding:18px;display:flex;gap:18px;align-items:center;background:var(--navy-2)}
-.example .tag{position:absolute;top:-10px;left:14px;background:var(--navy);padding:0 8px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
-.mini-score{font-family:var(--mono);font-weight:700;font-size:40px;line-height:1;color:var(--red-2)}
-.mini-score span{font-size:16px;color:var(--muted)}
-.example ul{list-style:none;margin:0;padding:0;display:grid;gap:4px;font-size:15px;min-width:0}
+/* start */
+.hero{display:flex;flex-direction:column;gap:20px;margin-top:28px}
+.sub{font-size:20px;line-height:1.4;max-width:30em}
+.sub b{color:#fff}
+.proof{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.proof div{background:var(--navy-2);border:1px solid var(--line);border-radius:16px;padding:14px 12px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.proof b{font-size:22px;font-weight:900;line-height:1.1}
+.proof span{font-size:13px;color:var(--muted);line-height:1.3}
+.sec{display:flex;flex-direction:column;gap:18px;padding-top:40px;margin-top:40px;border-top:1px solid var(--line)}
+.bullets{list-style:none;padding:0;margin:0;display:grid;gap:12px}
+.bullets li{display:flex;gap:12px;align-items:flex-start}
+.tick{flex:none;width:22px;height:22px;border-radius:6px;background:var(--red);display:grid;place-items:center;font-weight:800;font-size:13px;color:#fff;margin-top:2px}
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:14px;counter-reset:s}
+.steps li{display:grid;grid-template-columns:44px 1fr;gap:14px;align-items:start;counter-increment:s}
+.steps li::before{content:counter(s);width:44px;height:44px;border-radius:50%;border:2px solid var(--red);display:grid;place-items:center;font-weight:900;font-size:20px}
+.steps b{display:block;font-size:18px}
+.me{display:grid;grid-template-columns:88px 1fr;gap:16px;align-items:center}
+.me img{width:88px;height:88px;border-radius:50%;object-fit:cover;border:3px solid #fff}
+.faq{display:grid;gap:10px}
+.faq div{background:var(--navy-2);border:1px solid var(--line);border-radius:16px;padding:14px 16px}
+.faq b{display:block;margin-bottom:2px}
 
 /* quiz */
-.progress{margin-top:28px;display:flex;flex-direction:column;gap:8px}
+.progress{margin-top:24px;display:flex;flex-direction:column;gap:8px}
 .bar{height:6px;background:var(--navy-3);border-radius:99px;overflow:hidden}
 .bar i{display:block;height:100%;background:var(--red);width:0;transition:width .3s ease}
-.qmeta{display:flex;justify-content:space-between;font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
-.screen{margin-top:26px}
+.qmeta{display:flex;justify-content:space-between;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.screen{margin-top:24px}
+.hint{color:var(--muted);font-size:16px}
 .opts{display:grid;gap:10px}
-.opt{appearance:none;text-align:left;cursor:pointer;width:100%;font:inherit;font-size:18px;font-weight:600;color:var(--cream);
-  background:var(--navy-2);border:1px solid var(--line);border-radius:8px;padding:16px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px;transition:border-color .15s, background .15s}
+.opt{appearance:none;text-align:left;cursor:pointer;width:100%;font:inherit;font-size:18px;font-weight:700;color:var(--ink);
+  background:var(--navy-2);border:1.5px solid var(--line);border-radius:16px;padding:16px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px;transition:border-color .15s,background .15s}
 .opt:hover{border-color:var(--muted)}
 .opt[aria-pressed="true"]{border-color:var(--red);background:var(--navy-3)}
-.opt .arrow{color:var(--muted);font-family:var(--mono)}
-.search{width:100%;font:inherit;font-size:16px;padding:12px 14px;border-radius:6px;border:1px solid var(--line);background:var(--navy-2);color:var(--cream)}
+.opt .arrow{color:var(--muted)}
+.opt small{display:block;font-size:14px;font-weight:500;color:var(--muted);margin-top:2px}
+.search{width:100%;font:inherit;font-size:16px;padding:14px 16px;border-radius:14px;border:1.5px solid var(--line);background:var(--navy-2);color:var(--ink)}
 .cat{display:flex;flex-direction:column;gap:8px}
-.cat h3{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:700;margin-top:6px}
+.cat h3{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:800;margin-top:4px}
 .chips{display:flex;flex-wrap:wrap;gap:8px}
-.chk{position:relative;display:inline-flex;align-items:center;gap:8px;cursor:pointer;border:1px solid var(--line);background:var(--navy-2);border-radius:99px;padding:9px 14px;font-size:15px;font-weight:500;user-select:none;max-width:100%}
+.chk{position:relative;display:inline-flex;align-items:center;gap:8px;cursor:pointer;border:1.5px solid var(--line);background:var(--navy-2);border-radius:99px;padding:10px 14px;font-size:15px;font-weight:600;user-select:none;max-width:100%;line-height:1.25}
 .chk input{position:absolute;opacity:0;width:1px;height:1px}
-.chk .box{flex:none;width:16px;height:16px;border-radius:4px;border:1.5px solid var(--muted);display:grid;place-items:center;font-size:11px;line-height:1}
+.chk .box{flex:none;width:18px;height:18px;border-radius:50%;border:1.5px solid var(--muted);display:grid;place-items:center;font-size:11px;line-height:1}
 .chk:has(input:checked){border-color:var(--red);background:var(--navy-3)}
 .chk:has(input:checked) .box{background:var(--red);border-color:var(--red);color:#fff}
 .chk:has(input:checked) .box::after{content:"✓"}
-.count{font-family:var(--mono);font-size:13px;color:var(--muted)}
-.sticky-next{position:sticky;bottom:0;padding-block:14px calc(14px + env(safe-area-inset-bottom,0px));background:linear-gradient(to top,var(--navy) 70%,transparent);display:flex;gap:12px;align-items:center}
+.chk .via{font-size:12px;color:var(--muted);font-weight:500}
+.more{appearance:none;background:none;border:1.5px dashed var(--line);color:var(--ink);font:inherit;font-weight:700;font-size:15px;border-radius:14px;padding:12px;cursor:pointer;width:100%}
+.picked{display:flex;flex-wrap:wrap;gap:6px}
+.picked span{background:var(--red);color:#fff;font-size:13px;font-weight:700;border-radius:99px;padding:4px 10px}
+.sticky-next{position:sticky;bottom:0;padding-block:14px calc(14px + env(safe-area-inset-bottom,0px));background:linear-gradient(to top,var(--navy) 70%,transparent);display:flex;gap:12px;align-items:center;margin-top:8px;z-index:5}
 .field{display:flex;flex-direction:column;gap:8px}
-.field label{font-weight:600}
-.field input[type=email],.field input[type=text]{width:100%;font:inherit;font-size:18px;padding:16px;border-radius:6px;border:1px solid var(--line);background:#fff;color:var(--label-ink)}
+.field label{font-weight:700}
+.field input{width:100%;font:inherit;font-size:18px;padding:16px;border-radius:14px;border:1.5px solid var(--line);background:var(--navy-2);color:var(--ink)}
 .err{color:var(--red-2);font-size:15px;min-height:1.2em}
-.lock{display:flex;gap:16px;align-items:center;background:var(--navy-2);border:1px solid var(--line);border-radius:8px;padding:18px}
-.lock .q{font-family:var(--mono);font-weight:700;font-size:44px;line-height:1;color:var(--muted);filter:blur(5px)}
 
-/* results: supplement facts label */
-.facts{background:var(--label-bg);color:var(--label-ink);border:2px solid var(--label-ink);padding:14px 16px 16px;border-radius:2px;box-shadow:0 10px 30px rgba(0,0,0,.35)}
-.facts .ft{font-family:var(--display);font-weight:900;font-size:30px;letter-spacing:-.01em;line-height:1;border-bottom:1px solid var(--label-ink);padding-bottom:6px}
+/* gate + calculating */
+.gatewrap{position:relative}
+.blurred{filter:blur(5px);pointer-events:none;user-select:none;opacity:.85}
+.gatewrap .badge{position:absolute;inset:0;display:grid;place-items:center}
+.gatewrap .badge span{background:var(--navy);border:1px solid var(--line);padding:10px 16px;border-radius:99px;font-weight:800;font-size:15px}
+.inside{list-style:none;padding:0;margin:0;display:grid;gap:8px}
+.inside li::before{content:"✓  ";color:var(--keep);font-weight:900}
+.calc{display:grid;gap:14px;margin-top:8px}
+.calc li{display:flex;gap:12px;align-items:center;font-size:17px;font-weight:600;color:var(--dim);transition:color .3s}
+.calc li i{flex:none;width:24px;height:24px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;font-style:normal;font-size:13px;font-weight:900;color:#fff;transition:all .3s}
+.calc li.on{color:var(--ink)}
+.calc li.on i{background:var(--keep);border-color:var(--keep)}
+.calc li.on i::after{content:"✓"}
+
+/* results */
+.res{display:flex;flex-direction:column;gap:28px}
+.reveal{display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px;padding:24px 18px;border-radius:22px;background:linear-gradient(180deg,rgba(29,52,89,.9),rgba(20,38,69,.6));border:1px solid var(--line)}
+.gauge{position:relative;width:200px;height:200px;max-width:100%}
+.gauge svg{width:100%;height:100%;transform:rotate(-90deg)}
+.gauge .num{position:absolute;inset:0;display:grid;place-items:center;align-content:center}
+.gauge .num b{font-size:64px;font-weight:900;line-height:.9;letter-spacing:-.03em}
+.gauge .num span{font-size:14px;font-weight:700;color:var(--muted);letter-spacing:.12em;text-transform:uppercase}
+.bandpill{display:inline-block;font-size:13px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;padding:6px 12px;border-radius:99px}
+.b-low{background:rgba(226,67,59,.18);color:#ff8a82;border:1px solid rgba(226,67,59,.5)}
+.b-mid{background:rgba(242,178,52,.15);color:#ffd27a;border:1px solid rgba(242,178,52,.5)}
+.b-high{background:rgba(63,191,127,.15);color:#7fe0ae;border:1px solid rgba(63,191,127,.5)}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.tiles div{background:var(--navy-2);border:1px solid var(--line);border-radius:16px;padding:14px 10px;display:flex;flex-direction:column;gap:4px;text-align:center;min-width:0}
+.tiles b{font-size:22px;font-weight:900;line-height:1.1;overflow-wrap:anywhere}
+.tiles span{font-size:12px;color:var(--muted);line-height:1.3;font-weight:600}
+.tiles .hot b{color:var(--red-2)}
+.leak{border-left:4px solid var(--red);background:var(--navy-2);padding:18px;border-radius:0 18px 18px 0;display:flex;flex-direction:column;gap:8px}
+.leak .k{font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--red-2)}
+.leak .t{font-weight:900;font-size:22px;line-height:1.2}
+.leak .fix{font-size:15px;color:var(--ink);background:rgba(63,191,127,.1);border:1px solid rgba(63,191,127,.35);border-radius:12px;padding:10px 12px}
+.leak .fix b{color:#7fe0ae}
+.cta{background:var(--navy-2);border:1.5px solid var(--red);border-radius:22px;padding:22px 20px;display:flex;flex-direction:column;gap:14px}
+.cta ul{margin:0;padding:0;list-style:none;display:grid;gap:8px}
+.cta li{display:flex;gap:10px;align-items:flex-start}
+.cta li::before{content:"✓";flex:none;color:var(--keep);font-weight:900}
+
+.facts{background:var(--label-bg);color:var(--label-ink);border:2px solid var(--label-ink);padding:14px 16px 16px;border-radius:4px;box-shadow:0 14px 36px rgba(0,0,0,.4)}
+.facts .ft{font-weight:900;font-size:30px;letter-spacing:-.01em;line-height:1;border-bottom:1px solid var(--label-ink);padding-bottom:6px}
 .facts .serv{font-size:14px;display:flex;justify-content:space-between;gap:10px;padding-block:6px;border-bottom:8px solid var(--label-ink)}
 .scoreline{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;padding-block:10px;border-bottom:4px solid var(--label-ink)}
-.scoreline .lbl{font-family:var(--display);font-weight:900;font-size:20px}
+.scoreline .lbl{font-weight:900;font-size:20px}
 .scoreline .band{font-weight:600;font-size:15px}
-.bignum{font-family:var(--mono);font-weight:900;font-size:64px;line-height:.9;font-variant-numeric:tabular-nums}
-.bignum span{font-size:22px}
-.vhead{display:flex;justify-content:space-between;font-size:13px;font-weight:700;padding-block:6px;border-bottom:1px solid var(--label-ink)}
-.vrow{display:grid;grid-template-columns:1fr auto;gap:4px 12px;padding-block:8px;border-bottom:1px solid #c9ced8}
-.vrow .nm{font-weight:700;min-width:0}
-.vrow .why{grid-column:1 / -1;font-size:14px;color:#3a4a66}
-.pill{font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:3px;white-space:nowrap;align-self:start}
-.p-keep{background:#dff5ea;color:#13633d}
-.p-depends{background:#fdf0d4;color:#7a5408}
-.p-cut{background:#fde2e0;color:#a3221b}
+.bignum{font-weight:900;font-size:60px;line-height:.9}
+.bignum span{font-size:20px}
+.vhead{display:flex;justify-content:space-between;font-size:13px;font-weight:800;padding-block:6px;border-bottom:1px solid var(--label-ink)}
+.vrow{display:grid;grid-template-columns:1fr auto;gap:4px 12px;padding-block:10px;border-bottom:1px solid #c9ced8}
+.vrow .nm{font-weight:800;min-width:0}
+.vrow .why{grid-column:1 / -1;font-size:14px;color:var(--label-mute);line-height:1.45}
+.vrow .why b{color:var(--label-ink)}
+.vrow .go{grid-column:1 / -1;font-size:14px;font-weight:800;color:#b5281f;text-decoration:none;justify-self:start}
+.vrow .go:hover{text-decoration:underline}
+.pill{font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:4px 8px;border-radius:4px;white-space:nowrap;align-self:start}
+.p-worth{background:#dff5ea;color:#13633d}
+.p-situational{background:#fdf0d4;color:#7a5408}
+.p-skip{background:#fde2e0;color:#a3221b}
 .p-risk{background:#a3221b;color:#fff}
-.totals{display:grid;gap:0;margin-top:2px}
-.trow{display:flex;justify-content:space-between;gap:12px;padding-block:10px;border-bottom:1px solid var(--label-ink);font-weight:700}
+.p-add{background:#13633d;color:#fff}
+.trow{display:flex;justify-content:space-between;gap:12px;padding-block:10px;border-bottom:1px solid var(--label-ink);font-weight:800}
 .trow:last-child{border-bottom:8px solid var(--label-ink)}
-.trow .v{font-family:var(--mono);font-variant-numeric:tabular-nums;text-align:right}
-.foot{font-size:12px;color:#3a4a66;padding-top:8px}
-.leak{border-left:4px solid var(--red);background:var(--navy-2);padding:16px 18px;border-radius:0 8px 8px 0;display:flex;flex-direction:column;gap:6px}
-.leak .k{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--red-2)}
-.leak .t{font-family:var(--display);font-weight:800;font-size:22px}
-.cta{background:var(--navy-2);border:1px solid var(--line);border-radius:10px;padding:22px;display:flex;flex-direction:column;gap:14px}
-.sent{font-size:14px;color:var(--muted)}
-/* hormozi-style landing additions */
-.callout{background:var(--red);color:#fff;text-align:center;font-weight:700;font-size:15px;padding:10px 14px;border-radius:6px;margin-top:18px}
-.hero h1{font-size:clamp(38px,10vw,68px)}
-.sub{font-size:21px;line-height:1.4;font-weight:500;max-width:30em}
-.sub b{color:#fff}
-.micro{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 16px;font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
-.micro span::before{content:"✓ ";color:var(--keep)}
-.proof{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.proof div{background:var(--navy-2);border:1px solid var(--line);border-radius:8px;padding:14px 12px;display:flex;flex-direction:column;gap:4px;min-width:0}
-.proof b{font-family:var(--mono);font-size:22px;color:var(--cream);line-height:1.1}
-.proof span{font-size:13px;color:var(--muted);line-height:1.3}
-.sec{display:flex;flex-direction:column;gap:18px;padding-top:40px;margin-top:40px;border-top:1px solid var(--line)}
-.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--red-2)}
-.steps{list-style:none;margin:0;padding:0;display:grid;gap:12px;counter-reset:s}
-.steps li{display:grid;grid-template-columns:44px 1fr;gap:14px;align-items:start;counter-increment:s}
-.steps li::before{content:counter(s);width:44px;height:44px;border-radius:50%;border:2px solid var(--red);display:grid;place-items:center;font-family:var(--display);font-weight:900;font-size:20px}
-.steps b{display:block;font-family:var(--display);font-size:19px}
-.me{display:grid;grid-template-columns:96px 1fr;gap:16px;align-items:center}
-.me .ph{width:96px;height:96px;border-radius:50%;border:3px solid #fff;background:var(--navy-3) center/cover no-repeat;display:grid;place-items:center;font-family:var(--display);font-weight:900;font-size:34px;color:var(--red-2);border:1px solid var(--line)}
-.faq{display:grid;gap:10px}
-.faq div{background:var(--navy-2);border:1px solid var(--line);border-radius:8px;padding:14px 16px}
-.faq b{display:block;margin-bottom:2px}
-.inside{list-style:none;padding:0;margin:0;display:grid;gap:8px}
-.inside li::before{content:"✓  ";color:var(--keep);font-weight:800}
-.blurred{filter:blur(4px);pointer-events:none;user-select:none;opacity:.85}
-.gatewrap{position:relative}
-.gatewrap .badge{position:absolute;inset:0;display:grid;place-items:center}
-.gatewrap .badge span{background:var(--navy);border:1px solid var(--line);padding:10px 16px;border-radius:99px;font-weight:700;font-size:15px}
-.guarantee{border:2px dashed var(--keep);border-radius:10px;padding:16px 18px;display:flex;flex-direction:column;gap:4px}
-.guarantee b{font-family:var(--display);font-size:19px}
-.quote{font-size:15px;color:var(--muted);border-left:3px solid var(--line);padding-left:12px}
-@media (max-width:420px){.proof b{font-size:18px}.me{grid-template-columns:72px 1fr}.me .ph{width:72px;height:72px;font-size:26px}}
-/* ---------- desktop layout ---------- */
-.get-grid,.res-grid{display:grid;gap:22px}
-.get-grid > *,.res-grid > *{min-width:0}
-@media (min-width:900px){
-  body{font-size:18px}
-  .wrap{max-width:1120px;padding-block:36px 72px}
-  .wrap.narrow-mode main{max-width:680px;margin-inline:auto}
-  .hero{align-items:center;text-align:center;margin-top:56px;gap:26px}
-  .hero h1{font-size:clamp(56px,6.4vw,84px)}
-  .hero .sub{max-width:760px;font-size:23px}
-  .hero .stack{width:100%;max-width:480px}
-  .hero .proof{width:100%;max-width:820px}
-  .proof b{font-size:28px}
-  .sec{padding-top:64px;margin-top:64px;gap:24px}
-  .sec > .eyebrow,.sec > h2{text-align:center}
-  .get-grid{grid-template-columns:1fr 1fr;gap:48px;align-items:center}
-  .get-grid .bullets{gap:16px;font-size:19px}
-  .steps{grid-template-columns:repeat(3,1fr);gap:24px}
-  .steps li{grid-template-columns:1fr;gap:12px}
-  .me{max-width:820px;margin-inline:auto;grid-template-columns:150px 1fr;gap:28px}
-  .me .ph{width:150px;height:150px}
-  .faq{grid-template-columns:repeat(3,1fr)}
-  .sec .ctaend{max-width:480px;margin-inline:auto;width:100%}
-  .res-grid{grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:40px;align-items:start}
-  .res-grid .left{display:flex;flex-direction:column;gap:22px}
-  .res-grid .bignum{font-size:84px}
-}
-@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
-@media (max-width:420px){.bignum{font-size:54px}.facts .ft{font-size:26px}}
-.legal{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 18px;margin:48px auto 0;padding-bottom:24px;font-family:"Montserrat","Helvetica Neue",Arial,sans-serif;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.trow .v{text-align:right}
+.foot{font-size:12px;color:var(--label-mute);padding-top:8px}
+.share{display:flex;flex-direction:column;gap:10px;background:var(--navy-2);border:1px solid var(--line);border-radius:18px;padding:18px}
+.share code{font-family:var(--f);font-size:14px;color:var(--muted);overflow-wrap:anywhere;user-select:all}
+.coach{font-size:15px;color:var(--muted);text-align:center}
+.coach a{color:var(--ink);font-weight:700}
+.legal{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 18px;margin:48px auto 0;padding-bottom:24px;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
 .legal a{color:#9fb0c8;text-decoration:none}
 .legal a:hover{color:#fff}
+.fade{animation:fade .45s ease both}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@media (max-width:420px){.proof b,.tiles b{font-size:18px}.bignum{font-size:52px}.facts .ft{font-size:26px}.gauge{width:176px;height:176px}.gauge .num b{font-size:56px}}
+@media (min-width:900px){
+  body{font-size:17px}
+  .wrap{max-width:1080px;padding-block:32px 64px}
+  .wrap.narrow main{max-width:640px;margin-inline:auto}
+  .hero{align-items:center;text-align:center;margin-top:52px}
+  .hero .sub{max-width:720px;font-size:22px}
+  .hero .ctawrap{width:100%;max-width:460px}
+  .hero .proof{width:100%;max-width:780px}
+  .hero .byline{justify-content:center}
+  .sec{padding-top:60px;margin-top:60px}
+  .sec>.eyebrow,.sec>h2{text-align:center}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+  .grid2>*{min-width:0}
+  .steps{grid-template-columns:repeat(3,1fr);gap:24px}
+  .steps li{grid-template-columns:1fr}
+  .me{max-width:780px;margin-inline:auto;grid-template-columns:140px 1fr;gap:28px}
+  .me img{width:140px;height:140px}
+  .faq{grid-template-columns:repeat(3,1fr)}
+  .ctaend{max-width:460px;margin-inline:auto;width:100%}
+  .res{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:36px;align-items:start}
+  .res>*{min-width:0}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 <script defer src="/_vercel/insights/script.js"></script>
 <link rel="stylesheet" href="/skin.css">
 </head>
 <body>
-
 <div class="wrap">
   <div class="brand"><span><span class="dot"></span><b>Stack Score</b></span><span>by Boon Fay</span></div>
   <main id="app" aria-live="polite"></main>
   <footer class="legal"><a href="/terms">Terms</a><a href="/privacy">Privacy</a><a href="/disclaimer">Disclaimer</a></footer>
 </div>
-
 <script>
-/* ======== SETTINGS (edit these) ======== */
-const KIT_API_KEY = "rWMhWOuYNu8lJKKWoWIfsg";   // Kit PUBLIC API key
+/* ======== SETTINGS ======== */
+const KIT_API_KEY = "rWMhWOuYNu8lJKKWoWIfsg";   // Kit PUBLIC API key (safe in a web page)
 const KIT_FORM_ID = "10078143";                  // "Stack Score" form in Kit
-const APPLY_URL   = "/";                         // Six-Pack Stack sales page
-const APP_URL     = "/free-stack?src=stack-score";  // App landing page (The Free Stack)
-const BTL_URL     = "https://six-pack-stack.vercel.app/beyond-the-label";         // <-- paste your Beyond the Label sales page link
-const PHOTO_URL   = "/boon.jpg";                          // <-- optional: link to a photo of you (e.g. your after photo)
-/* ====================================== */
+const PLAN_URL    = "/app/lead?want=plan&src=stack-score";  // straight into the plan builder, answers carried over
+const VERDICT_URL = id => `/app/verdict/${id}?src=stack-score`;
+const LOOKUP_URL  = "/app/stack-check?src=stack-score";
+const COACH_URL   = "/?src=stack-score";
+const SHARE_URL   = "https://six-pack-stack.vercel.app/stack-score?src=share";
+/* ========================== */
 
-const PRODUCTS = [
-  // [id, name, category, verdict, points, wastePerMonth, why]
-  ["whey","Whey protein","Protein & muscle","keep",0,0,"Keep, if you can't hit your protein from food."],
-  ["plant","Plant protein","Protein & muscle","keep",0,0,"Keep. Same job as whey."],
-  ["casein","Casein","Protein & muscle","keep",0,0,"Keep. It's just protein."],
-  ["creatine","Creatine","Protein & muscle","keep",0,0,"Keep. Proven, cheap, worth it. 3–5g a day."],
-  ["gainer","Mass gainer","Protein & muscle","cut",8,50,"Mostly sugar and oats at a premium price."],
-  ["bcaa","BCAAs","Protein & muscle","cut",8,35,"Your protein already covers them."],
-  ["eaa","EAAs","Protein & muscle","depends",0,0,"Pointless if you already hit your protein."],
-  ["glutamine","Glutamine","Protein & muscle","cut",8,25,"Little evidence for muscle or fat loss."],
-  ["hmb","HMB","Protein & muscle","cut",8,30,"Weak evidence in guys who train."],
-  ["bars","Protein bars / snacks","Protein & muscle","depends",0,0,"Run the 5-second test: calories ÷ 10 vs protein."],
+// Boon's 47 Stack Check verdicts (same data as the app) plus 3 "enhanced" products. Built from src/data/stackcheck.json.
+const PRODUCTS = [{"id":"whey_protein","n":"Whey protein","full":"Whey Protein","g":"supp","c":"Protein","k":"worth","v":"Worth it","h":"Food in a tub, and that's the point","s":"Plain whey, third-party tested","a":["whey","protein powder","optimum nutrition","gold standard","isolate","iso100","dymatize","muscletech","nitro tech","ghost protein","myprotein"],"m":0,"o":0,"pts":0,"pop":0},{"id":"plant_protein","n":"Plant protein","full":"Plant Protein","g":"supp","c":"Protein","k":"worth","v":"Worth it (if you need it)","h":"Good if you need it, not \"better\" if you don't","s":"Pea-and-rice blend, or whey","a":["vegan protein","pea protein","garden of life","orgain","vega","soy protein"],"m":0,"o":0,"pts":0,"pop":99},{"id":"protein_bars_and_snacks","n":"Protein bars","full":"Protein Bars and Snacks","g":"supp","c":"Protein","k":"situational","v":"Situational","h":"Some are food. Some are candy in disguise.","s":"Greek yogurt, jerky, eggs","a":["quest bar","protein bar","barebells","one bar","rxbar","protein chips","protein cookie","built bar"],"m":0,"o":0,"pts":0,"pop":13},{"id":"collagen","n":"Collagen","full":"Collagen","g":"supp","c":"Protein","k":"situational","v":"Situational","h":"It doesn't go straight to your skin","s":"Sunscreen for skin, whey for muscle","a":["vital proteins","collagen peptides","collagen gummies"],"m":0,"o":0,"pts":0,"pop":99},{"id":"mass_gainers_and_meal_replacements","n":"Mass gainer / meal replacement","full":"Mass Gainers and Meal Replacements","g":"supp","c":"Protein","k":"situational","v":"Situational","h":"Mostly cheap carbs at a premium","s":"Homemade shake","a":["mass gainer","serious mass","slimfast","huel","ensure","meal replacement","weight gainer"],"m":0,"o":0,"pts":0,"pop":99},{"id":"creatine","n":"Creatine","full":"Creatine","g":"supp","c":"Gym & energy","k":"worth","v":"Worth it","h":"The cheap one is the one that works","s":"Plain monohydrate","a":["creatine monohydrate","creatine hcl","creatine gummies","creapure","kre-alkalyn"],"m":0,"o":0,"pts":0,"pop":1},{"id":"pre_workout","n":"Pre-workout","full":"Pre-Workout","g":"supp","c":"Gym & energy","k":"situational","v":"Situational","h":"You're mostly paying for caffeine","s":"Coffee","a":["c4","pre workout","preworkout","ghost legend","gorilla mode","bucked up","total war","pump"],"m":0,"o":0,"pts":0,"pop":2},{"id":"bcaas_and_eaas","n":"BCAAs / EAAs","full":"BCAAs and EAAs","g":"supp","c":"Gym & energy","k":"skip","v":"Waste of money","h":"Watering your lawn while it's raining","s":"","a":["bcaa","eaa","xtend","amino","aminos","scivation","amino energy"],"m":30,"o":0,"pts":8,"pop":6},{"id":"caffeine_pills","n":"Caffeine / energy drinks","full":"Caffeine Pills","g":"supp","c":"Gym & energy","k":"worth","v":"Worth it","h":"One of the few things that really works","s":"Coffee","a":["caffeine","energy pills","coffee","energy drink","celsius","alani nu","bang"],"m":0,"o":0,"pts":0,"pop":10},{"id":"beta_alanine","n":"Beta-Alanine","full":"Beta-Alanine","g":"supp","c":"Gym & energy","k":"situational","v":"Situational","h":"The tingle in your pre-workout","s":"Plain powder if needed","a":["beta alanine","tingles","carnosyn"],"m":0,"o":0,"pts":0,"pop":99},{"id":"citrulline","n":"Citrulline","full":"Citrulline","g":"supp","c":"Gym & energy","k":"situational","v":"Situational","h":"The \"pump\" ingredient","s":"Plain citrulline","a":["l-citrulline","citrulline malate","nitric oxide","pump pills"],"m":0,"o":0,"pts":0,"pop":99},{"id":"electrolyte_packets","n":"Electrolytes (LMNT, Liquid IV)","full":"Electrolyte Packets","g":"supp","c":"Hydration","k":"situational","v":"Situational","h":"Built for the 1%, sold to the 100%","s":"Water, or salt and juice","a":["lmnt","liquid iv","liquid i.v.","electrolytes","nuun","drip drop"],"m":0,"o":0,"pts":0,"pop":9},{"id":"sports_drinks","n":"Sports drinks","full":"Sports Drinks","g":"supp","c":"Hydration","k":"situational","v":"Situational","h":"Great for a two-hour game. Not for a 45-minute lift.","s":"Water","a":["gatorade","powerade","bodyarmor","body armor"],"m":0,"o":0,"pts":0,"pop":99},{"id":"prime","n":"Prime","full":"Prime","g":"supp","c":"Hydration","k":"skip","v":"Waste of money","h":"\"sports hydration\" with almost no sodium","s":"","a":["prime hydration","prime energy","logan paul","ksi"],"m":25,"o":0,"pts":8,"pop":99},{"id":"greens_powders","n":"Greens powder (AG1)","full":"Greens Powders","g":"supp","c":"Health","k":"skip","v":"Waste of money","h":"An expensive multivitamin with a podcast budget","s":"","a":["ag1","athletic greens","bloom greens","super greens","greens","bloom"],"m":80,"o":0,"pts":10,"pop":4},{"id":"multivitamins","n":"Multivitamin","full":"Multivitamins","g":"supp","c":"Health","k":"situational","v":"Situational","h":"Cheap insurance, not a health upgrade","s":"Basic multivitamin","a":["multivitamin","centrum","one a day","ritual","vitamins"],"m":0,"o":0,"pts":0,"pop":7},{"id":"vitamin_d","n":"Vitamin D","full":"Vitamin D","g":"supp","c":"Health","k":"situational","v":"Situational","h":"Worth it if you're low. A blood test tells you.","s":"Blood test, then basic D3","a":["vitamin d3","d3","vit d"],"m":0,"o":0,"pts":0,"pop":99},{"id":"fish_oil","n":"Fish oil / omega-3","full":"Fish Oil","g":"supp","c":"Health","k":"situational","v":"Situational","h":"Useful if you never eat fish","s":"Salmon twice a week","a":["omega 3","omega-3","nordic naturals","krill oil"],"m":0,"o":0,"pts":0,"pop":8},{"id":"magnesium","n":"Magnesium","full":"Magnesium","g":"supp","c":"Health","k":"situational","v":"Situational","h":"Helps if you're low. Not a sleeping pill.","s":"Food first, basic glycinate","a":["magnesium glycinate","magnesium citrate","mag glycinate"],"m":0,"o":0,"pts":0,"pop":99},{"id":"probiotics","n":"Probiotics","full":"Probiotics","g":"supp","c":"Health","k":"skip","v":"Waste of money (for most people)","h":"The right strain for the right problem, or nothing","s":"","a":["seed","gut health","culturelle","probiotic"],"m":35,"o":0,"pts":8,"pop":99},{"id":"ashwagandha","n":"Ashwagandha","full":"Ashwagandha","g":"supp","c":"Health","k":"situational","v":"Situational","h":"Some evidence for stress. Not a t-booster.","s":"Sleep and stress basics","a":["ksm-66","sensoril","cortisol"],"m":0,"o":0,"pts":0,"pop":12},{"id":"apple_cider_vinegar_gummies","n":"ACV gummies","full":"Apple Cider Vinegar Gummies","g":"supp","c":"Health","k":"skip","v":"Waste of money","h":"Candy with a wellness label","s":"","a":["goli","acv","apple cider vinegar"],"m":20,"o":0,"pts":8,"pop":11},{"id":"sea_moss","n":"Sea Moss","full":"Sea Moss","g":"supp","c":"Health","k":"skip","v":"Waste of money","h":"\"92 minerals\" and almost no research","s":"","a":["irish moss","sea moss gel"],"m":30,"o":0,"pts":8,"pop":99},{"id":"fat_burners","n":"Fat burner","full":"Fat Burners","g":"supp","c":"Fat loss","k":"skip","v":"Waste of money","h":"Mostly caffeine, with the worst safety record in the aisle","s":"","a":["hydroxycut","lipo 6","fat burner","thermogenic","raspberry ketone","garcinia","green tea extract"],"m":30,"o":0,"pts":12,"pop":3},{"id":"skinny_and_detox_teas","n":"Detox / skinny tea","full":"Skinny and Detox Teas","g":"supp","c":"Fat loss","k":"skip","v":"Waste of money","h":"A laxative in a nice box","s":"","a":["detox tea","skinny tea","fit tea","teatox","flat tummy"],"m":25,"o":0,"pts":8,"pop":99},{"id":"l_carnitine","n":"L-carnitine","full":"L-Carnitine","g":"supp","c":"Fat loss","k":"skip","v":"Waste of money","h":"The \"fat shuttle\" you already have","s":"","a":["carnitine","alcar","acetyl l-carnitine"],"m":25,"o":0,"pts":8,"pop":99},{"id":"cla","n":"CLA","full":"CLA","g":"supp","c":"Fat loss","k":"skip","v":"Waste of money","h":"A fraction of a pound, at best","s":"","a":["conjugated linoleic acid","tonalin"],"m":20,"o":0,"pts":8,"pop":99},{"id":"berberine","n":"Berberine","full":"Berberine","g":"supp","c":"Fat loss","k":"situational","v":"Situational","h":"\"nature's ozempic\" isn't ozempic","s":"Doctor, deficit, protein","a":["nature's ozempic","natures ozempic","ozempic"],"m":0,"o":0,"pts":0,"pop":99},{"id":"sweat_belts_and_waist_trainers","n":"Sweat belt / waist trainer","full":"Sweat Belts and Waist Trainers","g":"gear","c":"Fat loss gear","k":"skip","v":"Waste of money","h":"The only thing you lose is water","s":"","a":["waist trainer","sweat belt","sauna suit","sweat band"],"m":0,"o":30,"pts":5,"pop":16},{"id":"testosterone_boosters","n":"Test booster","full":"Testosterone Boosters","g":"supp","c":"Testosterone & hormones","k":"skip","v":"Waste of money","h":"Selling to the biggest insecurity guys have","s":"","a":["nugenix","test booster","t booster","prime male","testofen","fenugreek","tribulus","dhea"],"m":65,"o":0,"pts":12,"pop":5},{"id":"tongkat_ali","n":"Tongkat ali","full":"Tongkat Ali","g":"supp","c":"Testosterone & hormones","k":"situational","v":"Situational","h":"Significant on paper. Hard to feel in real life.","s":"Fix the basics","a":["tongkat","longjack","fadogia"],"m":0,"o":0,"pts":0,"pop":99},{"id":"hormone_balancing_supplements","n":"Hormone balancing pills","full":"\"Hormone Balancing\" Supplements","g":"supp","c":"Testosterone & hormones","k":"skip","v":"Waste of money","h":"Your body has dozens of hormones.","s":"","a":["hormone balance","estrogen blocker","dim","cortisol supplement"],"m":40,"o":0,"pts":8,"pop":99},{"id":"melatonin","n":"Melatonin / sleep aids","full":"Melatonin","g":"supp","c":"Sleep & recovery","k":"situational","v":"Situational","h":"Not a sedative, and the label might be wrong","s":"A consistent bedtime","a":["sleep gummies","sleep aid","zzzquil"],"m":0,"o":0,"pts":0,"pop":99},{"id":"zma","n":"ZMA","full":"ZMA","g":"supp","c":"Sleep & recovery","k":"skip","v":"Waste of money (for most people)","h":"Zinc, magnesium and b6, at a markup","s":"","a":["zinc","zinc magnesium"],"m":20,"o":0,"pts":8,"pop":99},{"id":"cold_plunge_tubs","n":"Cold plunge","full":"Cold Plunge Tubs","g":"gear","c":"Recovery","k":"situational","v":"Situational","h":"Good for soreness. Bad timing for gains.","s":"A cold shower, away from lifting","a":["ice bath","cold plunge","plunge"],"m":0,"o":0,"pts":0,"pop":99},{"id":"red_light_therapy","n":"Red light therapy","full":"Red Light Therapy","g":"gear","c":"Recovery","k":"situational","v":"Situational","h":"Some science, lots of weak devices","s":"Sunscreen + retinoid","a":["red light","red light mask","red light panel"],"m":0,"o":0,"pts":0,"pop":99},{"id":"massage_guns","n":"Massage gun","full":"Massage Guns","g":"gear","c":"Recovery","k":"situational","v":"Situational","h":"Feels good. Doesn't heal you faster.","s":"Foam roller","a":["theragun","hypervolt","massage gun","percussion"],"m":0,"o":0,"pts":0,"pop":15},{"id":"infrared_sauna_blankets","n":"Sauna blanket","full":"Infrared Sauna Blankets","g":"gear","c":"Recovery","k":"skip","v":"Waste of money","h":"A sleeping bag that makes you sweat","s":"","a":["sauna blanket","higherdose","infrared sauna"],"m":0,"o":200,"pts":5,"pop":99},{"id":"mouth_tape","n":"Mouth Tape","full":"Mouth Tape","g":"gear","c":"Recovery","k":"skip","v":"Waste of money","h":"A viral hack with real risks","s":"","a":["mouth taping"],"m":15,"o":0,"pts":5,"pop":99},{"id":"vibration_plates","n":"Vibration plate","full":"Vibration Plates","g":"gear","c":"Gadgets & tests","k":"skip","v":"Waste of money (for fat loss)","h":"The 1920s vibrating belt, with an app","s":"","a":["vibration plate","power plate"],"m":0,"o":250,"pts":5,"pop":99},{"id":"the_machine_moves_for_you_equipment","n":"EMS belt / under-desk machine","full":"\"The Machine Moves for You\"","g":"gear","c":"Gadgets & tests","k":"skip","v":"Waste of money","h":"Under-desk ellipticals that pedal themselves, waist twisters and motorized gadgets that promise results \"without exerting yourself.\".","s":"","a":["under desk elliptical","ems","ems belt","ab belt","cubii"],"m":0,"o":250,"pts":5,"pop":99},{"id":"ab_gadgets","n":"Ab gadget","full":"Ab Gadgets","g":"gear","c":"Gadgets & tests","k":"skip","v":"Waste of money","h":"Abs are built in the kitchen, not on a rocker","s":"","a":["ab roller","ab wheel","ab machine","ab stimulator","flex belt"],"m":0,"o":60,"pts":5,"pop":17},{"id":"lumen","n":"Lumen","full":"Lumen","g":"gear","c":"Gadgets & tests","k":"skip","v":"Waste of money","h":"It measures something real. The promise isn't.","s":"","a":["metabolism tracker","breath tracker"],"m":0,"o":300,"pts":5,"pop":99},{"id":"food_sensitivity_tests","n":"Food sensitivity test","full":"Food Sensitivity Tests","g":"gear","c":"Gadgets & tests","k":"skip","v":"Waste of money","h":"It tells you what you eat a lot of","s":"","a":["everlywell","food intolerance test","5strands"],"m":0,"o":150,"pts":5,"pop":99},{"id":"body_fat_scales","n":"Smart / body fat scale","full":"Body Fat Scales","g":"gear","c":"Gadgets & tests","k":"situational","v":"Situational","h":"Useful for trends. Not for daily numbers.","s":"Scale + tape + photos","a":["smart scale","renpho","withings","inbody","body fat"],"m":0,"o":0,"pts":0,"pop":99},{"id":"sleep_and_fitness_trackers","n":"Whoop / Oura / tracker","full":"Sleep and Fitness Trackers","g":"gear","c":"Gadgets & tests","k":"situational","v":"Situational","h":"Great for habits. Watch the subscription.","s":"Your phone","a":["whoop","oura","fitbit","apple watch","garmin"],"m":0,"o":0,"pts":0,"pop":14},{"id":"balance_bracelets","n":"Balance bracelet","full":"Balance Bracelets","g":"gear","c":"Gadgets & tests","k":"skip","v":"Waste of money","h":"A rubber band with a hologram","s":"","a":["power balance","bracelet","magnetic bracelet","ionic bracelet"],"m":0,"o":30,"pts":5,"pop":99},{"id":"sarms","n":"SARMs","full":"SARMs","g":"supp","c":"\"Enhanced\"","k":"risk","v":"Risky","h":"Not approved for people, often mislabeled, and the side effects are real.","s":"Talk to a doctor","a":["sarm","ostarine","rad 140","rad-140","lgd","mk-677","mk677","cardarine"],"m":0,"o":0,"pts":20,"pop":99},{"id":"peptides","n":"Peptides (BPC-157 etc.)","full":"Peptides (BPC-157 etc.)","g":"supp","c":"\"Enhanced\"","k":"risk","v":"Risky","h":"Not approved for people, often mislabeled, and the side effects are real.","s":"Talk to a doctor","a":["peptide","bpc","bpc-157","tb-500","retatrutide","research chemical"],"m":0,"o":0,"pts":20,"pop":99},{"id":"prohormones","n":"Prohormones","full":"Prohormones","g":"supp","c":"\"Enhanced\"","k":"risk","v":"Risky","h":"Not approved for people, often mislabeled, and the side effects are real.","s":"Talk to a doctor","a":["prohormone","andro","superdrol"],"m":0,"o":0,"pts":20,"pop":99}];
+const PMAP = Object.fromEntries(PRODUCTS.map(p=>[p.id,p]));
+const KIND = {worth:"Worth it",situational:"Depends",skip:"Skip it",risk:"Risky"};
 
-  ["pre","Pre-workout","Energy & pre-workout","depends",0,0,"Keep only with real doses and no proprietary blend."],
-  ["caffeine","Caffeine pills","Energy & pre-workout","keep",0,0,"Keep. Cheap and does the same job."],
-  ["energy","Energy drinks (Celsius, Ghost etc.)","Energy & pre-workout","depends",0,0,"Watch the calories and sugar."],
-  ["nootropic","Nootropics / focus blends","Energy & pre-workout","cut",10,40,"Mostly caffeine with marketing."],
-  ["citrulline","Citrulline or beta-alanine","Energy & pre-workout","depends",0,0,"Fine, but often already in your pre."],
-
-  ["fatburner","Fat burner / thermogenic","Fat loss","cut",12,45,"Mostly caffeine. It burns money, not fat."],
-  ["carnitine","L-carnitine","Fat loss","cut",10,30,"Little evidence for fat loss."],
-  ["cla","CLA","Fat loss","cut",10,25,"Tiny or no effect."],
-  ["acv","Apple cider vinegar gummies","Fat loss","cut",10,20,"Candy with vinegar."],
-  ["garcinia","Garcinia / raspberry ketones","Fat loss","cut",10,25,"No solid evidence."],
-  ["gte","Green tea extract","Fat loss","cut",10,25,"Weak effect, liver concerns at high doses."],
-  ["detox","Detox / cleanse tea","Fat loss","cut",10,30,"Mostly a laxative."],
-  ["appetite","Appetite suppressants","Fat loss","cut",10,40,"Fix the meals instead."],
-  ["berberine","Berberine (\"nature's Ozempic\")","Fat loss","cut",10,30,"Not a fat-loss shortcut."],
-
-  ["testbooster","Test booster","Testosterone & men's health","cut",12,50,"Little evidence it raises testosterone in healthy guys."],
-  ["tongkat","Tongkat ali","Testosterone & men's health","cut",10,40,"Limited evidence."],
-  ["turk","Turkesterone","Testosterone & men's health","cut",10,50,"Little solid human research."],
-  ["fadogia","Fadogia agrestis","Testosterone & men's health","cut",10,35,"Limited human research."],
-  ["shilajit","Shilajit","Testosterone & men's health","cut",10,35,"The marketing outruns the research."],
-  ["ashwa","Ashwagandha","Testosterone & men's health","depends",0,0,"May help stress and sleep. Not your abs."],
-  ["maca","Maca / horny goat weed","Testosterone & men's health","cut",8,25,"Not for body composition."],
-  ["zma","ZMA","Testosterone & men's health","depends",0,0,"Only useful if you're low in zinc or magnesium."],
-  ["dim","DIM","Testosterone & men's health","cut",8,25,"No reason for most guys to take it."],
-
-  ["greens","Greens powder (AG1 etc.)","Health & wellness","cut",12,80,"An expensive multivitamin. Eat vegetables instead."],
-  ["multi","Multivitamin","Health & wellness","depends",0,0,"Cheap insurance. Fine to keep."],
-  ["vitd","Vitamin D","Health & wellness","depends",0,0,"Useful if you're low or get little sun."],
-  ["mag","Magnesium","Health & wellness","depends",0,0,"May help sleep."],
-  ["fishoil","Fish oil / omega-3","Health & wellness","depends",0,0,"Useful if you don't eat fish."],
-  ["zinc","Zinc","Health & wellness","depends",0,0,"Only if you're low."],
-  ["electro","Electrolytes (LMNT, Liquid IV etc.)","Health & wellness","depends",0,0,"Only needed for heavy sweating."],
-  ["collagen","Collagen","Health & wellness","depends",0,0,"Not a muscle-building protein."],
-  ["probiotic","Probiotics","Health & wellness","depends",0,0,"Varies a lot by product and person."],
-  ["fiber","Fiber supplement","Health & wellness","depends",0,0,"Keep if you eat little fiber."],
-  ["melatonin","Melatonin / sleep aids","Health & wellness","depends",0,0,"Short-term use only."],
-  ["seamoss","Sea moss","Health & wellness","cut",10,30,"A trend with little evidence."],
-  ["colostrum","Colostrum","Health & wellness","cut",10,50,"A trend with little evidence."],
-  ["organs","Beef organ supplements","Health & wellness","cut",8,40,"Just eat the food."],
-  ["mushroom","Mushroom coffee / lion's mane","Health & wellness","cut",8,40,"Not doing anything for your abs."],
-
-  ["sarms","SARMs","\"Enhanced\"","risk",20,100,"Not approved for human use, often mislabeled."],
-  ["peptides","Peptides (BPC-157 etc.)","\"Enhanced\"","risk",20,100,"Often sold \"not for human consumption.\""],
-  ["prohormones","Prohormones","\"Enhanced\"","risk",20,80,"Serious health risks."]
-];
-const PMAP = Object.fromEntries(PRODUCTS.map(p=>[p[0],p]));
-const CATS = [...new Set(PRODUCTS.map(p=>p[2]))];
-
-const QUESTIONS = [
+const Q = [
   {id:"goal",q:"What's your #1 goal?",opts:["Lose fat and see my abs","Build muscle","Both"]},
   {id:"abs",q:"Have you ever seen your abs?",opts:["Never","Almost","Yes, but I lost them"]},
-  {id:"stack",q:"What do you take right now?",multi:true},
+  {id:"supps",q:"What do you take right now?",type:"pick",group:"supp",hint:"Tap everything you use. Type a brand if you don't see it, like AG1, C4 or Hydroxycut."},
+  {id:"gear",q:"Bought into any of these?",type:"pick",group:"gear",hint:"Gadgets, tests and trends. Tap anything you own or pay for."},
   {id:"spend",q:"About how much do you spend a month on supplements?",opts:["Under $50","$50–100","$100–200","$200+"]},
   {id:"protein",q:"Do you hit your protein most days?",opts:["Yes","Sometimes","No","No idea how much I need"]},
   {id:"train",q:"How many days a week do you train?",opts:["0–1","2–3","4+"]},
@@ -288,71 +247,90 @@ const QUESTIONS = [
   {id:"weekend",q:"How are your weekends?",opts:["On track","A bit loose","I undo the whole week"]}
 ];
 
-const state = {step:0, answers:{}, stack:new Set(), other:"", email:"", filter:""};
+const state = {step:0, a:{}, picked:new Set(), none:{supp:false,gear:false}, other:"", filter:"", showAll:{supp:false,gear:false}, name:"", email:"", result:null, sent:false};
 const app = document.getElementById("app");
 const esc = s => String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const money = n => "$"+Math.round(n).toLocaleString("en-US");
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* ---------- search: names, brands and nicknames ---------- */
+const norm = s => s.toLowerCase().replace(/[^a-z0-9 ]/g," ").replace(/\s+/g," ").trim();
+function match(p,f){
+  if(!f) return {ok:true};
+  const n=norm(p.n+" "+p.full);
+  if(n.includes(f)) return {ok:true};
+  const hit=p.a.find(a=>norm(a).includes(f)||(f.length>3&&f.includes(norm(a))));
+  return hit?{ok:true,via:hit}:{ok:false};
+}
 
 /* ---------- scoring ---------- */
-function computeResult(a, stack){
-  const picked = [...stack].map(id=>PMAP[id]).filter(Boolean);
-  let productPts = picked.reduce((s,p)=>s+p[4],0);
-  if(!stack.has("creatine")) productPts += 5;
+const SPEND_CAP = {"Under $50":600,"$50–100":1200,"$100–200":2400,"$200+":Infinity};
+function computeResult(){
+  const a=state.a, picked=[...state.picked].map(id=>PMAP[id]).filter(Boolean);
+  let productPts = picked.reduce((s,p)=>s+p.pts,0);
+  const missingCreatine = !state.picked.has("creatine");
+  if(missingCreatine) productPts += 5;
   productPts = Math.min(productPts,40);
-
   const proteinPts = {"Yes":0,"Sometimes":8,"No":15,"No idea how much I need":12}[a.protein] ?? 0;
   const trainPts   = {"4+":0,"2–3":8,"0–1":15}[a.train] ?? 0;
   const calPts     = {"Yes":0,"Roughly":5,"No idea":12}[a.cals] ?? 0;
   const wkPts      = {"On track":0,"A bit loose":6,"I undo the whole week":12}[a.weekend] ?? 0;
+  const score = Math.max(12, Math.min(96, 100-productPts-proteinPts-trainPts-calPts-wkPts));
 
-  let score = 100 - productPts - proteinPts - trainPts - calPts - wkPts;
-  score = Math.max(10, Math.min(95, score));
-
-  const wasteYear = picked.reduce((s,p)=>s+p[5],0) * 12;
+  // Money: what they rebuy every month (capped by what they told us they spend) plus gadgets already bought.
+  const rawYear = picked.filter(p=>p.k==="skip").reduce((s,p)=>s+p.m,0)*12;
+  const wasteYear = Math.min(rawYear, SPEND_CAP[a.spend] ?? Infinity);
+  const gearSpent = picked.filter(p=>p.k==="skip").reduce((s,p)=>s+p.o,0);
+  const skips = picked.filter(p=>p.k==="skip"||p.k==="risk");
 
   const leaks = [
-    {k:"stack",pts:productPts,t:"Your stack",d:"You're paying for products that aren't moving you closer to your abs."},
-    {k:"protein",pts:proteinPts,t:"Your protein",d:"Without enough protein, you lose muscle while you diet, so there's less to show when the fat comes off."},
-    {k:"train",pts:trainPts,t:"Your training",d:"Fewer than 4 days a week makes it hard to hold muscle while you lose fat."},
-    {k:"cals",pts:calPts,t:"Your calories",d:"If you don't know what you eat, hidden calories are quietly stalling your fat loss."},
-    {k:"weekend",pts:wkPts,t:"Your weekends",d:"You're undoing your weekday progress every Saturday and Sunday."}
+    {k:"stack",pts:productPts,t:"Your stack",d:skips.length?`${skips.length} of the things you buy ${skips.length===1?"isn't":"aren't"} moving you closer to your abs.`:"You're missing the one supplement that's cheap and proven.",fix:skips.length?"Stop reordering anything marked Skip it. Put that money into food.":"Add plain creatine monohydrate, 3–5g a day. It's about $10 a month."},
+    {k:"protein",pts:proteinPts,t:"Your protein",d:"Without enough protein you lose muscle while you diet, so there's less to show when the fat comes off.",fix:"Your free plan gives you your exact daily protein number, and meals that hit it."},
+    {k:"train",pts:trainPts,t:"Your training",d:"Fewer than 4 days a week makes it hard to hold muscle while you lose fat.",fix:"Your free plan builds 45-minute workouts around the days you can actually train."},
+    {k:"cals",pts:calPts,t:"Your calories",d:"If you don't know what you eat, hidden calories are quietly stalling your fat loss.",fix:"Your free plan gives you your calories and a meal plan made only from foods you already eat."},
+    {k:"weekend",pts:wkPts,t:"Your weekends",d:"Two loose days can wipe out five good ones. That's why the scale doesn't move.",fix:"Your free plan shows you what to order at the places you already go, so weekends stop undoing the week."}
   ].sort((x,y)=>y.pts-x.pts);
-  const leak = leaks[0].pts>0 ? leaks[0] : {t:"The last 10%",d:"Your basics are solid. What's left is dialing in the plan so the last layer comes off."};
+  const leak = leaks[0].pts>0 ? leaks[0] : {k:"last",t:"The last 10%",d:"Your basics are solid. What's left is dialing in the plan so the last layer comes off.",fix:"Your free plan sets your exact calories and protein so nothing is guesswork."};
 
-  let band, bandText;
-  if(score<50){band="Leaking";bandText="You're spending money and effort that isn't getting you closer to your abs.";}
-  else if(score<75){band="Close, but leaking";bandText="You've got a decent foundation, but a few leaks are costing you your abs.";}
-  else {band="Dialed in";bandText="Your stack is solid. You're ready for the last 10%, and that's where a plan built for you makes the difference.";}
+  let band, tone, bandText;
+  if(score<50){band="Leaking";tone="low";bandText="You're spending money and effort that isn't getting you closer to your abs.";}
+  else if(score<75){band="Close, but leaking";tone="mid";bandText="You've got a decent foundation, but a few leaks are costing you your abs.";}
+  else {band="Dialed in";tone="high";bandText="Your stack is solid. You're ready for the last 10%, and that's where a plan built for you makes the difference.";}
 
-  const order = {risk:0,cut:1,depends:2,keep:3};
-  const verdicts = picked.slice().sort((x,y)=>order[x[3]]-order[y[3]]);
-  return {score, band, bandText, wasteYear, leak, verdicts};
+  const order={risk:0,skip:1,situational:2,worth:3};
+  const verdicts=picked.slice().sort((x,y)=>order[x.k]-order[y.k]);
+  return {score,band,tone,bandText,wasteYear,gearSpent,leak,verdicts,skips,missingCreatine};
 }
 
-/* Lead source: ?src=video-name (or utm_source) from a video link, remembered for this visitor */
+/* ---------- lead source: ?src=video-name from a video link, remembered for this visitor ---------- */
 const LEAD_SOURCE = (()=>{ let v=""; try{ const q=new URLSearchParams(location.search); v=q.get("src")||q.get("utm_source")||""; if(v) localStorage.setItem("sps_src",v); else v=localStorage.getItem("sps_src")||""; }catch(e){} if(!v){ try{ v=document.referrer?new URL(document.referrer).hostname:""; }catch(e){} } return (v||"direct").slice(0,80); })();
-/* ---------- Kit signup ---------- */
-async function sendToKit(email, r){
-  const VL = {keep:"KEEP",depends:"DEPENDS",cut:"CUT",risk:"CUT NOW"};
-  const reportLines = r.verdicts.map(p=>{ let why=p[6].replace(/^(Keep|Cut|Cut now|Depends)[.,]\s*/i,""); why=why.charAt(0).toUpperCase()+why.slice(1); return `${p[1]}: ${VL[p[3]]}. ${why}`; });
-  if(state.other.trim()) reportLines.push(`${state.other.trim()}: CHECK. I'd need to see the label. This is exactly what the full audit covers.`);
-  if(!state.stack.has("creatine")) reportLines.push("Creatine (missing): ADD. The one supplement I'd never cut. Plain monohydrate, 3–5g a day.");
-  if(!reportLines.length) reportLines.push("No supplements yet: GOOD. You're not wasting money. Your results come from the basics.");
-  const fields = {stack_score:String(r.score), goal:state.answers.goal||"", monthly_spend:state.answers.spend||"",
-    stack_band:r.band,
-    stack_leak:`${r.leak.t}. ${r.leak.d}`,
-    stack_waste:r.wasteYear>0?`About $${r.wasteYear.toLocaleString("en-US")} a year`:"Little to none",
-    stack_report:reportLines.join("\n"), lead_source:LEAD_SOURCE};
+
+/* ---------- Kit ---------- */
+function reportLines(r){
+  const L = r.verdicts.map(p=>{
+    const tag = p.k==="risk"?"RISKY":KIND[p.k].toUpperCase();
+    let line = `${p.full}: ${tag}. ${p.h.replace(/\.?$/,".")}`;
+    if((p.k==="skip"||p.k==="situational") && p.s) line += ` Cheaper swap: ${p.s}.`;
+    return line;
+  });
+  if(state.other.trim()) L.push(`${state.other.trim()}: CHECK. Look it up in Stack Check in the app.`);
+  if(r.missingCreatine) L.push("Creatine (missing): ADD. The one supplement I'd never cut. Plain monohydrate, 3–5g a day.");
+  if(!L.length) L.push("Nothing yet: GOOD. You're not wasting money. Your results come from the basics.");
+  return L;
+}
+async function sendToKit(r){
+  const fields = {stack_score:String(r.score), goal:state.a.goal||"", monthly_spend:state.a.spend||"", stack_band:r.band,
+    stack_leak:`${r.leak.t}. ${r.leak.d} ${r.leak.fix}`,
+    stack_waste:r.wasteYear>0?`About ${money(r.wasteYear)} a year`:"Little to none",
+    stack_report:reportLines(r).join("\n"), lead_source:LEAD_SOURCE};
   try{
-    const res = await fetch(`https://api.convertkit.com/v3/forms/${KIT_FORM_ID}/subscribe`,{
-      method:"POST",headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({api_key:KIT_API_KEY,email,fields})
-    });
+    const res = await fetch(`https://api.convertkit.com/v3/forms/${KIT_FORM_ID}/subscribe`,{method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({api_key:KIT_API_KEY,email:state.email,first_name:state.name,fields})});
     if(res.ok) return true;
     throw new Error("api");
   }catch(e){
     try{
-      const fd = new FormData();
-      fd.append("email_address",email);
+      const fd=new FormData(); fd.append("email_address",state.email); fd.append("first_name",state.name);
       Object.entries(fields).forEach(([k,v])=>fd.append(`fields[${k}]`,v));
       await fetch(`https://app.kit.com/forms/${KIT_FORM_ID}/subscriptions`,{method:"POST",mode:"no-cors",body:fd});
       return true;
@@ -360,67 +338,70 @@ async function sendToKit(email, r){
   }
 }
 
-/* ---------- screens ---------- */
+/* ---------- navigation ---------- */
+const GATE = Q.length+1, CALC = Q.length+2, RES = Q.length+3;
 function render(){
-  const s = state.step;
-  document.querySelector(".wrap").classList.toggle("narrow-mode", s>=1 && s<=QUESTIONS.length+1);
+  const s=state.step;
+  document.querySelector(".wrap").classList.toggle("narrow", s>=1 && s<RES);
   if(s===0) return renderStart();
-  if(s>=1 && s<=QUESTIONS.length) return renderQuestion(s-1);
-  if(s===QUESTIONS.length+1) return renderGate();
+  if(s<=Q.length) return renderQuestion(s-1);
+  if(s===GATE) return renderGate();
+  if(s===CALC) return renderCalc();
   return renderResults();
 }
+function go(n){ state.step=n; render(); window.scrollTo({top:0,behavior:reduce?"auto":"smooth"}); const h=app.querySelector("h1,h2"); if(h){h.setAttribute("tabindex","-1");h.focus({preventScroll:true});} }
 function progress(i){
-  const pct = Math.round(((i+1)/QUESTIONS.length)*100);
-  return `<div class="progress"><div class="qmeta"><span>Question ${i+1} of ${QUESTIONS.length}</span><span>${pct}%</span></div><div class="bar"><i style="width:${pct}%"></i></div></div>`;
+  const pct=Math.round(((i+1)/Q.length)*100);
+  return `<div class="progress"><div class="qmeta"><span>Question ${i+1} of ${Q.length}</span><span>${pct}%</span></div><div class="bar"><i style="width:${pct}%"></i></div></div>`;
 }
-function go(n){ state.step=n; render(); window.scrollTo({top:0,behavior:"smooth"}); const h=app.querySelector("h1,h2"); if(h){h.setAttribute("tabindex","-1");h.focus({preventScroll:true});} }
 
-function ctaBlock(id,label){
-  return `<div class="stack" style="gap:10px"><button class="btn" data-start id="${id}">${label}</button>
-  <div class="micro"><span>Free</span><span>60 seconds</span><span>No sign-up to start</span></div></div>`;
+/* ---------- start ---------- */
+function ctaBlock(label){
+  return `<div class="stack ctawrap" style="gap:10px"><button class="btn" data-start>${label}</button>
+  <div class="micro"><span>Free</span><span>60 seconds</span><span>Instant results</span></div></div>`;
 }
 function exampleLabel(){
   return `<div class="facts" aria-label="Example Stack Score report">
     <div class="ft">Stack Score Facts</div>
     <div class="serv"><span>Example report</span><span>4 products checked</span></div>
-    <div class="scoreline"><div><div class="lbl">Your Stack Score</div><div class="band">"Leaking"</div></div><div class="bignum">42<span>/100</span></div></div>
+    <div class="scoreline"><div><div class="lbl">Stack Score</div><div class="band">"Leaking"</div></div><div class="bignum">42<span>/100</span></div></div>
     <div class="vhead"><span>Product</span><span>Verdict</span></div>
-    <div class="vrow"><span class="nm">Creatine</span><span class="pill p-keep">Keep</span></div>
-    <div class="vrow"><span class="nm">Pre-workout</span><span class="pill p-depends">Depends</span></div>
-    <div class="vrow"><span class="nm">Fat burner</span><span class="pill p-cut">Cut</span></div>
-    <div class="vrow"><span class="nm">Greens powder (AG1 etc.)</span><span class="pill p-cut">Cut</span></div>
-    <div class="totals"><div class="trow"><span>Estimated yearly waste</span><span class="v">About $1,500</span></div><div class="trow"><span>#1 leak</span><span class="v">Your weekends</span></div></div>
+    <div class="vrow"><span class="nm">Fat burner</span><span class="pill p-skip">Skip it</span><span class="why">Mostly caffeine, with the worst safety record in the aisle.</span></div>
+    <div class="vrow"><span class="nm">Greens powder (AG1)</span><span class="pill p-skip">Skip it</span><span class="why">An expensive multivitamin with a podcast budget.</span></div>
+    <div class="vrow"><span class="nm">Pre-workout</span><span class="pill p-situational">Depends</span><span class="why">You're mostly paying for caffeine. <b>Cheaper swap:</b> coffee.</span></div>
+    <div class="vrow"><span class="nm">Creatine</span><span class="pill p-worth">Worth it</span><span class="why">The cheap one is the one that works.</span></div>
+    <div class="trow"><span>Wasted a year</span><span class="v">About $1,320</span></div>
+    <div class="trow"><span>#1 leak</span><span class="v">Your weekends</span></div>
   </div>`;
 }
 function renderStart(){
-  const photo = PHOTO_URL ? `style="background-image:url('${esc(PHOTO_URL)}')"` : "";
   app.innerHTML = `
-  <section class="hero" style="margin-top:28px">
+  <section class="hero">
     <h1>What's Your <em>Stack Score?</em></h1>
-    <p class="sub">The free 60-second audit that shows you exactly what to <b>cut, keep and swap</b>, and how much your supplements are really costing you.</p>
-<div class="byline"><img src="/boon.jpg" alt="Boon Fay" width="46" height="46"><div><b>Boon Fay</b><span>Went from 225 to 175 lbs. No sponsors, no affiliate links.</span></div></div>
-    ${ctaBlock("start","Get My Stack Score →")}
+    <p class="sub">The free 60-second audit that gives you a verdict on <b>every supplement you take</b>, and shows you how much you're wasting a year.</p>
+    <div class="byline"><img src="/boon.jpg" alt="Boon Fay" width="46" height="46"><div><b>Boon Fay</b><span>Investigated 47 fitness products. No sponsors, no affiliate links.</span></div></div>
+    ${ctaBlock("Get My Stack Score →")}
     <div class="proof">
       <div><b>47</b><span>products investigated</span></div>
       <div><b>225→175</b><span>my own transformation</span></div>
-      <div><b>−11 lbs</b><span>client result in 1 month</span></div>
+      <div><b>$0</b><span>from any brand. Ever.</span></div>
     </div>
   </section>
 
   <section class="sec">
     <span class="eyebrow">What you'll get</span>
     <h2>Your personal Stack Score report</h2>
-    <div class="get-grid">
-    <div class="stack">
-    <ul class="bullets">
-      <li><span class="tick">✓</span><span><b>Your score out of 100</b>, so you know exactly where you stand</span></li>
-      <li><span class="tick">✓</span><span><b>A verdict on every supplement you take:</b> keep, cut or depends</span></li>
-      <li><span class="tick">✓</span><span><b>Your yearly waste:</b> how much money is going to products that don't work</span></li>
-      <li><span class="tick">✓</span><span><b>Your #1 leak:</b> the one thing keeping your abs hidden</span></li>
-    </ul>
-    ${ctaBlock("start2","Get My Stack Score →")}
-    </div>
-    ${exampleLabel()}
+    <div class="grid2">
+      <div class="stack">
+        <ul class="bullets">
+          <li><span class="tick">✓</span><span><b>Your score out of 100</b>, so you know exactly where you stand</span></li>
+          <li><span class="tick">✓</span><span><b>My verdict on everything you take:</b> worth it, depends or skip it, plus the cheaper swap</span></li>
+          <li><span class="tick">✓</span><span><b>What you're wasting a year</b> on products that don't work</span></li>
+          <li><span class="tick">✓</span><span><b>Your #1 leak</b>, the one thing keeping your abs hidden, and how to fix it</span></li>
+        </ul>
+        ${ctaBlock("Get My Stack Score →")}
+      </div>
+      ${exampleLabel()}
     </div>
   </section>
 
@@ -428,19 +409,19 @@ function renderStart(){
     <span class="eyebrow">How it works</span>
     <h2>3 steps. 60 seconds.</h2>
     <ol class="steps">
-      <li><div><b>Answer 8 quick questions</b><span class="muted">Your goal, what you take and your habits. One tap each.</span></div></li>
-      <li><div><b>Get your score instantly</b><span class="muted">See your verdicts, your waste and your #1 leak on screen.</span></div></li>
-      <li><div><b>Get your fix list</b><span class="muted">Your full report lands in your inbox so you can act on it.</span></div></li>
+      <li><div><b>Answer 9 quick questions</b><span class="muted">Your goal, what you take and your habits. Mostly one tap each.</span></div></li>
+      <li><div><b>Get your score instantly</b><span class="muted">Your verdicts, your waste and your #1 leak, right on screen.</span></div></li>
+      <li><div><b>Fix your #1 leak</b><span class="muted">Your report lands in your inbox, with exactly what to do this week.</span></div></li>
     </ol>
   </section>
 
   <section class="sec">
     <span class="eyebrow">Who built this</span>
     <div class="me">
-      <div class="ph" ${photo}>${PHOTO_URL?"":"B"}</div>
-      <div class="stack" style="gap:6px">
+      <img src="/boon.jpg" alt="Boon Fay" width="88" height="88">
+      <div class="stack" style="gap:8px">
         <h2 style="font-size:24px">I'm Boon. I wasted thousands on supplements.</h2>
-        <p class="muted">At 225 lbs, my cabinet looked like a GNC shelf. Fat burners, test boosters, greens powder. Most of it did nothing. I got to 175 once I cut the junk and kept what worked. This is the audit I wish someone had given me.</p>
+        <p class="muted">At 225 lbs my cabinet looked like a GNC shelf. Fat burners, test boosters, greens powder. Most of it did nothing. I got to 175 once I cut the junk and kept what worked. Then I investigated 47 of the most popular products so you don't have to. This is the audit I wish someone had given me.</p>
       </div>
     </div>
   </section>
@@ -449,26 +430,27 @@ function renderStart(){
     <span class="eyebrow">Questions</span>
     <div class="faq">
       <div><b>Is it really free?</b>Yes. No card, no catch.</div>
-      <div><b>How long does it take?</b>About 60 seconds. 8 questions, one tap each.</div>
-      <div><b>Do I need to sign up first?</b>No. Answer the questions first. You only add your email to get your report.</div>
+      <div><b>Who pays you to say this?</b>Nobody. No sponsors and no affiliate links, so I can tell you what doesn't work.</div>
+      <div><b>Do I need to sign up first?</b>No. Answer the questions first. You only add your email to see your report.</div>
     </div>
-    <div class="ctaend">${ctaBlock("start3","Find Out My Stack Score →")}</div>
+    <div class="ctaend">${ctaBlock("Find Out My Stack Score →")}</div>
   </section>`;
   app.querySelectorAll("[data-start]").forEach(b=>b.onclick=()=>go(1));
 }
 
+/* ---------- questions ---------- */
 function renderQuestion(i){
-  const Q = QUESTIONS[i];
-  if(Q.multi) return renderStack(i);
-  const cur = state.answers[Q.id];
+  const q=Q[i];
+  if(q.type==="pick") return renderPick(i);
+  const cur=state.a[q.id];
   app.innerHTML = `${progress(i)}
-  <section class="screen stack">
-    <h2>${esc(Q.q)}</h2>
-    <div class="opts">${Q.opts.map((o,k)=>`<button class="opt" data-k="${k}" aria-pressed="${cur===o}"><span>${esc(o)}</span><span class="arrow">→</span></button>`).join("")}</div>
+  <section class="screen stack fade">
+    <h2>${esc(q.q)}</h2>
+    <div class="opts">${q.opts.map((o,k)=>`<button class="opt" data-k="${k}" aria-pressed="${cur===o}"><span>${esc(o)}</span><span class="arrow">→</span></button>`).join("")}</div>
     <div><button class="link" id="back">← Back</button></div>
   </section>`;
   app.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{
-    state.answers[Q.id]=Q.opts[+b.dataset.k];
+    state.a[q.id]=q.opts[+b.dataset.k];
     app.querySelectorAll(".opt").forEach(x=>x.setAttribute("aria-pressed","false"));
     b.setAttribute("aria-pressed","true");
     setTimeout(()=>go(state.step+1),160);
@@ -476,160 +458,231 @@ function renderQuestion(i){
   document.getElementById("back").onclick=()=>go(state.step-1);
 }
 
-function renderStack(i){
-  const f = state.filter.trim().toLowerCase();
-  const catHtml = CATS.map(c=>{
-    const items = PRODUCTS.filter(p=>p[2]===c && (!f || p[1].toLowerCase().includes(f)));
-    if(!items.length) return "";
-    return `<div class="cat"><h3>${esc(c)}</h3><div class="chips">${items.map(p=>`
-      <label class="chk"><input type="checkbox" id="p-${p[0]}" value="${p[0]}" ${state.stack.has(p[0])?"checked":""}><span class="box"></span><span>${esc(p[1])}</span></label>`).join("")}</div></div>`;
-  }).join("");
+function chip(p,via){
+  return `<label class="chk"><input type="checkbox" value="${p.id}" ${state.picked.has(p.id)?"checked":""}><span class="box"></span><span>${esc(p.n)}${via?` <span class="via">(${esc(via)})</span>`:""}</span></label>`;
+}
+function renderPick(i){
+  const q=Q[i], g=q.group, f=norm(state.filter);
+  const pool=PRODUCTS.filter(p=>p.g===g);
+  let body="";
+  if(f){
+    const hits=pool.map(p=>({p,m:match(p,f)})).filter(x=>x.m.ok);
+    const other=PRODUCTS.filter(p=>p.g!==g).map(p=>({p,m:match(p,f)})).filter(x=>x.m.ok);
+    const all=[...hits,...other];
+    body = all.length ? `<div class="chips">${all.map(x=>chip(x.p,x.m.via)).join("")}</div>`
+      : `<p class="muted">I haven't investigated that one yet. Add it below and I'll flag it in your report.</p>`;
+  } else if(!state.showAll[g]){
+    const pop=pool.filter(p=>p.pop<99).sort((a,b)=>a.pop-b.pop);
+    const extra=pool.filter(p=>p.pop===99 && state.picked.has(p.id));
+    body = `<div class="cat"><h3>Most common</h3><div class="chips">${[...pop,...extra].map(p=>chip(p)).join("")}</div></div>
+      <button class="more" id="all">Show all ${pool.length} →</button>`;
+  } else {
+    const cats=[...new Set(pool.map(p=>p.c))];
+    body = cats.map(c=>`<div class="cat"><h3>${esc(c)}</h3><div class="chips">${pool.filter(p=>p.c===c).map(p=>chip(p)).join("")}</div></div>`).join("");
+  }
+  const mine=[...state.picked].map(id=>PMAP[id]).filter(p=>p&&p.g===g);
+  const noneLabel = g==="supp" ? "I don't take anything yet" : "None of these";
   app.innerHTML = `${progress(i)}
-  <section class="screen stack">
-    <h2>What do you take right now?</h2>
-    <p class="muted">Tick everything. Be honest, it's just you and the results.</p>
-    <label class="chk" style="align-self:flex-start"><input type="checkbox" id="p-none" ${state.stack.size===0 && state.answers.stack==="none"?"checked":""}><span class="box"></span><span>I don't take anything yet</span></label>
-    <input class="search" id="filter" type="search" placeholder="Search products…" value="${esc(state.filter)}" aria-label="Search products">
-    ${catHtml || `<p class="muted">No match. Add it under "Other" below.</p>`}
-    <div class="field">
-      <label for="other">Other (type it in)</label>
-      <input type="text" id="other" placeholder="e.g. a specific brand or product" value="${esc(state.other)}">
-    </div>
+  <section class="screen stack fade" style="gap:16px">
+    <h2>${esc(q.q)}</h2>
+    <p class="hint">${esc(q.hint)}</p>
+    <label class="chk" style="align-self:flex-start"><input type="checkbox" id="none" ${state.none[g]?"checked":""}><span class="box"></span><span>${noneLabel}</span></label>
+    <input class="search" id="filter" type="search" placeholder="${g==="supp"?"Search a product or brand…":"Search, e.g. Whoop, Theragun…"}" value="${esc(state.filter)}" aria-label="Search products" autocomplete="off">
+    ${body}
+    ${g==="supp"?`<div class="field"><label for="other">Something else? Type it in</label><input type="text" id="other" placeholder="e.g. a specific brand or product" value="${esc(state.other)}"></div>`:""}
   </section>
   <div class="sticky-next">
-    <button class="btn ghost" id="back" style="width:auto">←</button>
-    <button class="btn" id="next">Next → <span class="count" id="cnt" style="color:#fff">${state.stack.size?`(${state.stack.size})`:""}</span></button>
+    <button class="btn ghost" id="back" style="width:auto" aria-label="Back">←</button>
+    <button class="btn" id="next">${mine.length?`Next (${mine.length} picked) →`:"Next →"}</button>
   </div>`;
-  const upd=()=>{document.getElementById("cnt").textContent=state.stack.size?`(${state.stack.size})`:"";};
   app.querySelectorAll('.chk input[value]').forEach(cb=>cb.onchange=()=>{
-    cb.checked?state.stack.add(cb.value):state.stack.delete(cb.value);
-    if(cb.checked){document.getElementById("p-none").checked=false;state.answers.stack="";}
-    upd();
+    cb.checked?state.picked.add(cb.value):state.picked.delete(cb.value);
+    if(cb.checked){state.none[g]=false;const n=document.getElementById("none");if(n)n.checked=false;}
+    const c=[...state.picked].filter(id=>PMAP[id]?.g===g).length;
+    document.getElementById("next").textContent=c?`Next (${c} picked) →`:"Next →";
   });
-  document.getElementById("p-none").onchange=e=>{
-    if(e.target.checked){state.stack.clear();state.answers.stack="none";app.querySelectorAll('.chk input[value]').forEach(c=>c.checked=false);upd();}
-    else state.answers.stack="";
+  document.getElementById("none").onchange=e=>{
+    state.none[g]=e.target.checked;
+    if(e.target.checked){pool.forEach(p=>state.picked.delete(p.id));renderPick(i);}
   };
   const fi=document.getElementById("filter");
-  fi.oninput=()=>{state.filter=fi.value;const pos=fi.selectionStart;renderStack(i);const n=document.getElementById("filter");n.focus();n.setSelectionRange(pos,pos);};
-  document.getElementById("other").oninput=e=>state.other=e.target.value;
-  document.getElementById("back").onclick=()=>go(state.step-1);
+  fi.oninput=()=>{state.filter=fi.value;const pos=fi.selectionStart;renderPick(i);const n=document.getElementById("filter");n.focus();n.setSelectionRange(pos,pos);};
+  const all=document.getElementById("all"); if(all) all.onclick=()=>{state.showAll[g]=true;renderPick(i);};
+  const ot=document.getElementById("other"); if(ot) ot.oninput=e=>state.other=e.target.value;
+  document.getElementById("back").onclick=()=>{state.filter="";go(state.step-1);};
   document.getElementById("next").onclick=()=>{state.filter="";go(state.step+1);};
 }
 
+/* ---------- email gate ---------- */
 function renderGate(){
+  const n=state.picked.size;
   app.innerHTML = `
   <div class="progress"><div class="qmeta"><span>Done</span><span>100%</span></div><div class="bar"><i style="width:100%"></i></div></div>
-  <section class="screen stack" style="margin-top:28px">
+  <section class="screen stack fade" style="margin-top:24px">
     <h2>✅ Your Stack Score is ready.</h2>
     <div class="gatewrap">
       <div class="facts blurred" aria-hidden="true">
         <div class="ft">Stack Score Facts</div>
-        <div class="scoreline"><div><div class="lbl">Your Stack Score</div><div class="band">"———"</div></div><div class="bignum">??<span>/100</span></div></div>
-        <div class="vrow"><span class="nm">████████</span><span class="pill p-cut">Cut</span></div>
-        <div class="vrow"><span class="nm">██████</span><span class="pill p-keep">Keep</span></div>
-        <div class="trow"><span>Estimated yearly waste</span><span class="v">$█,███</span></div>
+        <div class="scoreline"><div><div class="lbl">Stack Score</div><div class="band">"———"</div></div><div class="bignum">??<span>/100</span></div></div>
+        <div class="vrow"><span class="nm">████████</span><span class="pill p-skip">Skip it</span></div>
+        <div class="vrow"><span class="nm">██████</span><span class="pill p-worth">Worth it</span></div>
+        <div class="trow"><span>Wasted a year</span><span class="v">$█,███</span></div>
       </div>
-      <div class="badge"><span>🔒 Enter your email to unlock</span></div>
+      <div class="badge"><span>🔒 ${n?`${n} product${n===1?"":"s"} checked`:"Your report is ready"}</span></div>
     </div>
-    <p class="lede">Where should I send your full report?</p>
+    <p style="font-size:19px;font-weight:700">Where should I send your report?</p>
     <ul class="inside">
       <li>Your score out of 100</li>
-      <li>Your verdict on every product you take</li>
-      <li>How much you're wasting every year</li>
-      <li>Your #1 leak and how to fix it</li>
+      <li>My verdict on ${n?`all ${n} things you picked`:"your stack"}, plus the cheaper swap</li>
+      <li>What you're wasting every year</li>
+      <li>Your #1 leak and exactly how to fix it</li>
     </ul>
     <form id="gate" class="stack" novalidate style="gap:12px">
-      <div class="field">
-        <label for="email">Email address</label>
+      <div class="field"><label for="name">First name</label>
+        <input type="text" id="name" autocomplete="given-name" placeholder="Your first name" value="${esc(state.name)}" required></div>
+      <div class="field"><label for="email">Email</label>
         <input type="email" id="email" autocomplete="email" inputmode="email" placeholder="you@email.com" value="${esc(state.email)}" required>
-        <div class="err" id="err" role="alert"></div>
-      </div>
+        <div class="err" id="err" role="alert"></div></div>
       <button class="btn" id="show" type="submit">Show My Stack Score →</button>
       <p class="muted small" style="text-align:center">🔒 No spam. Unsubscribe anytime.</p>
     </form>
     <div><button class="link" id="back">← Back</button></div>
   </section>`;
   document.getElementById("back").onclick=()=>go(state.step-1);
-  document.getElementById("gate").onsubmit=async e=>{
+  document.getElementById("gate").onsubmit=e=>{
     e.preventDefault();
-    const em=document.getElementById("email").value.trim();
-    if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(em)){document.getElementById("err").textContent="Enter a valid email so I can send your report.";return;}
-    state.email=em;
-    // Hand the answers to the app on this same site, so The Free Stack quiz starts pre-filled.
-    try{ localStorage.setItem("sps_stackscore", JSON.stringify({email:em, goal:state.answers.goal, spend:state.answers.spend, train:state.answers.train, stack:[...state.stack], at:Date.now()})); }catch(e){}
-    const btn=document.getElementById("show");btn.disabled=true;btn.textContent="Calculating…";
-    const r=computeResult(state.answers,state.stack);
-    state.result=r;
-    state.sent = await sendToKit(em,r);
-    go(state.step+1);
+    const nm=document.getElementById("name").value.trim(), em=document.getElementById("email").value.trim(), err=document.getElementById("err");
+    if(nm.length<2){err.textContent="Add your first name so I know who the report is for.";return;}
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(em)){err.textContent="Enter a valid email so I can send your report.";return;}
+    state.name=nm.charAt(0).toUpperCase()+nm.slice(1); state.email=em;
+    state.result=computeResult();
+    // Hand the answers to the app on this same site, so the plan builder starts pre-filled.
+    try{ localStorage.setItem("sps_stackscore", JSON.stringify({name:state.name,email:em,goal:state.a.goal,spend:state.a.spend,train:state.a.train,stack:[...state.picked],score:state.result.score,at:Date.now()})); }catch(x){}
+    state.sending = sendToKit(state.result).then(ok=>state.sent=ok);
+    go(CALC);
   };
 }
 
+/* ---------- the "working on it" beat ---------- */
+function renderCalc(){
+  const n=state.picked.size;
+  const steps=[
+    n?`Checking ${n} product${n===1?"":"s"} against my 47 verdicts`:"Checking your answers against my 47 verdicts",
+    "Adding up what you spend",
+    "Finding your #1 leak",
+    "Building your report"
+  ];
+  app.innerHTML = `<section class="screen stack fade" style="margin-top:56px;align-items:center;text-align:center">
+    <h2>Running your audit, ${esc(state.name)}…</h2>
+    <ul class="calc" style="list-style:none;padding:0;margin:8px 0 0;text-align:left">${steps.map(s=>`<li><i></i>${esc(s)}</li>`).join("")}</ul>
+  </section>`;
+  const lis=[...app.querySelectorAll(".calc li")];
+  const gap = reduce?60:520;
+  lis.forEach((li,k)=>setTimeout(()=>li.classList.add("on"),gap*(k+1)));
+  setTimeout(async()=>{ await Promise.race([state.sending,new Promise(r=>setTimeout(r,2500))]); go(RES); }, gap*(lis.length+1));
+}
+
+/* ---------- results ---------- */
+function absLine(){
+  return {"Never":"You've never seen your abs. Here's what's been in the way.",
+          "Almost":"You're closer than you think. Here's what's in the way.",
+          "Yes, but I lost them":"You've had them before. Here's what's keeping them hidden."}[state.a.abs] || "Here's what's in the way.";
+}
+function row(p){
+  const pill = p.k==="risk"?`<span class="pill p-risk">Risky</span>`:`<span class="pill p-${p.k}">${KIND[p.k]}</span>`;
+  const swap = (p.k==="skip"||p.k==="situational") && p.s ? ` <b>Cheaper swap:</b> ${esc(p.s)}.` : "";
+  const link = p.k==="risk" ? "" : `<a class="go" href="${VERDICT_URL(p.id)}">See the full breakdown →</a>`;
+  return `<div class="vrow"><span class="nm">${esc(p.n)}</span>${pill}<span class="why">${esc(p.h.replace(/\.?$/,"."))}${swap}</span>${link}</div>`;
+}
 function renderResults(){
-  const r = state.result || computeResult(state.answers,state.stack);
-  const rows = r.verdicts.map(p=>{
-    const v=p[3], label={keep:"Keep",depends:"Depends",cut:"Cut",risk:"Cut now"}[v];
-    return `<div class="vrow"><span class="nm">${esc(p[1])}</span><span class="pill p-${v}">${label}</span><span class="why">${esc(p[6])}</span></div>`;
-  }).join("");
-  const otherRow = state.other.trim()?`<div class="vrow"><span class="nm">${esc(state.other.trim())}</span><span class="pill p-depends">Check</span><span class="why">I'd need to see the label. This is exactly what the full audit covers.</span></div>`:"";
-  const noCreatine = !state.stack.has("creatine")?`<div class="vrow"><span class="nm">Creatine (missing)</span><span class="pill p-keep">Add</span><span class="why">The one supplement I'd never cut. Plain monohydrate, 3–5g a day.</span></div>`:"";
-  const wasteTxt = r.wasteYear>0?`About $${r.wasteYear.toLocaleString("en-US")}`:"Little to none";
-  const cta = (id)=>`<div class="cta">
-      <h2>Now fix it, free.</h2>
-      <p>Your score shows what to cut. My app shows you what to do instead, built from the answers you just gave me.</p>
-      <ul style="margin:0;padding-left:20px;display:grid;gap:6px">
-        <li>Your exact calories and protein</li>
-        <li>A meal plan made only from foods you already eat</li>
-        <li>Workouts on the days you choose, with a form video on every move</li>
-        <li>Stack Check: look up any supplement before you buy it</li>
-      </ul>
-      <a class="btn" id="${id}" href="${APP_URL}">Build My Free Plan →</a>
-      <p class="muted small" style="text-align:center">2 minutes. First 2 weeks free. No card.</p>
-    </div>`;
+  const r=state.result||computeResult();
+  const rows=r.verdicts.map(row).join("");
+  const otherRow = state.other.trim()?`<div class="vrow"><span class="nm">${esc(state.other.trim())}</span><span class="pill p-situational">Check</span><span class="why">I'd need to see the label. Look it up in Stack Check.</span><a class="go" href="${LOOKUP_URL}">Look it up in Stack Check →</a></div>`:"";
+  const creatineRow = r.missingCreatine?`<div class="vrow"><span class="nm">Creatine (missing)</span><span class="pill p-add">Add</span><span class="why">The one supplement I'd never cut. Plain monohydrate, 3–5g a day, about $10 a month.</span><a class="go" href="${VERDICT_URL("creatine")}">Why creatine →</a></div>`:"";
+  const empty = (!rows&&!otherRow)?`<div class="vrow"><span class="nm">Nothing yet</span><span class="pill p-worth">Good</span><span class="why">You're not wasting money. Your results come from the basics.</span></div>`:"";
+  const wasteTile = r.wasteYear>0?money(r.wasteYear):"$0";
+  const C=2*Math.PI*88, color={low:"#ff5a50",mid:"#f2b234",high:"#3fbf7f"}[r.tone];
   app.innerHTML = `
-  <section class="screen res-grid" style="margin-top:32px">
-  <div class="left stack" style="gap:22px">
-    <div class="scoreline" style="border:0;padding:0;align-items:center">
-      <div><span class="eyebrow">Your Stack Score</span><h2 style="margin-top:4px">"${esc(r.band)}"</h2></div>
-      <div class="bignum" style="color:var(--red-2)">${r.score}<span style="color:var(--muted)">/100</span></div>
-    </div>
-    <div class="leak"><span class="k">🚨 Your #1 leak</span><span class="t">${esc(r.leak.t)}</span><p>${esc(r.leak.d)}</p></div>
-    <a class="btn" href="${APP_URL}">Fix It With My Free Plan →</a>
-    ${cta("apply2")}
-    <p class="small muted" style="text-align:center">Want me to do it with you? <a href="${APPLY_URL}" style="color:var(--cream)">See if you qualify for 1:1 coaching</a>. Abs in 12 weeks, or I coach you free until you do.</p>
-  </div>
-  <div class="stack" style="gap:22px">
-    <span class="eyebrow">Your full report</span>
-    <div class="facts" role="region" aria-label="Your Stack Score report">
-      <div class="ft">Stack Score Facts</div>
-      <div class="serv"><span>Serving size: 1 honest audit</span><span>${r.verdicts.length} product${r.verdicts.length===1?"":"s"} checked</span></div>
-      <div class="scoreline">
-        <div><div class="lbl">Your Stack Score</div><div class="band">"${esc(r.band)}"</div></div>
-        <div class="bignum">${r.score}<span>/100</span></div>
+  <section class="screen res">
+    <div class="stack" style="gap:18px">
+      <div class="reveal fade">
+        <span class="eyebrow">${esc(state.name)}'s Stack Score</span>
+        <div class="gauge" role="img" aria-label="Stack Score ${r.score} out of 100">
+          <svg viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="88" fill="none" stroke="#1d3459" stroke-width="14"/>
+            <circle id="arc" cx="100" cy="100" r="88" fill="none" stroke="${color}" stroke-width="14" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${C}" style="transition:stroke-dashoffset 1.4s cubic-bezier(.2,.8,.2,1)"/></svg>
+          <div class="num"><b id="sc">0</b><span>out of 100</span></div>
+        </div>
+        <span class="bandpill b-${r.tone}">${esc(r.band)}</span>
+        <p style="font-size:17px;max-width:30em">${esc(absLine())}</p>
       </div>
-      <p style="font-size:15px;padding-block:8px;border-bottom:1px solid var(--label-ink)">${esc(r.bandText)}</p>
-      <div class="vhead"><span>Product</span><span>Verdict</span></div>
-      ${rows}${otherRow}${noCreatine}
-      ${(!rows && !otherRow)?`<div class="vrow"><span class="nm">No supplements yet</span><span class="pill p-keep">Good</span><span class="why">You're not wasting money. Your results come from the basics below.</span></div>`:""}
-      <div class="totals">
-        <div class="trow"><span>Estimated yearly waste</span><span class="v">${wasteTxt}</span></div>
-        <div class="trow"><span>#1 leak</span><span class="v">${esc(r.leak.t)}</span></div>
+      <div class="tiles fade">
+        <div class="${r.wasteYear>0?"hot":""}"><b>${wasteTile}</b><span>wasted a year</span></div>
+        <div class="${r.skips.length?"hot":""}"><b>${r.skips.length}</b><span>to stop buying</span></div>
+        <div><b>${r.verdicts.filter(p=>p.k==="worth").length}</b><span>worth keeping</span></div>
       </div>
-      <p class="foot">General information, not medical advice. Check with your doctor before stopping anything prescribed. Waste is an estimate based on typical prices.</p>
+      ${r.gearSpent>0?`<p class="small muted" style="text-align:center;margin-top:-6px">Plus about ${money(r.gearSpent)} already spent on gadgets and tests that don't work.</p>`:""}
+      <div class="leak fade">
+        <span class="k">🚨 Your #1 leak</span>
+        <span class="t">${esc(r.leak.t)}</span>
+        <p>${esc(r.leak.d)}</p>
+        <p class="fix"><b>The fix:</b> ${esc(r.leak.fix)}</p>
+      </div>
+      <div class="cta">
+        <h2>Now fix it, free.</h2>
+        <p>Your score shows what to stop. My app shows you what to do instead, built from the answers you just gave me.</p>
+        <ul>
+          <li>Your exact calories and protein</li>
+          <li>A meal plan made only from foods you already eat</li>
+          <li>Workouts on the days you choose, with a form video on every move</li>
+          <li>Stack Check: my verdict on all 47 products, before you buy anything</li>
+        </ul>
+        <a class="btn" href="${PLAN_URL}">Build My Free Plan →</a>
+        <p class="muted small" style="text-align:center">2 minutes. Your answers carry over. First 2 weeks free, no card.</p>
+      </div>
     </div>
 
-    <p class="sent">${state.sent?`Not ready? Your full report is on its way to <b>${esc(state.email)}</b>.`:`Not ready? Keep an eye on your inbox at <b>${esc(state.email)}</b>.`}</p>
-    <a class="btn" href="${APP_URL}">Get My Free Plan →</a>
-    <p class="muted small" style="text-align:center;margin:0">Your answers carry over. No card needed.</p>
-    <div><button class="link" id="redo">Retake the audit</button></div>
-  </div>
+    <div class="stack" style="gap:18px">
+      <span class="eyebrow">Your full report</span>
+      <div class="facts" role="region" aria-label="Your Stack Score report">
+        <div class="ft">Stack Score Facts</div>
+        <div class="serv"><span>Serving size: 1 honest audit</span><span>${r.verdicts.length} product${r.verdicts.length===1?"":"s"} checked</span></div>
+        <div class="scoreline"><div><div class="lbl">Stack Score</div><div class="band">"${esc(r.band)}"</div></div><div class="bignum">${r.score}<span>/100</span></div></div>
+        <p style="font-size:15px;padding-block:8px;border-bottom:1px solid var(--label-ink)">${esc(r.bandText)}</p>
+        <div class="vhead"><span>Product</span><span>Verdict</span></div>
+        ${rows}${otherRow}${creatineRow}${empty}
+        <div class="trow"><span>Wasted a year</span><span class="v">${r.wasteYear>0?"About "+money(r.wasteYear):"Little to none"}</span></div>
+        <div class="trow"><span>#1 leak</span><span class="v">${esc(r.leak.t)}</span></div>
+        <p class="foot">From Boon's Beyond the Label investigation. General information, not medical advice. Check with your doctor before stopping anything prescribed. Waste is an estimate based on typical prices.</p>
+      </div>
+      <p class="small muted">${state.sent?`A copy is on its way to <b style="color:#fff">${esc(state.email)}</b>.`:`A copy is on its way to <b style="color:#fff">${esc(state.email)}</b>. Check your promotions tab if you don't see it.`}</p>
+      <a class="btn" href="${PLAN_URL}">Fix My #1 Leak, Free →</a>
+      <div class="share">
+        <b>Know someone who buys this stuff?</b>
+        <p class="small muted">Send them the audit. It's free and takes 60 seconds.</p>
+        <code id="shareurl">${SHARE_URL}</code>
+        <button class="btn ghost sm" id="share">Copy link</button>
+      </div>
+      <p class="coach">Want me to do it with you? <a href="${COACH_URL}">See if you qualify for 1:1 coaching</a>. Abs in 12 weeks, or I coach you free until you do.</p>
+      <div style="text-align:center"><button class="link" id="redo">Retake the audit</button></div>
+    </div>
   </section>`;
-  document.getElementById("redo").onclick=()=>{state.answers={};state.stack.clear();state.other="";state.result=null;go(0);};
+
+  // count up the score and draw the ring
+  const sc=document.getElementById("sc"), arc=document.getElementById("arc"), target=r.score;
+  requestAnimationFrame(()=>{ arc.style.strokeDashoffset = C*(1-target/100); });
+  if(reduce){ sc.textContent=target; arc.style.transition="none"; }
+  else { const t0=performance.now(), dur=1400; const tick=t=>{ const k=Math.min(1,(t-t0)/dur), e=1-Math.pow(1-k,3); sc.textContent=Math.round(target*e); if(k<1) requestAnimationFrame(tick); }; requestAnimationFrame(tick); }
+
+  document.getElementById("share").onclick=async e=>{
+    const b=e.currentTarget;
+    try{ await navigator.clipboard.writeText(SHARE_URL); b.textContent="Copied ✓"; }
+    catch(x){ const s=window.getSelection(), rg=document.createRange(); rg.selectNodeContents(document.getElementById("shareurl")); s.removeAllRanges(); s.addRange(rg); b.textContent="Selected. Copy it ✓"; }
+    setTimeout(()=>b.textContent="Copy link",2200);
+  };
+  document.getElementById("redo").onclick=()=>{state.a={};state.picked.clear();state.none={supp:false,gear:false};state.other="";state.result=null;state.showAll={supp:false,gear:false};go(0);};
 }
 
 render();
 </script>
-
 </body>
 </html>
