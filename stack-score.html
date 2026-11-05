@@ -385,6 +385,94 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 }
 @media (max-width:380px){.live-in{padding:16px}.lq>div{font-size:13px}.lseg button{padding:6px 8px}}
 
+/* ---------- the report (results screen) ---------- */
+.report{padding-bottom:40px}
+.rhead{position:relative;overflow:hidden;background:#0b1430;color:#fff;padding-block:44px 120px}
+.rh-bg{position:absolute;inset:0;pointer-events:none;background:
+  radial-gradient(600px 380px at 12% 10%,rgba(208,54,47,.35),rgba(208,54,47,0) 70%),
+  radial-gradient(520px 360px at 92% 20%,rgba(61,107,255,.28),rgba(61,107,255,0) 70%),
+  radial-gradient(700px 300px at 50% 120%,rgba(47,209,127,.12),rgba(47,209,127,0) 70%),
+  linear-gradient(180deg,#101c40 0%,#0b1430 100%)}
+.rh-bg::after{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:36px 36px;-webkit-mask:radial-gradient(ellipse at 50% 30%,#000 30%,transparent 75%);mask:radial-gradient(ellipse at 50% 30%,#000 30%,transparent 75%)}
+.rh-in{position:relative;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:40px;align-items:center}
+.rh-meta{display:flex;flex-wrap:wrap;gap:6px 8px;margin-bottom:22px}
+.rh-meta span{font-size:12px;font-weight:700;color:#c7cde0;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.10);border-radius:99px;padding:5px 10px}
+.rh-meta span:first-child{color:#fff;background:rgba(208,54,47,.25);border-color:rgba(208,54,47,.5);text-transform:uppercase;letter-spacing:.08em;font-weight:900;font-size:11px}
+.rh-score{display:flex;align-items:center;gap:28px}
+.big-ring{position:relative;width:220px;height:220px;flex:none}
+.big-ring svg{width:100%;height:100%;transform:rotate(-90deg);filter:drop-shadow(0 0 22px rgba(255,90,80,.25))}
+.br-num{position:absolute;inset:0;display:grid;place-items:center;align-content:center}
+.br-num b{font-size:76px;font-weight:900;letter-spacing:-.05em;line-height:.9}
+.br-num span{font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#9aa3bd;margin-top:8px}
+.rh-copy{display:flex;flex-direction:column;gap:12px;min-width:0}
+.rh-copy h1{font-size:34px;line-height:1.12;font-weight:900;color:#fff}
+.rh-copy h1 em{font-style:normal;background:linear-gradient(90deg,#ff7a52,#ffb020);-webkit-background-clip:text;background-clip:text;color:transparent}
+.rh-copy p{color:#c7cde0;font-size:16px}
+.rband{align-self:flex-start;font-size:12px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;padding:6px 12px;border-radius:99px}
+.rband.b-low{background:rgba(255,90,80,.16);color:#ff9a8f;border:1px solid rgba(255,90,80,.4)}
+.rband.b-mid{background:rgba(255,176,32,.14);color:#ffd27a;border:1px solid rgba(255,176,32,.4)}
+.rband.b-high{background:rgba(47,209,127,.14);color:#8af0bd;border:1px solid rgba(47,209,127,.4)}
+.pot{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:24px;padding:22px;display:flex;flex-direction:column;gap:14px;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);box-shadow:0 30px 60px rgba(0,0,0,.25)}
+.pot-h{font-size:18px;font-weight:800;color:#fff;margin-top:-4px}
+.pot-row>div{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}
+.pot-row span{font-size:14px;font-weight:700;color:#c7cde0}
+.pot-row b{font-size:22px;font-weight:900;color:#fff}
+.pot-row i{display:block;height:10px;border-radius:99px;background:rgba(255,255,255,.10);overflow:hidden}
+.pot-row u{display:block;height:100%;width:0;border-radius:99px;transition:width 1.4s cubic-bezier(.2,.8,.2,1)}
+.pot-row u.go{width:var(--w)}
+.pot-row.now u{background:linear-gradient(90deg,#ff5a50,#ff9a6b)}
+.pot-row.one u{background:linear-gradient(90deg,#ffb020,#ffe08a);transition-delay:.25s}
+.pot-row.all u{background:linear-gradient(90deg,#2fd17f,#8af0bd);transition-delay:.5s;box-shadow:0 0 16px rgba(47,209,127,.5)}
+.pot-row.all b{color:#8af0bd}
+.pot .btn{margin-top:4px}
+.pot-f{font-size:13px;color:#9aa3bd;text-align:center}
+.rbody{position:relative;margin-top:-80px;display:flex;flex-direction:column;gap:18px;max-width:900px}
+.rbody .prio{display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:start;box-shadow:var(--shadow-lg);border:1px solid var(--line);border-top:4px solid var(--red)}
+.rbody .prio>div:nth-child(2){display:flex;flex-direction:column;gap:6px;min-width:0}
+.prio-ico{width:48px;height:48px;border-radius:14px;background:var(--red-bg);display:grid;place-items:center;font-size:24px}
+.prio-gain{align-self:center;display:flex;flex-direction:column;align-items:center;background:var(--green-bg);color:#13633d;border-radius:14px;padding:10px 12px;font-size:26px;font-weight:900;line-height:1}
+.prio-gain small{font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-top:4px}
+.tabs{position:sticky;top:60px;z-index:6;display:grid;grid-template-columns:repeat(3,1fr);gap:6px;background:rgba(243,244,248,.9);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);padding:6px;border-radius:18px;border:1px solid var(--line)}
+.tabs button{appearance:none;cursor:pointer;font:inherit;border:0;background:transparent;border-radius:13px;padding:8px 6px;display:flex;align-items:center;justify-content:center;gap:10px;color:var(--mute);transition:all .2s}
+.tabs button[aria-selected="true"]{background:#fff;color:var(--ink);box-shadow:0 4px 14px rgba(20,28,51,.10)}
+.tring{position:relative;width:44px;height:44px;flex:none}
+.tring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.tring b{position:absolute;inset:0;display:grid;place-items:center;font-size:14px;font-weight:900;color:var(--ink)}
+.tl{font-size:15px;font-weight:800}
+.panel.swap{animation:pop .45s cubic-bezier(.2,.8,.2,1) both}
+.rbody .cta{display:grid;grid-template-columns:1.1fr 1fr;gap:20px 28px;align-items:center}
+.rbody .cta>div:last-child{grid-column:1 / -1}
+.rfoot{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start}
+.stack-mini{display:flex;flex-direction:column;gap:12px;align-items:flex-start;padding:6px 4px}
+.stack-mini .coach{text-align:left}
+.dock{position:fixed;left:0;right:0;bottom:0;z-index:30;padding:10px max(14px,env(safe-area-inset-left,0px)) calc(10px + env(safe-area-inset-bottom,0px));transform:translateY(120%);transition:transform .35s cubic-bezier(.2,.8,.2,1);pointer-events:none}
+.dock.on{transform:none;pointer-events:auto}
+.dock-in{max-width:620px;margin:0 auto;background:var(--ink);color:#fff;border-radius:18px;padding:10px 10px 10px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px;box-shadow:0 20px 50px rgba(11,20,48,.45)}
+.dock-in b{display:block;font-size:17px;font-weight:900}
+.dock-in span{display:block;font-size:12px;color:#9aa3bd;font-weight:600}
+.dock .btn{flex:none;box-shadow:none}
+@media (max-width:900px){
+  .rhead{padding-block:28px 100px}
+  .rh-in{grid-template-columns:1fr;gap:26px}
+  .rh-score{flex-direction:column;text-align:center;gap:18px}
+  .rh-copy{align-items:center}
+  .rband{align-self:center}
+  .rh-meta{justify-content:center}
+  .big-ring{width:200px;height:200px}
+  .br-num b{font-size:68px}
+  .rh-copy h1{font-size:28px}
+  .rbody{margin-top:-70px}
+  .rbody .prio{grid-template-columns:auto 1fr;padding:18px}
+  .prio-gain{grid-column:1 / -1;flex-direction:row;gap:8px;align-items:baseline;justify-self:start;font-size:20px;padding:8px 12px}
+  .tabs button{flex-direction:column;gap:4px;padding:8px 2px}
+  .tl{font-size:12px}
+  .rbody .cta{grid-template-columns:1fr}
+  .rfoot{grid-template-columns:1fr}
+  .stack-mini{align-items:center;text-align:center}
+  .stack-mini .coach{text-align:center}
+  .dock-in b{font-size:15px}
+}
+
 </style>
 <script defer src="/_vercel/insights/script.js"></script>
 </head>
@@ -455,18 +543,18 @@ function tone(s){ return s<50?"low":s<75?"mid":"high"; }
 function liftArea(a,g){
   let s=100; const T=[], good=[];
   const muscle = g==="muscle"||g==="recomp", lean = g==="fat"||g==="cut";
-  if(a.days==="0–1"){ s-=40; T.push({t:"Train 3 days a week, full body",b:"Three 45-minute sessions that hit every muscle. That's the minimum that "+(lean?"holds on to your muscle while the fat comes off.":"starts building muscle you can see."),w:"Consistency beats intensity. 3 days you never miss is better than 5 you can't keep."}); }
+  if(a.days==="0–1"){ s-=40; T.push({p:40,t:"Train 3 days a week, full body",b:"Three 45-minute sessions that hit every muscle. That's the minimum that "+(lean?"holds on to your muscle while the fat comes off.":"starts building muscle you can see."),w:"Consistency beats intensity. 3 days you never miss is better than 5 you can't keep."}); }
   else if(a.days==="2–3"){
-    if(muscle){ s-=25; T.push({t:"Add a 4th day",b:"Switch to an upper/lower split, 4 days a week. More quality sets per muscle each week is the biggest lever for growth once you're showing up.",w:"Each muscle gets trained twice a week instead of once."}); }
-    else { s-=10; T.push({t:"Make every session full body",b:"With 2–3 days, hit every major muscle each session: a squat or leg press, a hinge, a push and a pull.",w:"That's how you keep your muscle while you diet, so you look lean, not just smaller."}); }
+    if(muscle){ s-=25; T.push({p:25,t:"Add a 4th day",b:"Switch to an upper/lower split, 4 days a week. More quality sets per muscle each week is the biggest lever for growth once you're showing up.",w:"Each muscle gets trained twice a week instead of once."}); }
+    else { s-=10; T.push({p:10,t:"Make every session full body",b:"With 2–3 days, hit every major muscle each session: a squat or leg press, a hinge, a push and a pull.",w:"That's how you keep your muscle while you diet, so you look lean, not just smaller."}); }
   } else good.push("You train 4+ days a week. That's the hardest part, done.");
 
-  if(a.style==="Mostly cardio or classes"){ s-=30; T.push({t:"Swap 2 cardio sessions for weights",b:"Cardio burns calories, but lifting decides what you look like when the fat is gone. Keep the walks, trade the classes.",w:lean?"Without lifting, a big chunk of the weight you lose can be muscle.":"You can't build muscle without a reason to: heavy-ish weights."}); }
-  else if(a.style==="Weights, I wing it"){ s-=15; T.push({t:"Run one plan for 8 weeks",b:"Same exercises in the same order every week. Change the weight and reps, not the workout.",w:"You can't beat last week's numbers if last week was a different workout."}); }
-  else if(a.style==="I don't train yet"){ s-=35; T.push({t:"Start with 6 basic moves",b:"A squat, a hinge, a push, a pull, a lunge and a carry. Learn them light with clean form, then add weight every week.",w:"Beginners grow fastest. Your first 6 months are the best gains you'll ever get."}); }
+  if(a.style==="Mostly cardio or classes"){ s-=30; T.push({p:30,t:"Swap 2 cardio sessions for weights",b:"Cardio burns calories, but lifting decides what you look like when the fat is gone. Keep the walks, trade the classes.",w:lean?"Without lifting, a big chunk of the weight you lose can be muscle.":"You can't build muscle without a reason to: heavy-ish weights."}); }
+  else if(a.style==="Weights, I wing it"){ s-=15; T.push({p:15,t:"Run one plan for 8 weeks",b:"Same exercises in the same order every week. Change the weight and reps, not the workout.",w:"You can't beat last week's numbers if last week was a different workout."}); }
+  else if(a.style==="I don't train yet"){ s-=35; T.push({p:35,t:"Start with 6 basic moves",b:"A squat, a hinge, a push, a pull, a lunge and a carry. Learn them light with clean form, then add weight every week.",w:"Beginners grow fastest. Your first 6 months are the best gains you'll ever get."}); }
   else good.push("You follow a set plan.");
 
-  if(a.prog==="Not really"||a.prog==="Sometimes"){ s-=a.prog==="Not really"?20:10; T.push({t:"Beat last week by one rep",b:"Log every set. When you hit the top of your rep range on every set, add 5 lbs next time.",w:"That's progressive overload. If the weights don't go up, your muscles have no reason to change."}); }
+  if(a.prog==="Not really"||a.prog==="Sometimes"){ const d=a.prog==="Not really"?20:10; s-=d; T.push({p:d,t:"Beat last week by one rep",b:"Log every set. When you hit the top of your rep range on every set, add 5 lbs next time.",w:"That's progressive overload. If the weights don't go up, your muscles have no reason to change."}); }
   else if(a.prog) good.push("Your lifts go up because you track them.");
 
   if(lean) T.push({t:"Walk 8,000–10,000 steps a day",b:"Get them in short walks: after meals, on calls, parking further away.",w:"Over a week, steps burn more than most cardio sessions, without making you hungrier or hurting your recovery."});
@@ -477,24 +565,24 @@ function liftArea(a,g){
 function eatArea(a,g){
   let s=100; const T=[], good=[], lean=g==="fat"||g==="cut";
   if(a.protein!=="Yes"){
-    s-={"Sometimes":15,"No":30,"No idea how much I need":25}[a.protein]||0;
-    T.push({t:"Hit your protein every day",b:"Aim for about 0.7–1g per pound of your goal body weight. For most guys that's 140–180g. Build every meal around a protein first.",w:lean?"It protects your muscle while you diet and keeps you full, so the deficit is easier.":"It's the raw material for new muscle. Train hard without it and you're leaving gains on the table."});
+    const d={"Sometimes":15,"No":30,"No idea how much I need":25}[a.protein]||0; s-=d;
+    T.push({p:d,t:"Hit your protein every day",b:"Aim for about 0.7–1g per pound of your goal body weight. For most guys that's 140–180g. Build every meal around a protein first.",w:lean?"It protects your muscle while you diet and keeps you full, so the deficit is easier.":"It's the raw material for new muscle. Train hard without it and you're leaving gains on the table."});
   } else good.push("You hit your protein. That's the habit most guys miss.");
   if(a.cals!=="Yes, I track"){
-    s-=a.cals==="No idea"?25:10;
+    const dc=a.cals==="No idea"?25:10; s-=dc;
     const c={fat:{t:"Eat 400–500 calories under maintenance",b:"That's about 1 lb a week. Track for just 2 weeks to learn what your portions really are. You don't have to do it forever."},
              cut:{t:"Eat about 300 calories under maintenance",b:"Slow and steady for the last few pounds, about half a pound a week, so you keep your muscle and your abs show."},
              muscle:{t:"Eat 200–300 calories over maintenance",b:"A small surplus builds muscle without piling on fat. If the scale climbs more than 1 lb a month (beginners: 2 lbs), pull back."},
              recomp:{t:"Eat about 200 calories under maintenance",b:"A small deficit plus high protein and heavy lifting lets you lose fat and build muscle at the same time."}}[g];
-    T.push({...c,w:a.cals==="Roughly"?"Roughly is close, but small misses add up over weeks. Know the number and the results get predictable.":"If you don't know your number, you're guessing. Most guys underestimate what they eat by a lot."});
+    T.push({...c,p:dc,w:a.cals==="Roughly"?"Roughly is close, but small misses add up over weeks. Know the number and the results get predictable.":"If you don't know your number, you're guessing. Most guys underestimate what they eat by a lot."});
   } else good.push("You know your calories.");
   if(a.weekend!=="On track"){
-    s-=a.weekend==="I undo the whole week"?25:10;
-    T.push({t:"Plan 2 meals out on the weekend",b:"Pick them ahead of time and keep the rest of the weekend like a weekday.",w:"Two loose days can wipe out five good ones. That's usually why the scale doesn't move."});
+    const dw=a.weekend==="I undo the whole week"?25:10; s-=dw;
+    T.push({p:dw,t:"Plan 2 meals out on the weekend",b:"Pick them ahead of time and keep the rest of the weekend like a weekday.",w:"Two loose days can wipe out five good ones. That's usually why the scale doesn't move."});
   } else good.push("Your weekends are on track.");
   if(a.out!=="Rarely"){
-    s-=a.out==="Most meals"?15:5;
-    T.push({t:"Pick 3 go-to orders",b:"One for each place you go most. Think a burrito bowl with double chicken, or grilled nuggets with a side salad. Decide before you walk in.",w:"When you've already decided, the menu doesn't decide for you."});
+    const dout=a.out==="Most meals"?15:5; s-=dout;
+    T.push({p:dout,t:"Pick 3 go-to orders",b:"One for each place you go most. Think a burrito bowl with double chicken, or grilled nuggets with a side salad. Decide before you walk in.",w:"When you've already decided, the menu doesn't decide for you."});
   }
   if(!T.length) T.push({t:"Re-check your calories every 4 weeks",b:"As your body changes, so does your maintenance. A small reset keeps the progress going.",w:"This is how you avoid the plateau."});
   const targets = [`Protein: 0.7–1g per lb of goal weight`, {fat:"Calories: 400–500 under maintenance",cut:"Calories: ~300 under maintenance",muscle:"Calories: 200–300 over maintenance",recomp:"Calories: ~200 under maintenance"}[g]];
@@ -509,9 +597,9 @@ function suppArea(a,g,pk){
   let s=100-picked.reduce((x,p)=>x+p.pts,0)-(missingCreatine?10:0);
   const wasteYear=skips.reduce((x,p)=>x+p.m,0)*12, gearSpent=skips.reduce((x,p)=>x+p.o,0);
   const T=[], good=[];
-  if(risks.length) T.push({t:`Stop the ${listy(risks.map(p=>p.n))}`,b:"These aren't approved for people, they're often mislabeled, and the side effects are real. Talk to a doctor before you take anything like this.",w:"Nothing on your results is worth that risk."});
-  if(skips.length) T.push({t:`Stop buying ${listy(skips.map(p=>{const n=p.n.replace(/ \(.*\)$/,"");return /^[A-Z][a-z]/.test(n)?n[0].toLowerCase()+n.slice(1):n;}))}`,b:wasteYear>0?`That's about ${money(wasteYear)} a year on things that aren't moving you closer to your goal. Finish what you have. Just don't reorder.`:"They aren't moving you closer to your goal. Don't buy more.",w:"Put that money into food. Groceries move the needle more than any pill."});
-  if(missingCreatine) T.push({t:"Add creatine",b:"Plain creatine monohydrate, 3–5g a day, any time. About $10 a month.",w:"It's the most researched supplement there is for strength and muscle, and it's cheap."});
+  if(risks.length) T.push({p:risks.reduce((x,p)=>x+p.pts,0),t:`Stop the ${listy(risks.map(p=>p.n))}`,b:"These aren't approved for people, they're often mislabeled, and the side effects are real. Talk to a doctor before you take anything like this.",w:"Nothing on your results is worth that risk."});
+  if(skips.length) T.push({p:skips.reduce((x,p)=>x+p.pts,0),t:`Stop buying ${listy(skips.map(p=>{const n=p.n.replace(/ \(.*\)$/,"");return /^[A-Z][a-z]/.test(n)?n[0].toLowerCase()+n.slice(1):n;}))}`,b:wasteYear>0?`That's about ${money(wasteYear)} a year on things that aren't moving you closer to your goal. Finish what you have. Just don't reorder.`:"They aren't moving you closer to your goal. Don't buy more.",w:"Put that money into food. Groceries move the needle more than any pill."});
+  if(missingCreatine) T.push({p:10,t:"Add creatine",b:"Plain creatine monohydrate, 3–5g a day, any time. About $10 a month.",w:"It's the most researched supplement there is for strength and muscle, and it's cheap."});
   if(a.protein!=="Yes" && !pk.has("whey_protein") && !pk.has("plant_protein")) T.push({t:"Use a protein shake on busy days",b:"A plain whey with a third-party seal. Only to fill the gap when food can't get you to your protein.",w:"It's food in a tub. Convenient, not magic."});
   if(deps.length) T.push({t:`Check if ${deps.length===1?deps[0].n.toLowerCase()+" is":"your “Depends” items are"} right for you`,b:`${listy(deps.map(p=>p.n))} only make${deps.length===1?"s":""} sense in certain cases. Tap through below to see if that's you.`,w:"Most guys pay for the full price and only need the cheap version."});
   if(!picked.length) good.push("You're not wasting money on supplements.");
@@ -521,20 +609,24 @@ function suppArea(a,g,pk){
     verdicts:picked.slice().sort((x,y)=>order[x.k]-order[y.k]),wasteYear,gearSpent,missingCreatine,skips:skips.length+risks.length};
 }
 
+function overall(l,e,s,g){ const w=(g==="muscle")?{l:.45,e:.35,s:.20}:{l:.35,e:.45,s:.20}; return clamp(l*w.l+e*w.e+s*w.s,10,98); }
 function computeResult(){
   const a=state.a, g=a.goal||"cut";
   const L=liftArea(a,g), E=eatArea(a,g), S=suppArea(a,g);
-  const w = (g==="muscle")?{l:.45,e:.35,s:.20}:{l:.35,e:.45,s:.20};
-  const score = clamp(L.score*w.l+E.score*w.e+S.score*w.s,10,98);
+  const score = overall(L.score,E.score,S.score,g);
+  const up = A => Math.min(100, A.score + A.tweaks.reduce((x,t)=>x+(t.p||0),0));
   // #1 tweak: first tweak of the weakest area (eating wins ties for fat loss, lifting for muscle)
   const areas=[L,E,S];
   const weakest = areas.slice().sort((x,y)=>x.score-y.score || (g==="muscle"?(x.key==="lift"?-1:1):(x.key==="eat"?-1:1)))[0];
   const top = weakest.tweaks[0];
+  const bump = A => A===weakest ? Math.min(100,A.score+(top.p||0)) : A.score;
+  const pot1 = Math.max(score, overall(bump(L),bump(E),bump(S),g));
+  const potAll = Math.max(pot1, overall(up(L),up(E),up(S),g));
   let band, bandText;
   if(score<50){band="Leaking";bandText=`A few big things are standing between you and your goal. The good news: they're all fixable.`;}
   else if(score<75){band="Close, but leaking";bandText=`You've got a decent foundation. A few tweaks are all that's standing between you and your goal.`;}
   else {band="Dialed in";bandText=`Your basics are solid. What's left is the last 10%, and that's where a plan built for you makes the difference.`;}
-  return {score,band,tone:tone(score),bandText,areas,L,E,S,weakest,top};
+  return {score,band,tone:tone(score),bandText,areas,L,E,S,weakest,top,pot1,potAll,goal:g};
 }
 
 /* ---------- lead source: ?src=video-name from a video link, remembered for this visitor ---------- */
@@ -940,7 +1032,7 @@ function ring(score,size,stroke){
 }
 function tweakList(T){ return `<ol class="tweaks">${T.map(t=>`<li><div><b>${esc(t.t)}</b><p>${esc(t.b)}<span class="why">Why: ${esc(t.w)}</span></p></div></li>`).join("")}</ol>`; }
 function areaCard(A,extra,k){
-  return `<section class="area pop" style="animation-delay:${.2+.12*(k||0)}s" id="a-${A.key}">
+  return `<section class="area" id="a-${A.key}">
     <div class="area-h"><h3>Your ${A.name.toLowerCase()}</h3><span class="sc ${tone(A.score)}">${A.score}/100</span></div>
     ${A.good.length?`<p class="working"><b>Working:</b> ${A.good.map(esc).join(" ")}</p>`:""}
     ${A.targets?`<div class="target">${A.targets.map(t=>`<span>${esc(t)}</span>`).join("")}</div>`:""}
@@ -967,68 +1059,120 @@ function verdictLabel(S){
     <p class="foot">From Boon's Beyond the Label investigation. General information, not medical advice. Check with your doctor before stopping anything prescribed. Waste is an estimate based on typical prices.</p>
   </div>${S.gearSpent>0?`<p class="small muted">Plus about ${money(S.gearSpent)} already spent on gadgets and tests that don't work.</p>`:""}`;
 }
+function gradRing(id,size,stroke,score){
+  const r=(size-stroke)/2, C=2*Math.PI*r, t=tone(score), c1={low:"#ff5a50",mid:"#ffb020",high:"#2fd17f"}[t], c2={low:"#ff9a6b",mid:"#ffe08a",high:"#8af0bd"}[t];
+  return `<svg viewBox="0 0 ${size} ${size}" aria-hidden="true"><defs><linearGradient id="${id}g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${c1}"/><stop offset="1" stop-color="${c2}"/></linearGradient></defs>
+    <circle cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke="rgba(255,255,255,.10)" stroke-width="${stroke}"/>
+    <circle id="${id}" cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke="url(#${id}g)" stroke-width="${stroke}" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${C}" data-c="${C}" data-s="${score}"/></svg>`;
+}
 function renderResults(){
   const r=state.result||computeResult();
-  const C=2*Math.PI*88, color={low:"#d0362f",mid:"#e0a21b",high:"#1f9d5f"}[r.tone];
-  const planBtn = label => `<a class="btn full" href="${PLAN_URL}">${label}</a>`;
-  app.innerHTML = `<div class="results gut"><div class="in">
-  <section class="res">
-    <div class="res-col">
-      <div class="reveal-card pop">
-        <span class="eyebrow">${esc(state.name)}'s Stack Score</span>
-        <div class="gauge" role="img" aria-label="Stack Score ${r.score} out of 100">
-          <svg viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="88" fill="none" stroke="#e6e8ef" stroke-width="14"/>
-            <circle id="arc" cx="100" cy="100" r="88" fill="none" stroke="${color}" stroke-width="14" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${C}" style="transition:stroke-dashoffset 1.4s cubic-bezier(.2,.8,.2,1)"/></svg>
-          <div class="num"><b id="sc">0</b><span>out of 100</span></div>
+  const g=GOALS.find(x=>x.v===state.a.goal);
+  const today=new Date().toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"});
+  const planBtn=(label,cls="")=>`<a class="btn full ${cls}" href="${PLAN_URL}">${label}</a>`;
+  const potRow=(label,val,cls)=>`<div class="pot-row ${cls}"><div><span>${label}</span><b data-count="${val}">0</b></div><i><u style="--w:${val}%"></u></i></div>`;
+  const tabs=[r.L,r.E,r.S];
+  const first=r.weakest.key;
+  app.innerHTML = `<div class="report">
+  <section class="rhead">
+    <div class="rh-bg" aria-hidden="true"></div>
+    <div class="in gut rh-in">
+      <div class="rh-left pop">
+        <div class="rh-meta"><span>Stack Score report</span><span>${esc(state.name)}</span><span>${today}</span>${g?`<span>Goal: ${esc(g.t.toLowerCase())}</span>`:""}</div>
+        <div class="rh-score">
+          <div class="big-ring">${gradRing("mainArc",220,16,r.score)}<div class="br-num"><b id="sc">0</b><span>out of 100</span></div></div>
+          <div class="rh-copy">
+            <span class="rband b-${r.tone}">${esc(r.band)}</span>
+            <h1>${esc(state.name)}, your Stack Score is <em>${r.score}</em>.</h1>
+            <p>${esc(r.bandText)}</p>
+          </div>
         </div>
-        <span class="bandpill b-${r.tone}">${esc(r.band)}</span>
-        <p style="font-size:17px;max-width:30em">${esc(r.bandText)}</p>
       </div>
-      <div class="areas pop" style="animation-delay:.15s">
-        ${r.areas.map(A=>`<a href="#a-${A.key}"><div class="ring">${ring(A.score,62,7)}<b>${A.score}</b></div><span>${A.name}</span></a>`).join("")}
+      <div class="rh-right pop" style="animation-delay:.2s">
+        <div class="pot">
+          <span class="eyebrow" style="color:#ff8a82">Your potential</span>
+          <p class="pot-h">Where your score goes when you make the tweaks</p>
+          ${potRow("Today",r.score,"now")}
+          ${potRow("Do your #1 tweak",r.pot1,"one")}
+          ${potRow("Do all your tweaks",r.potAll,"all")}
+          ${planBtn("Build my free plan →")}
+          <p class="pot-f">Your free plan walks you through every tweak, built from your answers.</p>
+        </div>
       </div>
-      <div class="prio pop" style="animation-delay:.3s">
-        <span class="eyebrow">🎯 Your #1 tweak · ${esc(r.weakest.name)}</span>
+    </div>
+  </section>
+
+  <div class="in gut rbody">
+    <div class="prio pop" style="animation-delay:.35s">
+      <div class="prio-ico" aria-hidden="true">🎯</div>
+      <div>
+        <span class="eyebrow">Your #1 tweak · ${esc(r.weakest.name)}</span>
         <span class="t">${esc(r.top.t)}</span>
         <p>${esc(r.top.b)}</p>
         <p class="small muted">Why: ${esc(r.top.w)}</p>
       </div>
-      <div class="cta pop" style="animation-delay:.45s">
-        <h2>Get the full plan, free.</h2>
-        <p>These are the tweaks. My app turns them into a plan to ${esc(GOAL_TEXT[state.a.goal]||"hit your goal")}, built from the answers you just gave me.</p>
-        <ul>
-          <li>Your exact calories and protein</li>
-          <li>A meal plan made only from foods you already eat</li>
-          <li>Workouts on the days you choose, with a form video on every move</li>
-          <li>Stack Check: my verdict on all 47 products, before you buy anything</li>
-        </ul>
-        ${planBtn("Build my free plan →")}
-        <p class="small">2 minutes. Your answers carry over. First 2 weeks free, no card.</p>
-      </div>
+      <span class="prio-gain">+${Math.max(1,r.pot1-r.score)}<small>points</small></span>
     </div>
 
-    <div class="res-col">
-      <span class="eyebrow" style="margin-top:6px">Your full breakdown</span>
-      ${areaCard(r.L,"",0)}
-      ${areaCard(r.E,"",1)}
-      ${areaCard(r.S, verdictLabel(r.S),2)}
-      <p class="small muted">A copy is on its way to <b style="color:var(--ink)">${esc(state.email)}</b>.${state.sent?"":" Check your promotions tab if you don't see it."}</p>
-      ${planBtn("Turn this into my free plan →")}
+    <div class="tabs pop" style="animation-delay:.45s" role="tablist" aria-label="Your breakdown">
+      ${tabs.map(A=>`<button role="tab" data-tab="${A.key}" aria-selected="${A.key===first}"><span class="tring">${ring(A.score,44,5)}<b>${A.score}</b></span><span class="tl">${A.name}</span></button>`).join("")}
+    </div>
+    <div class="panels">
+      ${tabs.map(A=>`<div class="panel" role="tabpanel" data-panel="${A.key}" ${A.key===first?"":"hidden"}>${areaCard(A, A.key==="supp"?verdictLabel(r.S):"", 0)}</div>`).join("")}
+    </div>
+
+    <div class="cta pop" style="animation-delay:.2s">
+      <div>
+        <h2>Turn this into your plan. Free.</h2>
+        <p>My app builds the plan to ${esc(GOAL_TEXT[state.a.goal]||"hit your goal")} from the answers you just gave me.</p>
+      </div>
+      <ul>
+        <li>Your exact calories and protein</li>
+        <li>A meal plan made only from foods you already eat</li>
+        <li>Workouts on the days you choose, with a form video on every move</li>
+        <li>Stack Check: my verdict on all 47 products</li>
+      </ul>
+      <div>${planBtn("Build my free plan →")}<p class="small" style="margin-top:10px;text-align:center">2 minutes. Your answers carry over. First 2 weeks free, no card.</p></div>
+    </div>
+
+    <div class="rfoot">
       <div class="share">
         <b>Know someone who needs this?</b>
         <p class="small muted">Send them the audit. It's free and takes 60 seconds.</p>
         <code id="shareurl">${SHARE_URL}</code>
         <button class="btn ghost sm full" id="share">Copy link</button>
       </div>
-      <p class="coach">Want me to do it with you? <a href="${COACH_URL}">See if you qualify for 1:1 coaching</a>. Abs in 12 weeks, or I coach you free until you do.</p>
-      <div style="text-align:center"><button class="link" id="redo">Retake the audit</button></div>
+      <div class="stack-mini">
+        <p class="small muted">A copy is on its way to <b style="color:var(--ink)">${esc(state.email)}</b>.${state.sent?"":" Check your promotions tab if you don't see it."}</p>
+        <p class="coach">Want me to do it with you? <a href="${COACH_URL}">See if you qualify for 1:1 coaching</a>. Abs in 12 weeks, or I coach you free until you do.</p>
+        <button class="link" id="redo">Retake the audit</button>
+      </div>
     </div>
-  </section></div></div>`;
+  </div>
+  <div class="dock" id="dock" aria-hidden="true"><div class="dock-in"><div><b>${r.score} → ${r.potAll}</b><span>Your plan gets you there</span></div><a class="btn sm" href="${PLAN_URL}" tabindex="-1">Build my free plan →</a></div></div>
+  </div>`;
 
-  const sc=document.getElementById("sc"), arc=document.getElementById("arc"), target=r.score;
-  requestAnimationFrame(()=>{ arc.style.strokeDashoffset = C*(1-target/100); });
-  if(reduce){ sc.textContent=target; arc.style.transition="none"; }
-  else { const t0=performance.now(), dur=1400; const tick=t=>{ const k=Math.min(1,(t-t0)/dur), e=1-Math.pow(1-k,3); sc.textContent=Math.round(target*e); if(k<1) requestAnimationFrame(tick); }; requestAnimationFrame(tick); }
+  // animate: main ring, numbers, potential bars
+  requestAnimationFrame(()=>{
+    app.querySelectorAll("circle[data-c]").forEach(c=>{ c.style.transition=reduce?"none":"stroke-dashoffset 1.6s cubic-bezier(.2,.8,.2,1)"; c.style.strokeDashoffset=c.dataset.c*(1-c.dataset.s/100); });
+    setTimeout(()=>app.querySelectorAll(".pot u").forEach(u=>u.classList.add("go")),350);
+  });
+  countTo(document.getElementById("sc"),r.score,1600);
+  app.querySelectorAll("[data-count]").forEach((n,i)=>setTimeout(()=>countTo(n,+n.dataset.count,1200),400+i*250));
+
+  // tabs
+  app.querySelectorAll("[data-tab]").forEach(t=>t.onclick=()=>{
+    app.querySelectorAll("[data-tab]").forEach(x=>x.setAttribute("aria-selected",String(x===t)));
+    app.querySelectorAll("[data-panel]").forEach(p=>{ const on=p.dataset.panel===t.dataset.tab; p.hidden=!on; if(on){ p.classList.remove("swap"); void p.offsetWidth; p.classList.add("swap"); } });
+  });
+  // dock appears once the potential card scrolls away
+  const dock=document.getElementById("dock"), pot=app.querySelector(".pot"), ctaBox=app.querySelector(".rbody .cta");
+  const vis={pot:true,cta:false,potAbove:false};
+  const upd=()=>{ const on=!vis.pot && vis.potAbove && !vis.cta; dock.classList.toggle("on",on); dock.setAttribute("aria-hidden",String(!on)); dock.querySelector("a").tabIndex=on?0:-1; };
+  if("IntersectionObserver" in window){
+    new IntersectionObserver(es=>es.forEach(e=>{ vis.pot=e.isIntersecting; vis.potAbove=e.boundingClientRect.top<0; upd(); })).observe(pot);
+    new IntersectionObserver(es=>es.forEach(e=>{ vis.cta=e.isIntersecting; upd(); })).observe(ctaBox);
+  }
 
   document.getElementById("share").onclick=async e=>{
     const b=e.currentTarget;
