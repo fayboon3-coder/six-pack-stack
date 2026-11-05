@@ -300,7 +300,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   .built{justify-content:center}
   .hero .micro{justify-content:center}
   .wall{display:none}
-  .mwall{display:flex;flex-direction:column;gap:8px;margin-top:40px;padding-bottom:150px;overflow:hidden;position:relative}
+  .mwall{display:flex;flex-direction:column;gap:8px;margin-top:40px;overflow:hidden;position:relative}
   .mwall .rowx{display:flex;gap:8px;width:max-content}
   .mwall img{width:104px;height:140px;object-fit:cover;border-radius:6px;flex:0 0 auto;display:block}
   .mwall .l{animation:left 40s linear infinite}.mwall .r{animation:right 46s linear infinite}
@@ -320,6 +320,70 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 }
 @media (max-width:420px){.hero h1{font-size:36px}.bignum{font-size:52px}.facts .ft{font-size:26px}.gauge{width:176px;height:176px}.gauge .num b{font-size:56px}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal,.pop{opacity:1;transform:none}}
+
+/* ---------- hero live preview ---------- */
+.hero .in{gap:48px;justify-content:space-between}
+.stage{position:relative;z-index:3;flex:0 1 440px;perspective:1400px;padding:40px 0}
+.wall{filter:saturate(.9)}
+.wall::after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;background:rgba(243,244,248,.45);backdrop-filter:blur(1.5px);-webkit-backdrop-filter:blur(1.5px)}
+.live{--glow:#d0362f;--mx:50%;--my:30%;position:relative;border-radius:28px;padding:2px;transform-style:preserve-3d;transition:transform .25s ease-out;animation:liveIn .9s cubic-bezier(.2,.8,.2,1) both .15s}
+@keyframes liveIn{from{opacity:0;transform:translateY(30px) rotateX(10deg) scale(.96)}to{opacity:1;transform:none}}
+.live::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:2px;background:conic-gradient(from var(--ang,0deg),#d0362f,#ff7a52,#e0a21b,#1f9d5f,#3d6bff,#d0362f);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:spinb 6s linear infinite;opacity:.9}
+@property --ang{syntax:"<angle>";initial-value:0deg;inherits:false}
+@keyframes spinb{to{--ang:360deg}}
+.live-glow{position:absolute;inset:8% 6% -6%;border-radius:40px;background:var(--glow);filter:blur(48px);opacity:.28;z-index:-1;transition:background .6s}
+.live-in{position:relative;border-radius:26px;background:rgba(255,255,255,.94);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);padding:20px;display:flex;flex-direction:column;gap:16px;box-shadow:0 30px 80px rgba(20,28,51,.22),0 8px 20px rgba(20,28,51,.10);overflow:hidden}
+.live-in::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(420px circle at var(--mx) var(--my),rgba(255,255,255,.55),rgba(255,255,255,0) 45%);mix-blend-mode:soft-light}
+.live-top{display:flex;align-items:center;gap:8px;font-size:13px}
+.live-top b{font-weight:800}
+.live-top .tap{margin-left:auto;font-size:12px;font-weight:700;color:var(--soft);transition:opacity .3s}
+.live.touched .tap{opacity:0}
+.dotlive{width:8px;height:8px;border-radius:50%;background:#1f9d5f;box-shadow:0 0 0 0 rgba(31,157,95,.5);animation:pulse 1.8s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 8px rgba(31,157,95,0)}100%{box-shadow:0 0 0 0 rgba(31,157,95,0)}}
+.lgoal{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;background:var(--bg);border-radius:12px;padding:4px}
+.lgoal button,.lseg button,.lchips button{appearance:none;cursor:pointer;font:inherit;border:0;transition:all .2s}
+.lgoal button{font-size:13px;font-weight:800;color:var(--mute);background:transparent;border-radius:9px;padding:9px 4px}
+.lgoal button[aria-pressed="true"]{background:#fff;color:var(--ink);box-shadow:0 2px 8px rgba(20,28,51,.12)}
+.lscore{display:grid;grid-template-columns:132px 1fr;gap:18px;align-items:center}
+.lring{position:relative;width:132px;height:132px}
+.lring svg{width:100%;height:100%;transform:rotate(-90deg);filter:drop-shadow(0 6px 14px rgba(20,28,51,.12))}
+#lArc{transition:stroke-dashoffset .9s cubic-bezier(.2,.8,.2,1)}
+.lnum{position:absolute;inset:0;display:grid;place-items:center;align-content:center}
+.lnum b{font-size:44px;font-weight:900;letter-spacing:-.04em;line-height:1}
+.lnum span{font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--soft);margin-top:4px}
+.lbars{display:grid;gap:10px;min-width:0}
+.lband{justify-self:start;font-size:11px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;padding:5px 10px;border-radius:99px;transition:all .3s}
+.lbar>div{display:flex;justify-content:space-between;font-size:13px;font-weight:700;margin-bottom:4px}
+.lbar em{font-style:normal;color:var(--mute);font-weight:800}
+.lbar i{display:block;height:8px;background:var(--line);border-radius:99px;overflow:hidden}
+.lbar u{display:block;height:100%;width:0;border-radius:99px;transition:width .8s cubic-bezier(.2,.8,.2,1),background .4s}
+.lq{display:grid;gap:8px}
+.lq>div{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:14px;font-weight:700;color:var(--ink2)}
+.lseg{display:inline-flex;background:var(--bg);border-radius:10px;padding:3px;flex:none}
+.lseg button{font-size:12px;font-weight:800;color:var(--mute);background:transparent;border-radius:8px;padding:6px 10px}
+.lseg button[aria-pressed="true"]{background:var(--ink);color:#fff}
+.lsup>span{display:block;font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--soft);margin-bottom:8px}
+.lchips{display:flex;flex-wrap:wrap;gap:6px}
+.lchips button{font-size:12.5px;font-weight:700;color:var(--ink);background:#fff;border:1.5px solid var(--line2);border-radius:99px;padding:6px 10px}
+.lchips button[aria-pressed="true"]{background:var(--red);border-color:var(--red);color:#fff}
+.lchips button[data-p="creatine"][aria-pressed="true"],.lchips button[data-p="whey_protein"][aria-pressed="true"]{background:#1f9d5f;border-color:#1f9d5f}
+.ltweak{min-height:74px;background:var(--red-bg);border-radius:14px;padding:12px 14px;display:flex;flex-direction:column;gap:2px}
+.ltweak .k{font-size:11px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:var(--red)}
+.ltweak b{font-size:16px;font-weight:900;line-height:1.3}
+.ltweak .w{font-size:12px;font-weight:700;color:var(--mute)}
+.ltweak.swap{animation:swap .45s ease}
+@keyframes swap{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.lgo{height:52px;font-size:16px}
+@media (max-width:900px){
+  .hero .in{gap:0}
+  .stage{flex:none;width:100%;max-width:440px;margin:0 auto;padding:30px 0 0}
+  .mwall{margin-top:28px;padding-bottom:28px}
+  .lscore{grid-template-columns:116px 1fr;gap:14px}
+  .lring{width:116px;height:116px}
+  .lnum b{font-size:38px}
+  .lnum span{font-size:9px;letter-spacing:.08em}
+}
+@media (max-width:380px){.live-in{padding:16px}.lq>div{font-size:13px}.lseg button{padding:6px 8px}}
 
 </style>
 <script defer src="/_vercel/insights/script.js"></script>
@@ -437,17 +501,18 @@ function eatArea(a,g){
   return {key:"eat",name:"Eating",score:clamp(s,10,100),tweaks:T.slice(0,3),good,targets};
 }
 
-function suppArea(a,g){
-  const picked=[...state.picked].map(id=>PMAP[id]).filter(Boolean);
+function suppArea(a,g,pk){
+  pk=pk||state.picked;
+  const picked=[...pk].map(id=>PMAP[id]).filter(Boolean);
   const skips=picked.filter(p=>p.k==="skip"), risks=picked.filter(p=>p.k==="risk"), deps=picked.filter(p=>p.k==="situational"), worth=picked.filter(p=>p.k==="worth");
-  const missingCreatine=!state.picked.has("creatine");
+  const missingCreatine=!pk.has("creatine");
   let s=100-picked.reduce((x,p)=>x+p.pts,0)-(missingCreatine?10:0);
   const wasteYear=skips.reduce((x,p)=>x+p.m,0)*12, gearSpent=skips.reduce((x,p)=>x+p.o,0);
   const T=[], good=[];
   if(risks.length) T.push({t:`Stop the ${listy(risks.map(p=>p.n))}`,b:"These aren't approved for people, they're often mislabeled, and the side effects are real. Talk to a doctor before you take anything like this.",w:"Nothing on your results is worth that risk."});
   if(skips.length) T.push({t:`Stop buying ${listy(skips.map(p=>{const n=p.n.replace(/ \(.*\)$/,"");return /^[A-Z][a-z]/.test(n)?n[0].toLowerCase()+n.slice(1):n;}))}`,b:wasteYear>0?`That's about ${money(wasteYear)} a year on things that aren't moving you closer to your goal. Finish what you have. Just don't reorder.`:"They aren't moving you closer to your goal. Don't buy more.",w:"Put that money into food. Groceries move the needle more than any pill."});
   if(missingCreatine) T.push({t:"Add creatine",b:"Plain creatine monohydrate, 3–5g a day, any time. About $10 a month.",w:"It's the most researched supplement there is for strength and muscle, and it's cheap."});
-  if(a.protein!=="Yes" && !state.picked.has("whey_protein") && !state.picked.has("plant_protein")) T.push({t:"Use a protein shake on busy days",b:"A plain whey with a third-party seal. Only to fill the gap when food can't get you to your protein.",w:"It's food in a tub. Convenient, not magic."});
+  if(a.protein!=="Yes" && !pk.has("whey_protein") && !pk.has("plant_protein")) T.push({t:"Use a protein shake on busy days",b:"A plain whey with a third-party seal. Only to fill the gap when food can't get you to your protein.",w:"It's food in a tub. Convenient, not magic."});
   if(deps.length) T.push({t:`Check if ${deps.length===1?deps[0].n.toLowerCase()+" is":"your “Depends” items are"} right for you`,b:`${listy(deps.map(p=>p.n))} only make${deps.length===1?"s":""} sense in certain cases. Tap through below to see if that's you.`,w:"Most guys pay for the full price and only need the cheap version."});
   if(!picked.length) good.push("You're not wasting money on supplements.");
   if(worth.length) good.push(`${listy(worth.map(p=>p.n))}: worth keeping.`);
@@ -538,18 +603,92 @@ function exampleLabel(){
 const PAIRS=[["robert","Robert"],["gerardo","Gerardo"],["james","James"],["c4","Client"]];
 function pairHTML(k,n){ return `<div class="pair"><img src="/img/lp/${k}-b.jpg" alt="${n}, before" loading="lazy"><img src="/img/lp/${k}-a.jpg" alt="${n}, after" loading="lazy"></div>`; }
 function wallCol(order,cls){ const items=order.map(i=>pairHTML(...PAIRS[i])).join(""); return `<div class="col"><div class="track ${cls}">${items}${items}</div></div>`; }
-function heroCard(){
-  const C=2*Math.PI*32;
-  return `<div class="float" aria-hidden="true"><div class="scard">
-    <div class="row"><div class="mini"><svg viewBox="0 0 76 76"><circle cx="38" cy="38" r="32" fill="none" stroke="#e6e8ef" stroke-width="8"/><circle cx="38" cy="38" r="32" fill="none" stroke="#e0a21b" stroke-width="8" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${C*(1-.58)}"/></svg><b>58</b></div>
-      <div><div class="lbl">Stack Score</div><div class="band">Close, but leaking</div></div></div>
-    <div class="bars">
-      <div><span>Lifting</span><i style="--v:82%;--c:#1f9d5f"></i><em>82</em></div>
-      <div><span>Eating</span><i style="--v:41%;--c:#d0362f"></i><em>41</em></div>
-      <div><span>Supplements</span><i style="--v:55%;--c:#e0a21b"></i><em>55</em></div>
+/* ---------- live preview in the hero: the real scoring, 6 taps ---------- */
+const pv={goal:"cut",protein:"No",days:"2–3",weekend:"I undo the whole week",pk:new Set(["fat_burners","greens_powders"]),touched:false,shown:null,timer:null};
+const PV_SUPPS=[["fat_burners","Fat burner"],["greens_powders","AG1"],["testosterone_boosters","Test booster"],["creatine","Creatine"],["whey_protein","Whey"]];
+const PV_GOALS=[["fat","Lose fat"],["cut","See my abs"],["muscle","Build muscle"]];
+const COL={low:"#d0362f",mid:"#e0a21b",high:"#1f9d5f"};
+function pvAnswers(){ return {goal:pv.goal,days:pv.days,style:pv.days==="4+"?"Weights, a set plan":"Weights, I wing it",prog:pv.days==="4+"?"Yes, I track it":"Sometimes",protein:pv.protein,cals:"Roughly",out:"A few times a week",weekend:pv.weekend}; }
+function pvCompute(){
+  const a=pvAnswers(), g=a.goal, L=liftArea(a,g), E=eatArea(a,g), S=suppArea(a,g,pv.pk);
+  const w=(g==="muscle")?{l:.45,e:.35,s:.20}:{l:.35,e:.45,s:.20};
+  const score=clamp(L.score*w.l+E.score*w.e+S.score*w.s,10,98);
+  const areas=[L,E,S], weakest=areas.slice().sort((x,y)=>x.score-y.score||(g==="muscle"?(x.key==="lift"?-1:1):(x.key==="eat"?-1:1)))[0];
+  return {score,areas,top:weakest.tweaks[0],weakest,waste:S.wasteYear};
+}
+const seg2=(key,opts)=>`<div class="lseg" data-k="${key}">${opts.map(([v,l])=>`<button type="button" data-v="${esc(v)}" aria-pressed="${pv[key]===v}">${esc(l)}</button>`).join("")}</div>`;
+function livePanel(){
+  const C=2*Math.PI*54;
+  return `<div class="live" id="live">
+    <div class="live-glow" aria-hidden="true"></div>
+    <div class="live-in">
+      <div class="live-top"><span class="dotlive"></span><b>Live preview</b><span class="tap">Tap to change it</span></div>
+      <div class="lgoal" role="group" aria-label="Goal">${PV_GOALS.map(([v,l])=>`<button type="button" data-g="${v}" aria-pressed="${pv.goal===v}">${l}</button>`).join("")}</div>
+      <div class="lscore">
+        <div class="lring"><svg viewBox="0 0 128 128" aria-hidden="true"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop id="lg1" offset="0" stop-color="#d0362f"/><stop id="lg2" offset="1" stop-color="#ff7a52"/></linearGradient></defs><circle cx="64" cy="64" r="54" fill="none" stroke="#eef0f5" stroke-width="12"/><circle id="lArc" cx="64" cy="64" r="54" fill="none" stroke="url(#lg)" stroke-width="12" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${C}"/></svg>
+          <div class="lnum"><b id="lNum">0</b><span>out of 100</span></div></div>
+        <div class="lbars">
+          <span class="lband" id="lBand">—</span>
+          ${["Lifting","Eating","Supplements"].map((n,i)=>`<div class="lbar"><div><span>${n}</span><em id="lv${i}">0</em></div><i><u id="lb${i}"></u></i></div>`).join("")}
+        </div>
+      </div>
+      <div class="lq">
+        <div><span>Protein most days?</span>${seg2("protein",[["Yes","Yes"],["No","No"]])}</div>
+        <div><span>Train 4+ days?</span>${seg2("days",[["4+","Yes"],["2–3","No"]])}</div>
+        <div><span>Weekends</span>${seg2("weekend",[["On track","On track"],["I undo the whole week","Off the rails"]])}</div>
+      </div>
+      <div class="lsup"><span>What you take</span><div class="lchips">${PV_SUPPS.map(([id,l])=>`<button type="button" data-p="${id}" aria-pressed="${pv.pk.has(id)}">${l}</button>`).join("")}</div></div>
+      <div class="ltweak" id="lTweak" aria-live="polite"></div>
+      <button class="btn full lgo" id="lGo">Get my real Stack Score →</button>
     </div>
-    <div class="tw"><b>#1 tweak:</b> hit your protein every day</div>
-  </div></div>`;
+  </div>`;
+}
+function pvRender(){
+  const el=document.getElementById("live"); if(!el) return;
+  const r=pvCompute(), C=2*Math.PI*54, t=tone(r.score);
+  document.getElementById("lArc").style.strokeDashoffset=C*(1-r.score/100);
+  const g1={low:"#d0362f",mid:"#e0a21b",high:"#1f9d5f"}[t], g2={low:"#ff7a52",mid:"#ffcf5a",high:"#5fd69a"}[t];
+  document.getElementById("lg1").setAttribute("stop-color",g1); document.getElementById("lg2").setAttribute("stop-color",g2);
+  el.style.setProperty("--glow",g1);
+  const band=document.getElementById("lBand"); band.textContent={low:"Leaking",mid:"Close, but leaking",high:"Dialed in"}[t]; band.className="lband b-"+t;
+  r.areas.forEach((A,i)=>{ const u=document.getElementById("lb"+i); u.style.width=A.score+"%"; u.style.background=COL[tone(A.score)]; countTo(document.getElementById("lv"+i),A.score,600); });
+  countTo(document.getElementById("lNum"),r.score,900);
+  const tw=document.getElementById("lTweak"), html=`<span class="k">#1 tweak · ${esc(r.weakest.name)}</span><b>${esc(r.top.t)}</b>${r.waste>0?`<span class="w">Wasting about ${money(r.waste)} a year on supplements</span>`:""}`;
+  if(pv.shown!==html){ tw.classList.remove("swap"); void tw.offsetWidth; tw.innerHTML=html; tw.classList.add("swap"); pv.shown=html; }
+  el.querySelectorAll("[data-g]").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.g===pv.goal)));
+  el.querySelectorAll(".lseg").forEach(s=>s.querySelectorAll("button").forEach(b=>b.setAttribute("aria-pressed",String(pv[s.dataset.k]===b.dataset.v))));
+  el.querySelectorAll("[data-p]").forEach(b=>b.setAttribute("aria-pressed",String(pv.pk.has(b.dataset.p))));
+}
+function countTo(node,to,dur){
+  const from=+node.dataset.v||0; node.dataset.v=to;
+  if(reduce||from===to){ node.textContent=to; return; }
+  const t0=performance.now(); cancelAnimationFrame(node._raf);
+  const tick=t=>{ const k=Math.min(1,(t-t0)/dur), e=1-Math.pow(1-k,3); node.textContent=Math.round(from+(to-from)*e); if(k<1) node._raf=requestAnimationFrame(tick); };
+  node._raf=requestAnimationFrame(tick);
+}
+function wireLive(){
+  const el=document.getElementById("live"); if(!el) return;
+  const touch=()=>{ if(!pv.touched){ pv.touched=true; clearInterval(pv.timer); el.classList.add("touched"); } };
+  el.querySelectorAll("[data-g]").forEach(b=>b.onclick=()=>{touch();pv.goal=b.dataset.g;pvRender();});
+  el.querySelectorAll(".lseg button").forEach(b=>b.onclick=()=>{touch();pv[b.parentElement.dataset.k]=b.dataset.v;pvRender();});
+  el.querySelectorAll("[data-p]").forEach(b=>b.onclick=()=>{touch();const id=b.dataset.p;pv.pk.has(id)?pv.pk.delete(id):pv.pk.add(id);pvRender();});
+  document.getElementById("lGo").onclick=()=>{
+    // carry the preview into the real quiz so their taps aren't wasted
+    if(pv.touched){ const gmap={fat:"fat",cut:"cut",muscle:"muscle"}; state.a.goal=gmap[pv.goal]; state.a.days=pv.days; state.a.protein=pv.protein; state.a.weekend=pv.weekend; state.picked=new Set(pv.pk); }
+    go(1);
+  };
+  // 3D tilt that follows the cursor (desktop only)
+  if(!reduce && matchMedia("(hover:hover) and (pointer:fine)").matches){
+    const stage=el.parentElement;
+    stage.addEventListener("pointermove",e=>{ const r=stage.getBoundingClientRect(), x=(e.clientX-r.left)/r.width-.5, y=(e.clientY-r.top)/r.height-.5;
+      el.style.transform=`rotateY(${x*10}deg) rotateX(${-y*8}deg) translateZ(0)`; el.style.setProperty("--mx",(x+.5)*100+"%"); el.style.setProperty("--my",(y+.5)*100+"%"); });
+    stage.addEventListener("pointerleave",()=>{ el.style.transform=""; });
+  }
+  // it plays itself until someone taps it
+  const demo=[()=>{pv.protein="Yes"},()=>{pv.pk.delete("fat_burners")},()=>{pv.pk.add("creatine")},()=>{pv.days="4+"},()=>{pv.weekend="On track"},()=>{pv.pk.delete("greens_powders")},
+              ()=>{pv.goal="muscle"},()=>{pv.goal="cut";pv.protein="No";pv.days="2–3";pv.weekend="I undo the whole week";pv.pk=new Set(["fat_burners","greens_powders"]);}];
+  let k=0; setTimeout(pvRender,350);
+  if(!reduce) pv.timer=setInterval(()=>{ if(pv.touched||!document.getElementById("live")){clearInterval(pv.timer);return;} demo[k%demo.length](); k++; pvRender(); },1900);
 }
 function cta(label){ return `<div style="display:flex;flex-direction:column;gap:14px"><button class="btn" data-start>${label}</button><div class="micro"><span>Free</span><span>4 quick steps</span><span>Instant results</span></div></div>`; }
 function renderStart(){
@@ -564,9 +703,10 @@ function renderStart(){
         ${cta("Get my Stack Score →")}
         <div class="built"><img src="/boon.jpg" alt="Boon Fay" width="44" height="44"><div><b>Built by Boon Fay</b><span>225 → 175 lbs. No sponsors, no affiliate links.</span></div></div>
       </div>
+      <div class="stage">${livePanel()}</div>
     </div>
     <div class="wall" aria-label="Real client results">${wallCol([0,1,2,3],"up")}${wallCol([2,3,0,1],"down")}${wallCol([1,0,3,2],"up")}</div>
-    <div class="heroband"><div class="mwall" aria-hidden="true"><div class="rowx l">${imgs}${imgs}</div><div class="rowx r">${imgs}${imgs}</div></div>${heroCard()}</div>
+    <div class="mwall" aria-hidden="true"><div class="rowx l">${imgs}${imgs}</div></div>
   </section>
 
   <section class="sec">
@@ -630,6 +770,7 @@ function renderStart(){
     </div>
   </section>`;
   app.querySelectorAll("[data-start]").forEach(b=>b.onclick=()=>go(1));
+  wireLive();
   try{
     const els=app.querySelectorAll(".reveal");
     if(!("IntersectionObserver" in window) || reduce){ els.forEach(el=>el.classList.add("on")); }
