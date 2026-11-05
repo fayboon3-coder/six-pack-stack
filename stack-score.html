@@ -5,9 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Stack Score</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<meta name="description" content="The free 60-second audit that shows you what to keep, what to skip and how much your supplements are really costing you. By Boon Fay.">
+<meta name="description" content="The free 60-second audit of how you lift, how you eat and what you take, with exactly what to tweak to hit your goal. By Boon Fay.">
 <meta property="og:title" content="What's your Stack Score?">
-<meta property="og:description" content="Free 60-second audit: a verdict on every supplement you take, and how much you're wasting a year.">
+<meta property="og:description" content="Free 60-second audit of your training, eating and supplements, with exactly what to tweak to hit your goal.">
 <meta property="og:image" content="https://six-pack-stack.vercel.app/og-coaching.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -209,6 +209,43 @@ p{margin:0}
   .res>*{min-width:0}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+/* v3: four-step quiz with sub-questions, and a breakdown per area */
+.qblock{display:flex;flex-direction:column;gap:10px}
+.qblock>b{font-size:17px;font-weight:800;line-height:1.3}
+.seg{display:flex;flex-wrap:wrap;gap:8px}
+.seg button{appearance:none;cursor:pointer;font:inherit;font-size:15px;font-weight:700;color:var(--ink);background:var(--navy-2);border:1.5px solid var(--line);border-radius:99px;padding:10px 15px;line-height:1.25;text-align:left;transition:border-color .15s,background .15s}
+.seg button:hover{border-color:var(--muted)}
+.seg button[aria-pressed="true"]{border-color:var(--red);background:var(--red);color:#fff}
+.seg button:focus-visible{outline:3px solid var(--warn);outline-offset:2px}
+.steplabel{font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--red-2)}
+.areas{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.areas a{background:var(--navy-2);border:1px solid var(--line);border-radius:16px;padding:12px 8px;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;min-width:0;text-decoration:none;color:var(--ink)}
+.areas a:hover{border-color:var(--muted)}
+.areas .ring{position:relative;width:62px;height:62px}
+.areas .ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.areas .ring b{position:absolute;inset:0;display:grid;place-items:center;font-size:19px;font-weight:900}
+.areas span{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.area{background:var(--navy-2);border:1px solid var(--line);border-radius:22px;padding:20px 18px;display:flex;flex-direction:column;gap:14px;scroll-margin-top:16px}
+.area-h{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.area-h h3{font-size:22px;font-weight:900;line-height:1.15}
+.area-h .sc{font-size:15px;font-weight:900;padding:6px 10px;border-radius:99px;white-space:nowrap}
+.sc.low{background:rgba(226,67,59,.18);color:#ff8a82}
+.sc.mid{background:rgba(242,178,52,.15);color:#ffd27a}
+.sc.high{background:rgba(63,191,127,.15);color:#7fe0ae}
+.working{font-size:15px;color:var(--muted);border-left:3px solid var(--keep);padding-left:12px}
+.working b{color:#7fe0ae}
+.tweaks{list-style:none;margin:0;padding:0;display:grid;gap:12px;counter-reset:t}
+.tweaks li{display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:start;counter-increment:t}
+.tweaks li::before{content:counter(t);width:30px;height:30px;border-radius:50%;background:var(--red);color:#fff;display:grid;place-items:center;font-weight:900;font-size:14px}
+.tweaks b{display:block;font-size:17px;line-height:1.3;margin-bottom:2px}
+.tweaks p{font-size:15px;color:var(--muted);line-height:1.5}
+.tweaks .why{display:block;margin-top:4px;font-size:14px;color:var(--dim)}
+.target{display:flex;flex-wrap:wrap;gap:8px}
+.target span{font-size:13px;font-weight:800;background:rgba(255,255,255,.06);border:1px solid var(--line);border-radius:10px;padding:6px 10px}
+.prio{background:linear-gradient(180deg,rgba(226,67,59,.16),rgba(226,67,59,.05));border:1.5px solid rgba(226,67,59,.6);border-radius:22px;padding:20px 18px;display:flex;flex-direction:column;gap:8px}
+.prio .t{font-size:22px;font-weight:900;line-height:1.2}
+.res-col{display:flex;flex-direction:column;gap:18px}
 </style>
 <script defer src="/_vercel/insights/script.js"></script>
 <link rel="stylesheet" href="/skin.css">
@@ -235,94 +272,150 @@ const PRODUCTS = [{"id":"whey_protein","n":"Whey protein","full":"Whey Protein",
 const PMAP = Object.fromEntries(PRODUCTS.map(p=>[p.id,p]));
 const KIND = {worth:"Worth it",situational:"Depends",skip:"Skip it",risk:"Risky"};
 
-const Q = [
-  {id:"goal",q:"What's your #1 goal?",opts:["Lose fat and see my abs","Build muscle","Both"]},
-  {id:"abs",q:"Have you ever seen your abs?",opts:["Never","Almost","Yes, but I lost them"]},
-  {id:"supps",q:"What do you take right now?",type:"pick",group:"supp",hint:"Tap everything you use. Type a brand if you don't see it, like AG1, C4 or Hydroxycut."},
-  {id:"gear",q:"Bought into any of these?",type:"pick",group:"gear",hint:"Gadgets, tests and trends. Tap anything you own or pay for."},
-  {id:"spend",q:"About how much do you spend a month on supplements?",opts:["Under $50","$50–100","$100–200","$200+"]},
-  {id:"protein",q:"Do you hit your protein most days?",opts:["Yes","Sometimes","No","No idea how much I need"]},
-  {id:"train",q:"How many days a week do you train?",opts:["0–1","2–3","4+"]},
-  {id:"cals",q:"Do you know roughly how many calories you eat?",opts:["Yes","Roughly","No idea"]},
-  {id:"weekend",q:"How are your weekends?",opts:["On track","A bit loose","I undo the whole week"]}
+/* ---------- the 4 steps ---------- */
+const GOALS = [
+  {v:"fat",    t:"Lose a lot of fat",          s:"20+ lbs to lose"},
+  {v:"cut",    t:"Lose the last of my belly fat", s:"Close, I want my abs to show"},
+  {v:"muscle", t:"Build muscle",               s:"Get bigger and stronger"},
+  {v:"recomp", t:"Build muscle and lose fat",  s:"Both at the same time"}
+];
+const GOAL_TEXT = {fat:"lose the fat", cut:"lose the last of your belly fat", muscle:"build muscle", recomp:"build muscle and lose fat"};
+const STEPS = [
+  {id:"goal", label:"Your goal", q:"What's your goal?"},
+  {id:"lift", label:"How you lift", q:"How do you train right now?", subs:[
+    {id:"days",  q:"Days a week you train", opts:["0–1","2–3","4+"]},
+    {id:"style", q:"What does a workout look like?", opts:["Weights, a set plan","Weights, I wing it","Mostly cardio or classes","I don't train yet"]},
+    {id:"prog",  q:"Do your weights go up over time?", opts:["Yes, I track it","Sometimes","Not really"]}
+  ]},
+  {id:"eat", label:"How you eat", q:"How do you eat?", subs:[
+    {id:"protein", q:"Do you hit your protein most days?", opts:["Yes","Sometimes","No","No idea how much I need"]},
+    {id:"cals",    q:"Do you know how many calories you eat?", opts:["Yes, I track","Roughly","No idea"]},
+    {id:"out",     q:"How often do you eat out or order in?", opts:["Rarely","A few times a week","Most meals"]},
+    {id:"weekend", q:"How are your weekends?", opts:["On track","A bit loose","I undo the whole week"]}
+  ]},
+  {id:"supps", label:"What you take", q:"What do you take right now?", hint:"Supplements, gadgets, anything. Type a brand if you don't see it, like AG1, C4 or Hydroxycut."}
 ];
 
-const state = {step:0, a:{}, picked:new Set(), none:{supp:false,gear:false}, other:"", filter:"", showAll:{supp:false,gear:false}, name:"", email:"", result:null, sent:false};
+const state = {step:0, a:{}, picked:new Set(), none:false, other:"", filter:"", showAll:false, name:"", email:"", result:null, sent:false};
 const app = document.getElementById("app");
 const esc = s => String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const money = n => "$"+Math.round(n).toLocaleString("en-US");
 const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const clamp = (n,lo,hi) => Math.max(lo,Math.min(hi,Math.round(n)));
+const listy = arr => arr.length<=1?arr.join(""):arr.length===2?arr.join(" and "):arr.slice(0,-1).join(", ")+" and "+arr[arr.length-1];
 
 /* ---------- search: names, brands and nicknames ---------- */
 const norm = s => s.toLowerCase().replace(/[^a-z0-9 ]/g," ").replace(/\s+/g," ").trim();
 function match(p,f){
   if(!f) return {ok:true};
-  const n=norm(p.n+" "+p.full);
-  if(n.includes(f)) return {ok:true};
+  if(norm(p.n+" "+p.full).includes(f)) return {ok:true};
   const hit=p.a.find(a=>norm(a).includes(f)||(f.length>3&&f.includes(norm(a))));
   return hit?{ok:true,via:hit}:{ok:false};
 }
 
-/* ---------- scoring ---------- */
-const SPEND_CAP = {"Under $50":600,"$50–100":1200,"$100–200":2400,"$200+":Infinity};
-function computeResult(){
-  const a=state.a, picked=[...state.picked].map(id=>PMAP[id]).filter(Boolean);
-  let productPts = picked.reduce((s,p)=>s+p.pts,0);
-  const missingCreatine = !state.picked.has("creatine");
-  if(missingCreatine) productPts += 5;
-  productPts = Math.min(productPts,40);
-  const proteinPts = {"Yes":0,"Sometimes":8,"No":15,"No idea how much I need":12}[a.protein] ?? 0;
-  const trainPts   = {"4+":0,"2–3":8,"0–1":15}[a.train] ?? 0;
-  const calPts     = {"Yes":0,"Roughly":5,"No idea":12}[a.cals] ?? 0;
-  const wkPts      = {"On track":0,"A bit loose":6,"I undo the whole week":12}[a.weekend] ?? 0;
-  const score = Math.max(12, Math.min(96, 100-productPts-proteinPts-trainPts-calPts-wkPts));
+/* ================= the breakdown ================= */
+function tone(s){ return s<50?"low":s<75?"mid":"high"; }
 
-  // Money: what they rebuy every month (capped by what they told us they spend) plus gadgets already bought.
-  const rawYear = picked.filter(p=>p.k==="skip").reduce((s,p)=>s+p.m,0)*12;
-  const wasteYear = Math.min(rawYear, SPEND_CAP[a.spend] ?? Infinity);
-  const gearSpent = picked.filter(p=>p.k==="skip").reduce((s,p)=>s+p.o,0);
-  const skips = picked.filter(p=>p.k==="skip"||p.k==="risk");
+function liftArea(a,g){
+  let s=100; const T=[], good=[];
+  const muscle = g==="muscle"||g==="recomp", lean = g==="fat"||g==="cut";
+  if(a.days==="0–1"){ s-=40; T.push({t:"Train 3 days a week, full body",b:"Three 45-minute sessions that hit every muscle. That's the minimum that "+(lean?"holds on to your muscle while the fat comes off.":"starts building muscle you can see."),w:"Consistency beats intensity. 3 days you never miss is better than 5 you can't keep."}); }
+  else if(a.days==="2–3"){
+    if(muscle){ s-=25; T.push({t:"Add a 4th day",b:"Switch to an upper/lower split, 4 days a week. More quality sets per muscle each week is the biggest lever for growth once you're showing up.",w:"Each muscle gets trained twice a week instead of once."}); }
+    else { s-=10; T.push({t:"Make every session full body",b:"With 2–3 days, hit every major muscle each session: a squat or leg press, a hinge, a push and a pull.",w:"That's how you keep your muscle while you diet, so you look lean, not just smaller."}); }
+  } else good.push("You train 4+ days a week. That's the hardest part, done.");
 
-  const leaks = [
-    {k:"stack",pts:productPts,t:"Your stack",d:skips.length?`${skips.length} of the things you buy ${skips.length===1?"isn't":"aren't"} moving you closer to your abs.`:"You're missing the one supplement that's cheap and proven.",fix:skips.length?"Stop reordering anything marked Skip it. Put that money into food.":"Add plain creatine monohydrate, 3–5g a day. It's about $10 a month."},
-    {k:"protein",pts:proteinPts,t:"Your protein",d:"Without enough protein you lose muscle while you diet, so there's less to show when the fat comes off.",fix:"Your free plan gives you your exact daily protein number, and meals that hit it."},
-    {k:"train",pts:trainPts,t:"Your training",d:"Fewer than 4 days a week makes it hard to hold muscle while you lose fat.",fix:"Your free plan builds 45-minute workouts around the days you can actually train."},
-    {k:"cals",pts:calPts,t:"Your calories",d:"If you don't know what you eat, hidden calories are quietly stalling your fat loss.",fix:"Your free plan gives you your calories and a meal plan made only from foods you already eat."},
-    {k:"weekend",pts:wkPts,t:"Your weekends",d:"Two loose days can wipe out five good ones. That's why the scale doesn't move.",fix:"Your free plan shows you what to order at the places you already go, so weekends stop undoing the week."}
-  ].sort((x,y)=>y.pts-x.pts);
-  const leak = leaks[0].pts>0 ? leaks[0] : {k:"last",t:"The last 10%",d:"Your basics are solid. What's left is dialing in the plan so the last layer comes off.",fix:"Your free plan sets your exact calories and protein so nothing is guesswork."};
+  if(a.style==="Mostly cardio or classes"){ s-=30; T.push({t:"Swap 2 cardio sessions for weights",b:"Cardio burns calories, but lifting decides what you look like when the fat is gone. Keep the walks, trade the classes.",w:lean?"Without lifting, a big chunk of the weight you lose can be muscle.":"You can't build muscle without a reason to: heavy-ish weights."}); }
+  else if(a.style==="Weights, I wing it"){ s-=15; T.push({t:"Run one plan for 8 weeks",b:"Same exercises in the same order every week. Change the weight and reps, not the workout.",w:"You can't beat last week's numbers if last week was a different workout."}); }
+  else if(a.style==="I don't train yet"){ s-=35; T.push({t:"Start with 6 basic moves",b:"A squat, a hinge, a push, a pull, a lunge and a carry. Learn them light with clean form, then add weight every week.",w:"Beginners grow fastest. Your first 6 months are the best gains you'll ever get."}); }
+  else good.push("You follow a set plan.");
 
-  let band, tone, bandText;
-  if(score<50){band="Leaking";tone="low";bandText="You're spending money and effort that isn't getting you closer to your abs.";}
-  else if(score<75){band="Close, but leaking";tone="mid";bandText="You've got a decent foundation, but a few leaks are costing you your abs.";}
-  else {band="Dialed in";tone="high";bandText="Your stack is solid. You're ready for the last 10%, and that's where a plan built for you makes the difference.";}
+  if(a.prog==="Not really"||a.prog==="Sometimes"){ s-=a.prog==="Not really"?20:10; T.push({t:"Beat last week by one rep",b:"Log every set. When you hit the top of your rep range on every set, add 5 lbs next time.",w:"That's progressive overload. If the weights don't go up, your muscles have no reason to change."}); }
+  else if(a.prog) good.push("Your lifts go up because you track them.");
 
+  if(lean) T.push({t:"Walk 8,000–10,000 steps a day",b:"Get them in short walks: after meals, on calls, parking further away.",w:"Over a week, steps burn more than most cardio sessions, without making you hungrier or hurting your recovery."});
+  if(muscle && T.length<2) T.push({t:"Push most sets close to failure",b:"Finish most sets with 1–2 good reps left in the tank. If you could've done 5 more, the set didn't count for much.",w:"Effort per set matters more than the number of exercises."});
+  return {key:"lift",name:"Lifting",score:clamp(s,10,100),tweaks:T.slice(0,3),good};
+}
+
+function eatArea(a,g){
+  let s=100; const T=[], good=[], lean=g==="fat"||g==="cut";
+  if(a.protein!=="Yes"){
+    s-={"Sometimes":15,"No":30,"No idea how much I need":25}[a.protein]||0;
+    T.push({t:"Hit your protein every day",b:"Aim for about 0.7–1g per pound of your goal body weight. For most guys that's 140–180g. Build every meal around a protein first.",w:lean?"It protects your muscle while you diet and keeps you full, so the deficit is easier.":"It's the raw material for new muscle. Train hard without it and you're leaving gains on the table."});
+  } else good.push("You hit your protein. That's the habit most guys miss.");
+  if(a.cals!=="Yes, I track"){
+    s-=a.cals==="No idea"?25:10;
+    const c={fat:{t:"Eat 400–500 calories under maintenance",b:"That's about 1 lb a week. Track for just 2 weeks to learn what your portions really are. You don't have to do it forever."},
+             cut:{t:"Eat about 300 calories under maintenance",b:"Slow and steady for the last few pounds, about half a pound a week, so you keep your muscle and your abs show."},
+             muscle:{t:"Eat 200–300 calories over maintenance",b:"A small surplus builds muscle without piling on fat. If the scale climbs more than 1 lb a month (beginners: 2 lbs), pull back."},
+             recomp:{t:"Eat about 200 calories under maintenance",b:"A small deficit plus high protein and heavy lifting lets you lose fat and build muscle at the same time."}}[g];
+    T.push({...c,w:a.cals==="Roughly"?"Roughly is close, but small misses add up over weeks. Know the number and the results get predictable.":"If you don't know your number, you're guessing. Most guys underestimate what they eat by a lot."});
+  } else good.push("You know your calories.");
+  if(a.weekend!=="On track"){
+    s-=a.weekend==="I undo the whole week"?25:10;
+    T.push({t:"Plan 2 meals out on the weekend",b:"Pick them ahead of time and keep the rest of the weekend like a weekday.",w:"Two loose days can wipe out five good ones. That's usually why the scale doesn't move."});
+  } else good.push("Your weekends are on track.");
+  if(a.out!=="Rarely"){
+    s-=a.out==="Most meals"?15:5;
+    T.push({t:"Pick 3 go-to orders",b:"One for each place you go most. Think a burrito bowl with double chicken, or grilled nuggets with a side salad. Decide before you walk in.",w:"When you've already decided, the menu doesn't decide for you."});
+  }
+  if(!T.length) T.push({t:"Re-check your calories every 4 weeks",b:"As your body changes, so does your maintenance. A small reset keeps the progress going.",w:"This is how you avoid the plateau."});
+  const targets = [`Protein: 0.7–1g per lb of goal weight`, {fat:"Calories: 400–500 under maintenance",cut:"Calories: ~300 under maintenance",muscle:"Calories: 200–300 over maintenance",recomp:"Calories: ~200 under maintenance"}[g]];
+  return {key:"eat",name:"Eating",score:clamp(s,10,100),tweaks:T.slice(0,3),good,targets};
+}
+
+function suppArea(a,g){
+  const picked=[...state.picked].map(id=>PMAP[id]).filter(Boolean);
+  const skips=picked.filter(p=>p.k==="skip"), risks=picked.filter(p=>p.k==="risk"), deps=picked.filter(p=>p.k==="situational"), worth=picked.filter(p=>p.k==="worth");
+  const missingCreatine=!state.picked.has("creatine");
+  let s=100-picked.reduce((x,p)=>x+p.pts,0)-(missingCreatine?10:0);
+  const wasteYear=skips.reduce((x,p)=>x+p.m,0)*12, gearSpent=skips.reduce((x,p)=>x+p.o,0);
+  const T=[], good=[];
+  if(risks.length) T.push({t:`Stop the ${listy(risks.map(p=>p.n))}`,b:"These aren't approved for people, they're often mislabeled, and the side effects are real. Talk to a doctor before you take anything like this.",w:"Nothing on your results is worth that risk."});
+  if(skips.length) T.push({t:`Stop buying ${listy(skips.map(p=>{const n=p.n.replace(/ \(.*\)$/,"");return /^[A-Z][a-z]/.test(n)?n[0].toLowerCase()+n.slice(1):n;}))}`,b:wasteYear>0?`That's about ${money(wasteYear)} a year on things that aren't moving you closer to your goal. Finish what you have. Just don't reorder.`:"They aren't moving you closer to your goal. Don't buy more.",w:"Put that money into food. Groceries move the needle more than any pill."});
+  if(missingCreatine) T.push({t:"Add creatine",b:"Plain creatine monohydrate, 3–5g a day, any time. About $10 a month.",w:"It's the most researched supplement there is for strength and muscle, and it's cheap."});
+  if(a.protein!=="Yes" && !state.picked.has("whey_protein") && !state.picked.has("plant_protein")) T.push({t:"Use a protein shake on busy days",b:"A plain whey with a third-party seal. Only to fill the gap when food can't get you to your protein.",w:"It's food in a tub. Convenient, not magic."});
+  if(deps.length) T.push({t:`Check if ${deps.length===1?deps[0].n.toLowerCase()+" is":"your “Depends” items are"} right for you`,b:`${listy(deps.map(p=>p.n))} only make${deps.length===1?"s":""} sense in certain cases. Tap through below to see if that's you.`,w:"Most guys pay for the full price and only need the cheap version."});
+  if(!picked.length) good.push("You're not wasting money on supplements.");
+  if(worth.length) good.push(`${listy(worth.map(p=>p.n))}: worth keeping.`);
   const order={risk:0,skip:1,situational:2,worth:3};
-  const verdicts=picked.slice().sort((x,y)=>order[x.k]-order[y.k]);
-  return {score,band,tone,bandText,wasteYear,gearSpent,leak,verdicts,skips,missingCreatine};
+  return {key:"supp",name:"Supplements",score:clamp(s,10,100),tweaks:T.slice(0,3),good,
+    verdicts:picked.slice().sort((x,y)=>order[x.k]-order[y.k]),wasteYear,gearSpent,missingCreatine,skips:skips.length+risks.length};
+}
+
+function computeResult(){
+  const a=state.a, g=a.goal||"cut";
+  const L=liftArea(a,g), E=eatArea(a,g), S=suppArea(a,g);
+  const w = (g==="muscle")?{l:.45,e:.35,s:.20}:{l:.35,e:.45,s:.20};
+  const score = clamp(L.score*w.l+E.score*w.e+S.score*w.s,10,98);
+  // #1 tweak: first tweak of the weakest area (eating wins ties for fat loss, lifting for muscle)
+  const areas=[L,E,S];
+  const weakest = areas.slice().sort((x,y)=>x.score-y.score || (g==="muscle"?(x.key==="lift"?-1:1):(x.key==="eat"?-1:1)))[0];
+  const top = weakest.tweaks[0];
+  let band, bandText;
+  if(score<50){band="Leaking";bandText=`A few big things are standing between you and your goal. The good news: they're all fixable.`;}
+  else if(score<75){band="Close, but leaking";bandText=`You've got a decent foundation. A few tweaks are all that's standing between you and your goal.`;}
+  else {band="Dialed in";bandText=`Your basics are solid. What's left is the last 10%, and that's where a plan built for you makes the difference.`;}
+  return {score,band,tone:tone(score),bandText,areas,L,E,S,weakest,top};
 }
 
 /* ---------- lead source: ?src=video-name from a video link, remembered for this visitor ---------- */
 const LEAD_SOURCE = (()=>{ let v=""; try{ const q=new URLSearchParams(location.search); v=q.get("src")||q.get("utm_source")||""; if(v) localStorage.setItem("sps_src",v); else v=localStorage.getItem("sps_src")||""; }catch(e){} if(!v){ try{ v=document.referrer?new URL(document.referrer).hostname:""; }catch(e){} } return (v||"direct").slice(0,80); })();
 
 /* ---------- Kit ---------- */
-function reportLines(r){
-  const L = r.verdicts.map(p=>{
-    const tag = p.k==="risk"?"RISKY":KIND[p.k].toUpperCase();
-    let line = `${p.full}: ${tag}. ${p.h.replace(/\.?$/,".")}`;
-    if((p.k==="skip"||p.k==="situational") && p.s) line += ` Cheaper swap: ${p.s}.`;
-    return line;
-  });
-  if(state.other.trim()) L.push(`${state.other.trim()}: CHECK. Look it up in Stack Check in the app.`);
-  if(r.missingCreatine) L.push("Creatine (missing): ADD. The one supplement I'd never cut. Plain monohydrate, 3–5g a day.");
-  if(!L.length) L.push("Nothing yet: GOOD. You're not wasting money. Your results come from the basics.");
-  return L;
+function reportText(r){
+  const sec = A => [`${A.name.toUpperCase()}: ${A.score}/100`, ...A.good.map(x=>`Working: ${x}`), ...A.tweaks.map((t,i)=>`${i+1}. ${t.t}. ${t.b}`)].join("\n");
+  const v = r.S.verdicts.map(p=>{ const tag=p.k==="risk"?"RISKY":KIND[p.k].toUpperCase(); let l=`- ${p.full}: ${tag}. ${p.h.replace(/\.?$/,".")}`; if((p.k==="skip"||p.k==="situational")&&p.s) l+=` Cheaper swap: ${p.s}.`; return l; });
+  if(state.other.trim()) v.push(`- ${state.other.trim()}: CHECK. Look it up in Stack Check in the app.`);
+  return [sec(r.L), sec(r.E)+(r.E.targets?"\nTargets: "+r.E.targets.join(" · "):""), sec(r.S)+(v.length?"\nYour verdicts:\n"+v.join("\n"):"")].join("\n\n");
 }
 async function sendToKit(r){
-  const fields = {stack_score:String(r.score), goal:state.a.goal||"", monthly_spend:state.a.spend||"", stack_band:r.band,
-    stack_leak:`${r.leak.t}. ${r.leak.d} ${r.leak.fix}`,
-    stack_waste:r.wasteYear>0?`About ${money(r.wasteYear)} a year`:"Little to none",
-    stack_report:reportLines(r).join("\n"), lead_source:LEAD_SOURCE};
+  const g=GOALS.find(x=>x.v===state.a.goal);
+  const fields = {stack_score:String(r.score), goal:g?g.t:"", stack_band:r.band,
+    stack_leak:`${r.top.t}. ${r.top.b}`,
+    stack_waste:r.S.wasteYear>0?`About ${money(r.S.wasteYear)} a year`:"Little to none",
+    stack_report:reportText(r), lead_source:LEAD_SOURCE};
   try{
     const res = await fetch(`https://api.convertkit.com/v3/forms/${KIT_FORM_ID}/subscribe`,{method:"POST",headers:{"Content-Type":"application/json"},
       body:JSON.stringify({api_key:KIT_API_KEY,email:state.email,first_name:state.name,fields})});
@@ -339,65 +432,64 @@ async function sendToKit(r){
 }
 
 /* ---------- navigation ---------- */
-const GATE = Q.length+1, CALC = Q.length+2, RES = Q.length+3;
+const GATE = STEPS.length+1, CALC = STEPS.length+2, RES = STEPS.length+3;
 function render(){
   const s=state.step;
   document.querySelector(".wrap").classList.toggle("narrow", s>=1 && s<RES);
   if(s===0) return renderStart();
-  if(s<=Q.length) return renderQuestion(s-1);
+  if(s<=STEPS.length) return renderStep(s-1);
   if(s===GATE) return renderGate();
   if(s===CALC) return renderCalc();
   return renderResults();
 }
 function go(n){ state.step=n; render(); window.scrollTo({top:0,behavior:reduce?"auto":"smooth"}); const h=app.querySelector("h1,h2"); if(h){h.setAttribute("tabindex","-1");h.focus({preventScroll:true});} }
 function progress(i){
-  const pct=Math.round(((i+1)/Q.length)*100);
-  return `<div class="progress"><div class="qmeta"><span>Question ${i+1} of ${Q.length}</span><span>${pct}%</span></div><div class="bar"><i style="width:${pct}%"></i></div></div>`;
+  const pct=Math.round(((i+1)/STEPS.length)*100);
+  return `<div class="progress"><div class="qmeta"><span>Step ${i+1} of ${STEPS.length} · ${esc(STEPS[i].label)}</span><span>${pct}%</span></div><div class="bar"><i style="width:${pct}%"></i></div></div>`;
 }
 
 /* ---------- start ---------- */
 function ctaBlock(label){
   return `<div class="stack ctawrap" style="gap:10px"><button class="btn" data-start>${label}</button>
-  <div class="micro"><span>Free</span><span>60 seconds</span><span>Instant results</span></div></div>`;
+  <div class="micro"><span>Free</span><span>4 quick steps</span><span>Instant results</span></div></div>`;
 }
 function exampleLabel(){
   return `<div class="facts" aria-label="Example Stack Score report">
     <div class="ft">Stack Score Facts</div>
-    <div class="serv"><span>Example report</span><span>4 products checked</span></div>
-    <div class="scoreline"><div><div class="lbl">Stack Score</div><div class="band">"Leaking"</div></div><div class="bignum">42<span>/100</span></div></div>
-    <div class="vhead"><span>Product</span><span>Verdict</span></div>
-    <div class="vrow"><span class="nm">Fat burner</span><span class="pill p-skip">Skip it</span><span class="why">Mostly caffeine, with the worst safety record in the aisle.</span></div>
-    <div class="vrow"><span class="nm">Greens powder (AG1)</span><span class="pill p-skip">Skip it</span><span class="why">An expensive multivitamin with a podcast budget.</span></div>
-    <div class="vrow"><span class="nm">Pre-workout</span><span class="pill p-situational">Depends</span><span class="why">You're mostly paying for caffeine. <b>Cheaper swap:</b> coffee.</span></div>
-    <div class="vrow"><span class="nm">Creatine</span><span class="pill p-worth">Worth it</span><span class="why">The cheap one is the one that works.</span></div>
+    <div class="serv"><span>Example report</span><span>Goal: lose the belly fat</span></div>
+    <div class="scoreline"><div><div class="lbl">Stack Score</div><div class="band">"Close, but leaking"</div></div><div class="bignum">58<span>/100</span></div></div>
+    <div class="vhead"><span>Area</span><span>Score</span></div>
+    <div class="vrow"><span class="nm">Lifting</span><span class="pill p-worth">82</span><span class="why">Beat last week by one rep. Walk 8–10k steps.</span></div>
+    <div class="vrow"><span class="nm">Eating</span><span class="pill p-skip">41</span><span class="why">Hit your protein every day. Plan 2 meals out on the weekend.</span></div>
+    <div class="vrow"><span class="nm">Supplements</span><span class="pill p-situational">55</span><span class="why">Stop buying the fat burner and AG1. Add creatine.</span></div>
     <div class="trow"><span>Wasted a year</span><span class="v">About $1,320</span></div>
-    <div class="trow"><span>#1 leak</span><span class="v">Your weekends</span></div>
+    <div class="trow"><span>#1 tweak</span><span class="v">Hit your protein</span></div>
   </div>`;
 }
 function renderStart(){
   app.innerHTML = `
   <section class="hero">
     <h1>What's Your <em>Stack Score?</em></h1>
-    <p class="sub">The free 60-second audit that gives you a verdict on <b>every supplement you take</b>, and shows you how much you're wasting a year.</p>
-    <div class="byline"><img src="/boon.jpg" alt="Boon Fay" width="46" height="46"><div><b>Boon Fay</b><span>Investigated 47 fitness products. No sponsors, no affiliate links.</span></div></div>
+    <p class="sub">The free 60-second audit of <b>how you lift, how you eat and what you take</b>, with exactly what to tweak to hit your goal.</p>
+    <div class="byline"><img src="/boon.jpg" alt="Boon Fay" width="46" height="46"><div><b>Boon Fay</b><span>Went from 225 to 175 lbs. No sponsors, no affiliate links.</span></div></div>
     ${ctaBlock("Get My Stack Score →")}
     <div class="proof">
-      <div><b>47</b><span>products investigated</span></div>
+      <div><b>4</b><span>quick steps</span></div>
       <div><b>225→175</b><span>my own transformation</span></div>
-      <div><b>$0</b><span>from any brand. Ever.</span></div>
+      <div><b>47</b><span>products investigated</span></div>
     </div>
   </section>
 
   <section class="sec">
     <span class="eyebrow">What you'll get</span>
-    <h2>Your personal Stack Score report</h2>
+    <h2>Your personal breakdown</h2>
     <div class="grid2">
       <div class="stack">
         <ul class="bullets">
-          <li><span class="tick">✓</span><span><b>Your score out of 100</b>, so you know exactly where you stand</span></li>
-          <li><span class="tick">✓</span><span><b>My verdict on everything you take:</b> worth it, depends or skip it, plus the cheaper swap</span></li>
-          <li><span class="tick">✓</span><span><b>What you're wasting a year</b> on products that don't work</span></li>
-          <li><span class="tick">✓</span><span><b>Your #1 leak</b>, the one thing keeping your abs hidden, and how to fix it</span></li>
+          <li><span class="tick">✓</span><span><b>Your score out of 100</b>, plus a score for your lifting, your eating and your supplements</span></li>
+          <li><span class="tick">✓</span><span><b>The tweaks to your training</b> that get you to your goal faster</span></li>
+          <li><span class="tick">✓</span><span><b>Your eating targets:</b> protein, calories and how to handle weekends and eating out</span></li>
+          <li><span class="tick">✓</span><span><b>My verdict on every supplement you take</b>, and how much you're wasting a year</span></li>
         </ul>
         ${ctaBlock("Get My Stack Score →")}
       </div>
@@ -407,11 +499,11 @@ function renderStart(){
 
   <section class="sec">
     <span class="eyebrow">How it works</span>
-    <h2>3 steps. 60 seconds.</h2>
+    <h2>4 steps. 60 seconds.</h2>
     <ol class="steps">
-      <li><div><b>Answer 9 quick questions</b><span class="muted">Your goal, what you take and your habits. Mostly one tap each.</span></div></li>
-      <li><div><b>Get your score instantly</b><span class="muted">Your verdicts, your waste and your #1 leak, right on screen.</span></div></li>
-      <li><div><b>Fix your #1 leak</b><span class="muted">Your report lands in your inbox, with exactly what to do this week.</span></div></li>
+      <li><div><b>Tell me your goal</b><span class="muted">Lose fat, see your abs, build muscle, or both.</span></div></li>
+      <li><div><b>How you lift, eat and what you take</b><span class="muted">A few taps each. No typing, no weighing anything.</span></div></li>
+      <li><div><b>Get your breakdown</b><span class="muted">On screen right away, and a copy in your inbox.</span></div></li>
     </ol>
   </section>
 
@@ -420,8 +512,8 @@ function renderStart(){
     <div class="me">
       <img src="/boon.jpg" alt="Boon Fay" width="88" height="88">
       <div class="stack" style="gap:8px">
-        <h2 style="font-size:24px">I'm Boon. I wasted thousands on supplements.</h2>
-        <p class="muted">At 225 lbs my cabinet looked like a GNC shelf. Fat burners, test boosters, greens powder. Most of it did nothing. I got to 175 once I cut the junk and kept what worked. Then I investigated 47 of the most popular products so you don't have to. This is the audit I wish someone had given me.</p>
+        <h2 style="font-size:24px">I'm Boon. I did everything wrong first.</h2>
+        <p class="muted">At 225 lbs I trained without a plan, guessed my food and bought every supplement with a good ad. I got to 175 once I fixed the basics and cut the junk. This audit shows you which of those basics you're missing, so you don't waste years like I did.</p>
       </div>
     </div>
   </section>
@@ -431,28 +523,51 @@ function renderStart(){
     <div class="faq">
       <div><b>Is it really free?</b>Yes. No card, no catch.</div>
       <div><b>Who pays you to say this?</b>Nobody. No sponsors and no affiliate links, so I can tell you what doesn't work.</div>
-      <div><b>Do I need to sign up first?</b>No. Answer the questions first. You only add your email to see your report.</div>
+      <div><b>Do I need to sign up first?</b>No. Answer first. You only add your email to see your breakdown.</div>
     </div>
     <div class="ctaend">${ctaBlock("Find Out My Stack Score →")}</div>
   </section>`;
   app.querySelectorAll("[data-start]").forEach(b=>b.onclick=()=>go(1));
 }
 
-/* ---------- questions ---------- */
-function renderQuestion(i){
-  const q=Q[i];
-  if(q.type==="pick") return renderPick(i);
-  const cur=state.a[q.id];
+/* ---------- steps ---------- */
+function renderStep(i){
+  const S=STEPS[i];
+  if(S.id==="goal") return renderGoal(i);
+  if(S.id==="supps") return renderPick(i);
+  const done = () => S.subs.every(q=>state.a[q.id]);
+  app.innerHTML = `${progress(i)}
+  <section class="screen stack fade" style="gap:24px">
+    <h2>${esc(S.q)}</h2>
+    ${S.subs.map(q=>`<div class="qblock" role="group" aria-label="${esc(q.q)}"><b>${esc(q.q)}</b><div class="seg">${q.opts.map(o=>`<button type="button" data-q="${q.id}" data-v="${esc(o)}" aria-pressed="${state.a[q.id]===o}">${esc(o)}</button>`).join("")}</div></div>`).join("")}
+  </section>
+  <div class="sticky-next">
+    <button class="btn ghost" id="back" style="width:auto" aria-label="Back">←</button>
+    <button class="btn" id="next" ${done()?"":"disabled"}>Next →</button>
+  </div>`;
+  app.querySelectorAll(".seg button").forEach(b=>b.onclick=()=>{
+    state.a[b.dataset.q]=b.dataset.v;
+    b.parentElement.querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));
+    if(b.dataset.q==="style" && b.dataset.v==="I don't train yet"){ // nothing to progress yet
+      state.a.prog = state.a.prog || "Not really";
+      app.querySelectorAll('[data-q="prog"]').forEach(x=>x.setAttribute("aria-pressed",String(x.dataset.v===state.a.prog)));
+    }
+    document.getElementById("next").disabled=!done();
+  });
+  document.getElementById("back").onclick=()=>go(state.step-1);
+  document.getElementById("next").onclick=()=>{ if(done()) go(state.step+1); };
+}
+function renderGoal(i){
+  const cur=state.a.goal;
   app.innerHTML = `${progress(i)}
   <section class="screen stack fade">
-    <h2>${esc(q.q)}</h2>
-    <div class="opts">${q.opts.map((o,k)=>`<button class="opt" data-k="${k}" aria-pressed="${cur===o}"><span>${esc(o)}</span><span class="arrow">→</span></button>`).join("")}</div>
+    <h2>What's your goal?</h2>
+    <div class="opts">${GOALS.map(g=>`<button class="opt" data-v="${g.v}" aria-pressed="${cur===g.v}"><span>${esc(g.t)}<small>${esc(g.s)}</small></span><span class="arrow">→</span></button>`).join("")}</div>
     <div><button class="link" id="back">← Back</button></div>
   </section>`;
   app.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{
-    state.a[q.id]=q.opts[+b.dataset.k];
-    app.querySelectorAll(".opt").forEach(x=>x.setAttribute("aria-pressed","false"));
-    b.setAttribute("aria-pressed","true");
+    state.a.goal=b.dataset.v;
+    app.querySelectorAll(".opt").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));
     setTimeout(()=>go(state.step+1),160);
   });
   document.getElementById("back").onclick=()=>go(state.step-1);
@@ -462,80 +577,72 @@ function chip(p,via){
   return `<label class="chk"><input type="checkbox" value="${p.id}" ${state.picked.has(p.id)?"checked":""}><span class="box"></span><span>${esc(p.n)}${via?` <span class="via">(${esc(via)})</span>`:""}</span></label>`;
 }
 function renderPick(i){
-  const q=Q[i], g=q.group, f=norm(state.filter);
-  const pool=PRODUCTS.filter(p=>p.g===g);
+  const S=STEPS[i], f=norm(state.filter);
   let body="";
   if(f){
-    const hits=pool.map(p=>({p,m:match(p,f)})).filter(x=>x.m.ok);
-    const other=PRODUCTS.filter(p=>p.g!==g).map(p=>({p,m:match(p,f)})).filter(x=>x.m.ok);
-    const all=[...hits,...other];
-    body = all.length ? `<div class="chips">${all.map(x=>chip(x.p,x.m.via)).join("")}</div>`
+    const hits=PRODUCTS.map(p=>({p,m:match(p,f)})).filter(x=>x.m.ok);
+    body = hits.length ? `<div class="chips">${hits.map(x=>chip(x.p,x.m.via)).join("")}</div>`
       : `<p class="muted">I haven't investigated that one yet. Add it below and I'll flag it in your report.</p>`;
-  } else if(!state.showAll[g]){
-    const pop=pool.filter(p=>p.pop<99).sort((a,b)=>a.pop-b.pop);
-    const extra=pool.filter(p=>p.pop===99 && state.picked.has(p.id));
+  } else if(!state.showAll){
+    const pop=PRODUCTS.filter(p=>p.pop<99).sort((a,b)=>a.pop-b.pop);
+    const extra=PRODUCTS.filter(p=>p.pop===99 && state.picked.has(p.id));
     body = `<div class="cat"><h3>Most common</h3><div class="chips">${[...pop,...extra].map(p=>chip(p)).join("")}</div></div>
-      <button class="more" id="all">Show all ${pool.length} →</button>`;
+      <button class="more" id="all">Show all ${PRODUCTS.length} →</button>`;
   } else {
-    const cats=[...new Set(pool.map(p=>p.c))];
-    body = cats.map(c=>`<div class="cat"><h3>${esc(c)}</h3><div class="chips">${pool.filter(p=>p.c===c).map(p=>chip(p)).join("")}</div></div>`).join("");
+    const cats=[...new Set(PRODUCTS.map(p=>p.c))];
+    body = cats.map(c=>`<div class="cat"><h3>${esc(c)}</h3><div class="chips">${PRODUCTS.filter(p=>p.c===c).map(p=>chip(p)).join("")}</div></div>`).join("");
   }
-  const mine=[...state.picked].map(id=>PMAP[id]).filter(p=>p&&p.g===g);
-  const noneLabel = g==="supp" ? "I don't take anything yet" : "None of these";
+  const n=state.picked.size;
   app.innerHTML = `${progress(i)}
   <section class="screen stack fade" style="gap:16px">
-    <h2>${esc(q.q)}</h2>
-    <p class="hint">${esc(q.hint)}</p>
-    <label class="chk" style="align-self:flex-start"><input type="checkbox" id="none" ${state.none[g]?"checked":""}><span class="box"></span><span>${noneLabel}</span></label>
-    <input class="search" id="filter" type="search" placeholder="${g==="supp"?"Search a product or brand…":"Search, e.g. Whoop, Theragun…"}" value="${esc(state.filter)}" aria-label="Search products" autocomplete="off">
+    <h2>${esc(S.q)}</h2>
+    <p class="hint">${esc(S.hint)}</p>
+    <label class="chk" style="align-self:flex-start"><input type="checkbox" id="none" ${state.none?"checked":""}><span class="box"></span><span>Nothing right now</span></label>
+    <input class="search" id="filter" type="search" placeholder="Search a product or brand…" value="${esc(state.filter)}" aria-label="Search products" autocomplete="off">
     ${body}
-    ${g==="supp"?`<div class="field"><label for="other">Something else? Type it in</label><input type="text" id="other" placeholder="e.g. a specific brand or product" value="${esc(state.other)}"></div>`:""}
+    <div class="field"><label for="other">Something else? Type it in</label><input type="text" id="other" placeholder="e.g. a specific brand or product" value="${esc(state.other)}"></div>
   </section>
   <div class="sticky-next">
     <button class="btn ghost" id="back" style="width:auto" aria-label="Back">←</button>
-    <button class="btn" id="next">${mine.length?`Next (${mine.length} picked) →`:"Next →"}</button>
+    <button class="btn" id="next">${n?`See my breakdown (${n}) →`:"See my breakdown →"}</button>
   </div>`;
   app.querySelectorAll('.chk input[value]').forEach(cb=>cb.onchange=()=>{
     cb.checked?state.picked.add(cb.value):state.picked.delete(cb.value);
-    if(cb.checked){state.none[g]=false;const n=document.getElementById("none");if(n)n.checked=false;}
-    const c=[...state.picked].filter(id=>PMAP[id]?.g===g).length;
-    document.getElementById("next").textContent=c?`Next (${c} picked) →`:"Next →";
+    if(cb.checked){state.none=false;document.getElementById("none").checked=false;}
+    const c=state.picked.size; document.getElementById("next").textContent=c?`See my breakdown (${c}) →`:"See my breakdown →";
   });
-  document.getElementById("none").onchange=e=>{
-    state.none[g]=e.target.checked;
-    if(e.target.checked){pool.forEach(p=>state.picked.delete(p.id));renderPick(i);}
-  };
+  document.getElementById("none").onchange=e=>{ state.none=e.target.checked; if(e.target.checked){state.picked.clear();renderPick(i);} };
   const fi=document.getElementById("filter");
-  fi.oninput=()=>{state.filter=fi.value;const pos=fi.selectionStart;renderPick(i);const n=document.getElementById("filter");n.focus();n.setSelectionRange(pos,pos);};
-  const all=document.getElementById("all"); if(all) all.onclick=()=>{state.showAll[g]=true;renderPick(i);};
-  const ot=document.getElementById("other"); if(ot) ot.oninput=e=>state.other=e.target.value;
+  fi.oninput=()=>{state.filter=fi.value;const pos=fi.selectionStart;renderPick(i);const el=document.getElementById("filter");el.focus();el.setSelectionRange(pos,pos);};
+  const all=document.getElementById("all"); if(all) all.onclick=()=>{state.showAll=true;renderPick(i);};
+  document.getElementById("other").oninput=e=>state.other=e.target.value;
   document.getElementById("back").onclick=()=>{state.filter="";go(state.step-1);};
   document.getElementById("next").onclick=()=>{state.filter="";go(state.step+1);};
 }
 
 /* ---------- email gate ---------- */
 function renderGate(){
-  const n=state.picked.size;
   app.innerHTML = `
   <div class="progress"><div class="qmeta"><span>Done</span><span>100%</span></div><div class="bar"><i style="width:100%"></i></div></div>
   <section class="screen stack fade" style="margin-top:24px">
-    <h2>✅ Your Stack Score is ready.</h2>
+    <h2>✅ Your breakdown is ready.</h2>
     <div class="gatewrap">
       <div class="facts blurred" aria-hidden="true">
         <div class="ft">Stack Score Facts</div>
         <div class="scoreline"><div><div class="lbl">Stack Score</div><div class="band">"———"</div></div><div class="bignum">??<span>/100</span></div></div>
-        <div class="vrow"><span class="nm">████████</span><span class="pill p-skip">Skip it</span></div>
-        <div class="vrow"><span class="nm">██████</span><span class="pill p-worth">Worth it</span></div>
-        <div class="trow"><span>Wasted a year</span><span class="v">$█,███</span></div>
+        <div class="vrow"><span class="nm">Lifting</span><span class="pill p-worth">██</span></div>
+        <div class="vrow"><span class="nm">Eating</span><span class="pill p-skip">██</span></div>
+        <div class="vrow"><span class="nm">Supplements</span><span class="pill p-situational">██</span></div>
+        <div class="trow"><span>#1 tweak</span><span class="v">████████</span></div>
       </div>
-      <div class="badge"><span>🔒 ${n?`${n} product${n===1?"":"s"} checked`:"Your report is ready"}</span></div>
+      <div class="badge"><span>🔒 Built for your goal</span></div>
     </div>
-    <p style="font-size:19px;font-weight:700">Where should I send your report?</p>
+    <p style="font-size:19px;font-weight:700">Where should I send your breakdown?</p>
     <ul class="inside">
-      <li>Your score out of 100</li>
-      <li>My verdict on ${n?`all ${n} things you picked`:"your stack"}, plus the cheaper swap</li>
-      <li>What you're wasting every year</li>
-      <li>Your #1 leak and exactly how to fix it</li>
+      <li>Your score, plus your lifting, eating and supplement scores</li>
+      <li>The exact tweaks to ${esc(GOAL_TEXT[state.a.goal]||"hit your goal")}</li>
+      <li>Your protein and calorie targets</li>
+      <li>My verdict on everything you take</li>
     </ul>
     <form id="gate" class="stack" novalidate style="gap:12px">
       <div class="field"><label for="name">First name</label>
@@ -543,7 +650,7 @@ function renderGate(){
       <div class="field"><label for="email">Email</label>
         <input type="email" id="email" autocomplete="email" inputmode="email" placeholder="you@email.com" value="${esc(state.email)}" required>
         <div class="err" id="err" role="alert"></div></div>
-      <button class="btn" id="show" type="submit">Show My Stack Score →</button>
+      <button class="btn" id="show" type="submit">Show My Breakdown →</button>
       <p class="muted small" style="text-align:center">🔒 No spam. Unsubscribe anytime.</p>
     </form>
     <div><button class="link" id="back">← Back</button></div>
@@ -552,12 +659,13 @@ function renderGate(){
   document.getElementById("gate").onsubmit=e=>{
     e.preventDefault();
     const nm=document.getElementById("name").value.trim(), em=document.getElementById("email").value.trim(), err=document.getElementById("err");
-    if(nm.length<2){err.textContent="Add your first name so I know who the report is for.";return;}
-    if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(em)){err.textContent="Enter a valid email so I can send your report.";return;}
+    if(nm.length<2){err.textContent="Add your first name so I know who this is for.";return;}
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(em)){err.textContent="Enter a valid email so I can send your breakdown.";return;}
     state.name=nm.charAt(0).toUpperCase()+nm.slice(1); state.email=em;
     state.result=computeResult();
     // Hand the answers to the app on this same site, so the plan builder starts pre-filled.
-    try{ localStorage.setItem("sps_stackscore", JSON.stringify({name:state.name,email:em,goal:state.a.goal,spend:state.a.spend,train:state.a.train,stack:[...state.picked],score:state.result.score,at:Date.now()})); }catch(x){}
+    const appGoal={fat:"Lose fat and see my abs",cut:"Lose fat and see my abs",muscle:"Build muscle",recomp:"Both"}[state.a.goal];
+    try{ localStorage.setItem("sps_stackscore", JSON.stringify({name:state.name,email:em,goal:appGoal,train:state.a.days,stack:[...state.picked],score:state.result.score,at:Date.now()})); }catch(x){}
     state.sending = sendToKit(state.result).then(ok=>state.sent=ok);
     go(CALC);
   };
@@ -566,45 +674,57 @@ function renderGate(){
 /* ---------- the "working on it" beat ---------- */
 function renderCalc(){
   const n=state.picked.size;
-  const steps=[
-    n?`Checking ${n} product${n===1?"":"s"} against my 47 verdicts`:"Checking your answers against my 47 verdicts",
-    "Adding up what you spend",
-    "Finding your #1 leak",
-    "Building your report"
-  ];
+  const steps=["Scoring your training","Scoring your eating",n?`Checking ${n} product${n===1?"":"s"} against my 47 verdicts`:"Checking your supplements","Building your tweaks for "+(GOAL_TEXT[state.a.goal]||"your goal")];
   app.innerHTML = `<section class="screen stack fade" style="margin-top:56px;align-items:center;text-align:center">
     <h2>Running your audit, ${esc(state.name)}…</h2>
     <ul class="calc" style="list-style:none;padding:0;margin:8px 0 0;text-align:left">${steps.map(s=>`<li><i></i>${esc(s)}</li>`).join("")}</ul>
   </section>`;
-  const lis=[...app.querySelectorAll(".calc li")];
-  const gap = reduce?60:520;
+  const lis=[...app.querySelectorAll(".calc li")], gap=reduce?60:520;
   lis.forEach((li,k)=>setTimeout(()=>li.classList.add("on"),gap*(k+1)));
   setTimeout(async()=>{ await Promise.race([state.sending,new Promise(r=>setTimeout(r,2500))]); go(RES); }, gap*(lis.length+1));
 }
 
 /* ---------- results ---------- */
-function absLine(){
-  return {"Never":"You've never seen your abs. Here's what's been in the way.",
-          "Almost":"You're closer than you think. Here's what's in the way.",
-          "Yes, but I lost them":"You've had them before. Here's what's keeping them hidden."}[state.a.abs] || "Here's what's in the way.";
+function ring(score,size,stroke){
+  const r=(size-stroke)/2, C=2*Math.PI*r, col={low:"#ff5a50",mid:"#f2b234",high:"#3fbf7f"}[tone(score)];
+  return `<svg viewBox="0 0 ${size} ${size}" aria-hidden="true"><circle cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke="#1d3459" stroke-width="${stroke}"/><circle cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke="${col}" stroke-width="${stroke}" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${C*(1-score/100)}"/></svg>`;
 }
-function row(p){
+function tweakList(T){ return `<ol class="tweaks">${T.map(t=>`<li><div><b>${esc(t.t)}</b><p>${esc(t.b)}<span class="why">Why: ${esc(t.w)}</span></p></div></li>`).join("")}</ol>`; }
+function areaCard(A,extra){
+  return `<section class="area" id="a-${A.key}">
+    <div class="area-h"><h3>Your ${A.name.toLowerCase()}</h3><span class="sc ${tone(A.score)}">${A.score}/100</span></div>
+    ${A.good.length?`<p class="working"><b>Working:</b> ${A.good.map(esc).join(" ")}</p>`:""}
+    ${A.targets?`<div class="target">${A.targets.map(t=>`<span>${esc(t)}</span>`).join("")}</div>`:""}
+    <span class="eyebrow" style="color:var(--muted)">What to tweak</span>
+    ${tweakList(A.tweaks)}
+    ${extra||""}
+  </section>`;
+}
+function vrow(p){
   const pill = p.k==="risk"?`<span class="pill p-risk">Risky</span>`:`<span class="pill p-${p.k}">${KIND[p.k]}</span>`;
   const swap = (p.k==="skip"||p.k==="situational") && p.s ? ` <b>Cheaper swap:</b> ${esc(p.s)}.` : "";
   const link = p.k==="risk" ? "" : `<a class="go" href="${VERDICT_URL(p.id)}">See the full breakdown →</a>`;
   return `<div class="vrow"><span class="nm">${esc(p.n)}</span>${pill}<span class="why">${esc(p.h.replace(/\.?$/,"."))}${swap}</span>${link}</div>`;
 }
+function verdictLabel(S){
+  if(!S.verdicts.length && !state.other.trim()) return "";
+  const other = state.other.trim()?`<div class="vrow"><span class="nm">${esc(state.other.trim())}</span><span class="pill p-situational">Check</span><span class="why">I'd need to see the label.</span><a class="go" href="${LOOKUP_URL}">Look it up in Stack Check →</a></div>`:"";
+  return `<div class="facts" role="region" aria-label="Your supplement verdicts">
+    <div class="ft">Supplement Facts</div>
+    <div class="serv"><span>My verdict on what you take</span><span>${S.verdicts.length+(other?1:0)} checked</span></div>
+    <div class="vhead"><span>Product</span><span>Verdict</span></div>
+    ${S.verdicts.map(vrow).join("")}${other}
+    <div class="trow"><span>Wasted a year</span><span class="v">${S.wasteYear>0?"About "+money(S.wasteYear):"Little to none"}</span></div>
+    <p class="foot">From Boon's Beyond the Label investigation. General information, not medical advice. Check with your doctor before stopping anything prescribed. Waste is an estimate based on typical prices.</p>
+  </div>${S.gearSpent>0?`<p class="small muted">Plus about ${money(S.gearSpent)} already spent on gadgets and tests that don't work.</p>`:""}`;
+}
 function renderResults(){
   const r=state.result||computeResult();
-  const rows=r.verdicts.map(row).join("");
-  const otherRow = state.other.trim()?`<div class="vrow"><span class="nm">${esc(state.other.trim())}</span><span class="pill p-situational">Check</span><span class="why">I'd need to see the label. Look it up in Stack Check.</span><a class="go" href="${LOOKUP_URL}">Look it up in Stack Check →</a></div>`:"";
-  const creatineRow = r.missingCreatine?`<div class="vrow"><span class="nm">Creatine (missing)</span><span class="pill p-add">Add</span><span class="why">The one supplement I'd never cut. Plain monohydrate, 3–5g a day, about $10 a month.</span><a class="go" href="${VERDICT_URL("creatine")}">Why creatine →</a></div>`:"";
-  const empty = (!rows&&!otherRow)?`<div class="vrow"><span class="nm">Nothing yet</span><span class="pill p-worth">Good</span><span class="why">You're not wasting money. Your results come from the basics.</span></div>`:"";
-  const wasteTile = r.wasteYear>0?money(r.wasteYear):"$0";
   const C=2*Math.PI*88, color={low:"#ff5a50",mid:"#f2b234",high:"#3fbf7f"}[r.tone];
+  const planBtn = label => `<a class="btn" href="${PLAN_URL}">${label}</a>`;
   app.innerHTML = `
   <section class="screen res">
-    <div class="stack" style="gap:18px">
+    <div class="res-col">
       <div class="reveal fade">
         <span class="eyebrow">${esc(state.name)}'s Stack Score</span>
         <div class="gauge" role="img" aria-label="Stack Score ${r.score} out of 100">
@@ -613,51 +733,40 @@ function renderResults(){
           <div class="num"><b id="sc">0</b><span>out of 100</span></div>
         </div>
         <span class="bandpill b-${r.tone}">${esc(r.band)}</span>
-        <p style="font-size:17px;max-width:30em">${esc(absLine())}</p>
+        <p style="font-size:17px;max-width:30em">${esc(r.bandText)}</p>
       </div>
-      <div class="tiles fade">
-        <div class="${r.wasteYear>0?"hot":""}"><b>${wasteTile}</b><span>wasted a year</span></div>
-        <div class="${r.skips.length?"hot":""}"><b>${r.skips.length}</b><span>to stop buying</span></div>
-        <div><b>${r.verdicts.filter(p=>p.k==="worth").length}</b><span>worth keeping</span></div>
+      <div class="areas fade">
+        ${r.areas.map(A=>`<a href="#a-${A.key}"><div class="ring">${ring(A.score,62,7)}<b>${A.score}</b></div><span>${A.name}</span></a>`).join("")}
       </div>
-      ${r.gearSpent>0?`<p class="small muted" style="text-align:center;margin-top:-6px">Plus about ${money(r.gearSpent)} already spent on gadgets and tests that don't work.</p>`:""}
-      <div class="leak fade">
-        <span class="k">🚨 Your #1 leak</span>
-        <span class="t">${esc(r.leak.t)}</span>
-        <p>${esc(r.leak.d)}</p>
-        <p class="fix"><b>The fix:</b> ${esc(r.leak.fix)}</p>
+      <div class="prio fade">
+        <span class="eyebrow">🎯 Your #1 tweak · ${esc(r.weakest.name)}</span>
+        <span class="t">${esc(r.top.t)}</span>
+        <p>${esc(r.top.b)}</p>
+        <p class="small muted">Why: ${esc(r.top.w)}</p>
       </div>
       <div class="cta">
-        <h2>Now fix it, free.</h2>
-        <p>Your score shows what to stop. My app shows you what to do instead, built from the answers you just gave me.</p>
+        <h2>Get the full plan, free.</h2>
+        <p>These are the tweaks. My app turns them into a plan to ${esc(GOAL_TEXT[state.a.goal]||"hit your goal")}, built from the answers you just gave me.</p>
         <ul>
           <li>Your exact calories and protein</li>
           <li>A meal plan made only from foods you already eat</li>
           <li>Workouts on the days you choose, with a form video on every move</li>
           <li>Stack Check: my verdict on all 47 products, before you buy anything</li>
         </ul>
-        <a class="btn" href="${PLAN_URL}">Build My Free Plan →</a>
+        ${planBtn("Build My Free Plan →")}
         <p class="muted small" style="text-align:center">2 minutes. Your answers carry over. First 2 weeks free, no card.</p>
       </div>
     </div>
 
-    <div class="stack" style="gap:18px">
-      <span class="eyebrow">Your full report</span>
-      <div class="facts" role="region" aria-label="Your Stack Score report">
-        <div class="ft">Stack Score Facts</div>
-        <div class="serv"><span>Serving size: 1 honest audit</span><span>${r.verdicts.length} product${r.verdicts.length===1?"":"s"} checked</span></div>
-        <div class="scoreline"><div><div class="lbl">Stack Score</div><div class="band">"${esc(r.band)}"</div></div><div class="bignum">${r.score}<span>/100</span></div></div>
-        <p style="font-size:15px;padding-block:8px;border-bottom:1px solid var(--label-ink)">${esc(r.bandText)}</p>
-        <div class="vhead"><span>Product</span><span>Verdict</span></div>
-        ${rows}${otherRow}${creatineRow}${empty}
-        <div class="trow"><span>Wasted a year</span><span class="v">${r.wasteYear>0?"About "+money(r.wasteYear):"Little to none"}</span></div>
-        <div class="trow"><span>#1 leak</span><span class="v">${esc(r.leak.t)}</span></div>
-        <p class="foot">From Boon's Beyond the Label investigation. General information, not medical advice. Check with your doctor before stopping anything prescribed. Waste is an estimate based on typical prices.</p>
-      </div>
+    <div class="res-col">
+      <span class="eyebrow">Your full breakdown</span>
+      ${areaCard(r.L)}
+      ${areaCard(r.E)}
+      ${areaCard(r.S, verdictLabel(r.S))}
       <p class="small muted">${state.sent?`A copy is on its way to <b style="color:#fff">${esc(state.email)}</b>.`:`A copy is on its way to <b style="color:#fff">${esc(state.email)}</b>. Check your promotions tab if you don't see it.`}</p>
-      <a class="btn" href="${PLAN_URL}">Fix My #1 Leak, Free →</a>
+      ${planBtn("Turn This Into My Free Plan →")}
       <div class="share">
-        <b>Know someone who buys this stuff?</b>
+        <b>Know someone who needs this?</b>
         <p class="small muted">Send them the audit. It's free and takes 60 seconds.</p>
         <code id="shareurl">${SHARE_URL}</code>
         <button class="btn ghost sm" id="share">Copy link</button>
@@ -667,7 +776,6 @@ function renderResults(){
     </div>
   </section>`;
 
-  // count up the score and draw the ring
   const sc=document.getElementById("sc"), arc=document.getElementById("arc"), target=r.score;
   requestAnimationFrame(()=>{ arc.style.strokeDashoffset = C*(1-target/100); });
   if(reduce){ sc.textContent=target; arc.style.transition="none"; }
@@ -679,7 +787,7 @@ function renderResults(){
     catch(x){ const s=window.getSelection(), rg=document.createRange(); rg.selectNodeContents(document.getElementById("shareurl")); s.removeAllRanges(); s.addRange(rg); b.textContent="Selected. Copy it ✓"; }
     setTimeout(()=>b.textContent="Copy link",2200);
   };
-  document.getElementById("redo").onclick=()=>{state.a={};state.picked.clear();state.none={supp:false,gear:false};state.other="";state.result=null;state.showAll={supp:false,gear:false};go(0);};
+  document.getElementById("redo").onclick=()=>{state.a={};state.picked.clear();state.none=false;state.other="";state.result=null;state.showAll=false;go(0);};
 }
 
 render();
