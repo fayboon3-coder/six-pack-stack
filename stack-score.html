@@ -531,6 +531,19 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   .dock-in b{font-size:15px}
 }
 
+/* phones: the graphic sits right under the headline, before the subtext and button */
+@media (max-width:900px){
+  .hero .in{display:flex;flex-direction:column;align-items:stretch;padding-top:36px}
+  .hero-text{display:contents}
+  .hero-text>.eyebrow{order:1;text-align:center}
+  .hero-text>h1{order:2;text-align:center;margin-top:12px}
+  .hero .stage{order:3;padding:22px 0 6px}
+  .hero-text>.sub{order:4;text-align:center;margin-top:18px}
+  .hero-text>div:not(.built){order:5;margin-top:18px}
+  .hero-text>.built{order:6;justify-content:center;margin-top:18px}
+  .hero .mwall{order:7}
+}
+
 </style>
 <script defer src="/_vercel/insights/script.js"></script>
 </head>
