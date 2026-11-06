@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Funnel by Video</title>
+<link rel="icon" href="/logo-b.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800;900&display=swap">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<style>
+/* Boon's private funnel dashboard: one row per video link (?src=), how far people got. Light, matches the site. */
+:root{--bg:#f3f4f8;--card:#fff;--ink:#141c33;--ink2:#2b3450;--mute:#4a5470;--soft:#8a92a8;--line:#e6e8ef;--red:#d0362f;--red-bg:#fdf0ef;--green:#1f9d5f;--green-bg:#e9f7f0;--amber:#b7800a;--amber-bg:#fdf5e3;--shadow:0 1px 2px rgba(20,28,51,.05),0 8px 24px rgba(20,28,51,.07);color-scheme:light}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,"Helvetica Neue",Arial,sans-serif;font-size:15px;font-weight:500;line-height:1.5;-webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:1180px;margin:0 auto;padding-block:28px 60px;display:flex;flex-direction:column;gap:18px}
+h1{font-size:28px;font-weight:900;letter-spacing:-.02em;margin:0}
+h2{font-size:17px;font-weight:900;margin:0}
+p{margin:0}
+.muted{color:var(--mute)}
+.top{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px}
+.seg{display:inline-flex;background:#fff;border:1px solid var(--line);border-radius:12px;padding:3px;gap:2px}
+.seg button{appearance:none;border:0;background:transparent;font:inherit;font-weight:800;font-size:13px;color:var(--mute);padding:8px 12px;border-radius:9px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--ink);color:#fff}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);padding:18px}
+.kpis{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px}
+.kpi{background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:14px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.kpi span{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--soft)}
+.kpi b{font-size:26px;font-weight:900;letter-spacing:-.02em}
+.kpi em{font-style:normal;font-size:12px;font-weight:700;color:var(--mute)}
+.tbl{overflow-x:auto;border-radius:14px}
+table{border-collapse:collapse;width:100%;min-width:980px}
+th,td{padding:10px 10px;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap}
+th{font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--soft);background:#fafbfd;position:sticky;top:0}
+th:first-child,td:first-child{text-align:left}
+td b{font-weight:900}
+td small{display:block;font-size:11px;font-weight:700;color:var(--soft)}
+tr.sel td{background:var(--red-bg)}
+tbody tr{cursor:pointer}
+tbody tr:hover td{background:#fafbfd}
+tfoot td{font-weight:900;border-top:2px solid var(--ink);border-bottom:0}
+.pct{display:inline-block;font-size:11px;font-weight:800;border-radius:6px;padding:1px 6px;margin-left:4px}
+.p-good{background:var(--green-bg);color:#13633d}.p-mid{background:var(--amber-bg);color:#7a5408}.p-bad{background:#fde2e0;color:#a3221b}
+.grid2{display:grid;grid-template-columns:1.2fr 1fr;gap:18px}
+.grid2>*{min-width:0}
+.steps{display:flex;flex-direction:column;gap:8px;margin-top:12px}
+.st{display:grid;grid-template-columns:150px 1fr 54px 56px;align-items:center;gap:10px;font-size:13px;font-weight:700}
+.st i{display:block;height:22px;border-radius:6px;background:var(--line);overflow:hidden}
+.st u{display:block;height:100%;background:var(--ink);border-radius:6px;transition:width .5s}
+.st.hot u{background:var(--red)}
+.st b{text-align:right}
+.st em{font-style:normal;text-align:right;color:var(--soft);font-size:12px}
+.links{display:grid;gap:8px;margin-top:10px}
+.lk{display:flex;align-items:center;gap:8px;background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:8px 8px 8px 12px}
+.lk code{flex:1;min-width:0;overflow-wrap:anywhere;font-size:13px;font-family:ui-monospace,Menlo,monospace}
+.lk button,.btn{appearance:none;border:0;cursor:pointer;font:inherit;font-weight:800;font-size:13px;background:var(--ink);color:#fff;border-radius:9px;padding:8px 12px}
+.btn.red{background:var(--red);font-size:15px;padding:12px 18px}
+.add{display:flex;gap:8px;margin-top:10px}
+input{font:inherit;font-size:15px;padding:11px 12px;border:1.5px solid #d7dbe6;border-radius:10px;width:100%;background:#fff;color:var(--ink)}
+.login{max-width:400px;margin:60px auto;display:flex;flex-direction:column;gap:12px}
+.err{color:var(--red);font-weight:700;font-size:14px;min-height:1.2em}
+.note{font-size:13px;color:var(--mute);background:var(--amber-bg);border-radius:12px;padding:10px 12px}
+.empty{padding:28px;text-align:center;color:var(--mute)}
+[hidden]{display:none!important}
+@media (max-width:900px){.kpis{grid-template-columns:repeat(3,minmax(0,1fr))}.grid2{grid-template-columns:1fr}.st{grid-template-columns:110px 1fr 44px 48px}}
+@media (max-width:480px){.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}h1{font-size:23px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <section id="login" class="card login" hidden>
+    <h1>Funnel by video</h1>
+    <p class="muted">Sign in with your coach account (the one you use in the app).</p>
+    <form id="lf" style="display:flex;flex-direction:column;gap:10px">
+      <input id="em" type="email" autocomplete="email" placeholder="Email" required>
+      <input id="pw" type="password" autocomplete="current-password" placeholder="Password" required>
+      <button class="btn red" type="submit">Sign in</button>
+      <div class="err" id="lerr" role="alert"></div>
+    </form>
+  </section>
+
+  <section id="dash" hidden>
+    <div class="wrap" style="padding:0">
+      <div class="top">
+        <div><h1>Funnel by video</h1><p class="muted" id="sub">Who came from each link and how far they got.</p></div>
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+          <div class="seg" role="group" aria-label="Date range"><button data-d="7">7 days</button><button data-d="30" aria-pressed="true">30 days</button><button data-d="90">90 days</button><button data-d="365">All</button></div>
+          <button class="btn" id="refresh">Refresh</button>
+          <button class="btn" id="out" style="background:#fff;color:var(--ink);border:1px solid var(--line)">Sign out</button>
+        </div>
+      </div>
+      <div class="kpis" id="kpis"></div>
+      <div class="card" style="padding:0"><div class="tbl"><table>
+        <thead><tr><th>Video / source</th><th>Stack Score visits</th><th>Played preview</th><th>Started</th><th>Finished (leads)</th><th>Tapped free plan</th><th>App quiz done</th><th>Paid</th><th>Coaching page</th><th>Applied</th></tr></thead>
+        <tbody id="rows"></tbody><tfoot id="foot"></tfoot></table></div></div>
+      <div class="grid2">
+        <div class="card"><h2 id="fTitle">All sources</h2><p class="muted" style="font-size:13px">Step by step. The red bar is the biggest drop-off.</p><div class="steps" id="steps"></div></div>
+        <div class="card">
+          <h2>Video links</h2>
+          <p class="muted" style="font-size:13px">Put one in each video's description and pinned comment. Each lead gets credited to the video they came from.</p>
+          <div class="links" id="links"></div>
+          <div class="add"><input id="newv" placeholder="New video name, e.g. creatine-myths" aria-label="New video name"><button class="btn" id="addv">Add</button></div>
+          <p class="note" style="margin-top:12px">Coaching clients and money come from Kit and RevenueCat, so they aren't counted here. Applications here are people who finished the coaching application.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+<script>
+const SUPABASE_URL="https://ejcditarwgsqasecuqmx.supabase.co", SUPABASE_KEY="sb_publishable_7-MLNhS_mB4odxRMlNo4CA_99Dn50vk";
+const SITE="https://six-pack-stack.vercel.app";
+const sb=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+const COLS=[["ss_visit","Visits"],["ss_preview_tap","Played"],["ss_start","Started"],["ss_done","Leads"],["ss_plan_tap","Plan taps"],["quiz_done","App quiz"],["purchase_done","Paid"],["coach","Coaching page"],["apply_done","Applied"]];
+const STEPS=[["ss_visit","Stack Score visits"],["ss_start","Started the quiz"],["ss_done","Finished (lead)"],["ss_plan_tap","Tapped free plan"],["quiz_done","Finished app quiz"],["purchase_done","Paid for the app"]];
+const DEFAULT_VIDEOS=["electrolytes","bang","prime"];
+let days=30, data=[], selected=null;
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const fmt=n=>(n||0).toLocaleString("en-US");
+function pct(a,b){ a=a||0; if(!b) return ""; const p=a/b*100; const cls=p>=30?"p-good":p>=10?"p-mid":"p-bad"; return `<span class="pct ${cls}">${p<1&&p>0?p.toFixed(1):Math.round(p)}%</span>`; }
+function videos(){ let v=[]; try{ v=JSON.parse(localStorage.getItem("sps_videos")||"null")||DEFAULT_VIDEOS; }catch(e){ v=DEFAULT_VIDEOS; } return v; }
+function saveVideos(v){ try{ localStorage.setItem("sps_videos",JSON.stringify(v)); }catch(e){} }
+function renderLinks(){
+  $("links").innerHTML=videos().map(v=>{ const u=`${SITE}/stack-score?src=${encodeURIComponent(v)}`; return `<div class="lk"><code>${esc(u)}</code><button data-copy="${esc(u)}">Copy</button></div>`; }).join("");
+  $("links").querySelectorAll("[data-copy]").forEach(b=>b.onclick=async()=>{ try{ await navigator.clipboard.writeText(b.dataset.copy); b.textContent="Copied ✓"; }catch(e){ const r=document.createRange(); r.selectNodeContents(b.previousElementSibling); const s=getSelection(); s.removeAllRanges(); s.addRange(r); b.textContent="Selected"; } setTimeout(()=>b.textContent="Copy",1800); });
+}
+$("addv").onclick=()=>{ const v=$("newv").value.trim().toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,""); if(!v) return; const all=videos(); if(!all.includes(v)) all.unshift(v); saveVideos(all); $("newv").value=""; renderLinks(); };
+
+function pivot(rows){
+  const by={};
+  rows.forEach(r=>{ const s=r.src||"direct"; by[s]=by[s]||{src:s}; by[s][r.step]=(by[s][r.step]||0)+Number(r.people); });
+  Object.values(by).forEach(o=>{ o.coach=Math.max(o.coach_view||0,o.coaching_view||0); });
+  return Object.values(by).sort((a,b)=>(b.ss_visit||0)-(a.ss_visit||0)||(b.ss_done||0)-(a.ss_done||0));
+}
+function total(list){ const t={src:"All sources"}; COLS.forEach(([k])=>t[k]=list.reduce((s,o)=>s+(o[k]||0),0)); return t; }
+function render(){
+  const list=pivot(data), t=total(list);
+  $("kpis").innerHTML=[["Visits",t.ss_visit,""],["Leads",t.ss_done,pct(t.ss_done,t.ss_visit)+" of visits"],["Plan taps",t.ss_plan_tap,pct(t.ss_plan_tap,t.ss_done)+" of leads"],["App quiz done",t.quiz_done,""],["Paid",t.purchase_done,pct(t.purchase_done,t.ss_done)+" of leads"],["Applied",t.apply_done,pct(t.apply_done,t.ss_done)+" of leads"]]
+    .map(([l,v,e])=>`<div class="kpi"><span>${l}</span><b>${fmt(v)}</b><em>${e||"&nbsp;"}</em></div>`).join("");
+  const row=o=>`<tr data-src="${esc(o.src)}" class="${selected===o.src?"sel":""}"><td><b>${esc(o.src)}</b></td>
+    <td>${fmt(o.ss_visit)}</td><td>${fmt(o.ss_preview_tap)}${pct(o.ss_preview_tap,o.ss_visit)}</td><td>${fmt(o.ss_start)}${pct(o.ss_start,o.ss_visit)}</td>
+    <td><b>${fmt(o.ss_done)}</b>${pct(o.ss_done,o.ss_visit)}</td><td>${fmt(o.ss_plan_tap)}${pct(o.ss_plan_tap,o.ss_done)}</td>
+    <td>${fmt(o.quiz_done)}</td><td><b>${fmt(o.purchase_done)}</b></td><td>${fmt(o.coach)}</td><td><b>${fmt(o.apply_done)}</b></td></tr>`;
+  $("rows").innerHTML=list.length?list.map(row).join(""):`<tr><td colspan="10" class="empty">No visits yet in this range. Once people use your video links, they show up here.</td></tr>`;
+  $("foot").innerHTML=list.length>1?`<tr><td>All sources</td><td>${fmt(t.ss_visit)}</td><td>${fmt(t.ss_preview_tap)}</td><td>${fmt(t.ss_start)}</td><td>${fmt(t.ss_done)}</td><td>${fmt(t.ss_plan_tap)}</td><td>${fmt(t.quiz_done)}</td><td>${fmt(t.purchase_done)}</td><td>${fmt(t.coach)}</td><td>${fmt(t.apply_done)}</td></tr>`:"";
+  $("rows").querySelectorAll("tr[data-src]").forEach(tr=>tr.onclick=()=>{ selected=selected===tr.dataset.src?null:tr.dataset.src; render(); });
+  const o=selected?list.find(x=>x.src===selected)||t:t;
+  $("fTitle").textContent=selected?`Source: ${selected}`:"All sources";
+  const top=Math.max(1,o.ss_visit||0,...STEPS.map(([k])=>o[k]||0));
+  let worst=-1, worstDrop=-1; STEPS.forEach(([k],i)=>{ if(i===0) return; const prev=o[STEPS[i-1][0]]||0; if(prev>0){ const d=1-(o[k]||0)/prev; if(d>worstDrop){worstDrop=d;worst=i;} } });
+  $("steps").innerHTML=STEPS.map(([k,l],i)=>{ const v=o[k]||0, prev=i?o[STEPS[i-1][0]]||0:0; return `<div class="st ${i===worst?"hot":""}"><span>${l}</span><i><u style="width:${v/top*100}%"></u></i><b>${fmt(v)}</b><em>${i&&prev?Math.round(v/prev*100)+"%":""}</em></div>`; }).join("");
+  $("sub").textContent=`Last ${days>=365?"year":days+" days"} · credited to the first link each person used · updated ${new Date().toLocaleTimeString([], {hour:"numeric",minute:"2-digit"})}`;
+}
+async function load(){
+  const {data:rows,error}=await sb.rpc("funnel_by_source",{p_days:days});
+  if(error){ $("rows").innerHTML=`<tr><td colspan="10" class="empty">${/coach only/.test(error.message)?"This account isn't set as the coach account.":/function|does not exist|schema cache/.test(error.message)?"The tracking setup hasn't been run in Supabase yet (supabase/008_funnel_by_source.sql).":esc(error.message)}</td></tr>`; return; }
+  data=rows||[]; render();
+}
+document.querySelectorAll("[data-d]").forEach(b=>b.onclick=()=>{ days=+b.dataset.d; document.querySelectorAll("[data-d]").forEach(x=>x.setAttribute("aria-pressed",String(x===b))); load(); });
+$("refresh").onclick=load;
+$("out").onclick=async()=>{ await sb.auth.signOut(); show(false); };
+$("lf").onsubmit=async e=>{ e.preventDefault(); $("lerr").textContent=""; const {error}=await sb.auth.signInWithPassword({email:$("em").value.trim(),password:$("pw").value}); if(error){ $("lerr").textContent="That didn't work. Check the email and password."; return; } show(true); };
+function show(on){ $("login").hidden=on; $("dash").hidden=!on; if(on){ renderLinks(); load(); } }
+sb.auth.getSession().then(({data})=>show(!!data.session));
+setInterval(()=>{ if(!$("dash").hidden) load(); },60000);
+</script>
+</body>
+</html>

@@ -11,6 +11,7 @@
 <meta property="og:description" content="Free 60-second audit of your training, eating and supplements, with exactly what to tweak to hit your goal.">
 <meta property="og:image" content="https://six-pack-stack.vercel.app/og-coaching.jpg">
 <link rel="icon" href="/logo-b.png">
+<script src="/t.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap">
@@ -899,12 +900,13 @@ function countTo(node,to,dur){
 }
 function wireLive(){
   const el=document.getElementById("live"); if(!el) return;
-  const touch=()=>{ if(!pv.touched){ pv.touched=true; clearInterval(pv.timer); el.classList.add("touched"); } };
+  const touch=()=>{ if(!pv.touched){ pv.touched=true; clearInterval(pv.timer); el.classList.add("touched"); window.spsTrack&&spsTrack("ss_preview_tap",{},true); } };
   el.querySelectorAll("[data-g]").forEach(b=>b.onclick=()=>{touch();pv.goal=b.dataset.g;pvRender();});
   el.querySelectorAll(".hb").forEach(b=>b.onclick=()=>{touch();const k=b.dataset.b;pv.on.has(k)?pv.on.delete(k):pv.on.add(k);b.classList.remove("pop2");void b.offsetWidth;b.classList.add("pop2");pvRender();});
   document.getElementById("lGo").onclick=()=>{
     // carry the preview into the real quiz so their taps aren't wasted
     if(pv.touched){ const a=pvAnswersFor(pv.on); Object.assign(state.a,{goal:pv.goal,days:a.days,style:a.style,prog:a.prog,protein:a.protein,cals:a.cals,weekend:a.weekend}); if(pv.on.has("stack")) state.picked=new Set(["creatine","whey_protein"]); }
+    window.spsTrack&&spsTrack("ss_start",{from:"preview",touched:pv.touched});
     go(1);
   };
   if(!reduce && matchMedia("(hover:hover) and (pointer:fine)").matches){
@@ -999,7 +1001,8 @@ function renderStart(){
       <div style="width:100%;max-width:380px">${cta("Get my Stack Score →")}</div>
     </div>
   </section>`;
-  app.querySelectorAll("[data-start]").forEach(b=>b.onclick=()=>go(1));
+  app.querySelectorAll("[data-start]").forEach(b=>b.onclick=()=>{window.spsTrack&&spsTrack("ss_start",{from:"button"});go(1);});
+  window.spsTrack&&spsTrack("ss_visit",{},true);
   wireLive();
   try{
     const els=app.querySelectorAll(".reveal");
@@ -1011,6 +1014,7 @@ function renderStart(){
 /* ---------- steps ---------- */
 function renderStep(i){
   const S=STEPS[i];
+  window.spsTrack&&spsTrack("ss_step",{n:i+1},true);
   if(S.id==="goal") return renderGoal(i);
   if(S.id==="supps") return renderPick(i);
   const done = () => S.subs.every(q=>state.a[q.id]);
@@ -1100,6 +1104,7 @@ function renderPick(i){
 
 /* ---------- email gate ---------- */
 function renderGate(){
+  window.spsTrack&&spsTrack("ss_gate",{},true);
   app.innerHTML = `<div class="quiz gut"><div class="qwrap">
   <div class="progress"><div class="qmeta"><span><b>Done</b> · Your breakdown is ready</span><span>100%</span></div><div class="bar"><i style="width:100%"></i></div></div>
   <section class="qcard fade">
@@ -1145,6 +1150,7 @@ function renderGate(){
     const appGoal={fat:"Lose fat and see my abs",cut:"Lose fat and see my abs",muscle:"Build muscle",recomp:"Both"}[state.a.goal];
     try{ localStorage.setItem("sps_stackscore", JSON.stringify({name:state.name,email:em,goal:appGoal,train:state.a.days,stack:[...state.picked],score:state.result.score,at:Date.now()})); }catch(x){}
     state.sending = sendToKit(state.result).then(ok=>state.sent=ok);
+    window.spsTrack&&spsTrack("ss_done",{score:state.result.score,goal:state.a.goal||"",picked:state.picked.size});
     go(CALC);
   };
 }
@@ -1164,6 +1170,10 @@ function renderCalc(){
 }
 
 /* ---------- results ---------- */
+document.addEventListener("click",e=>{ const a=e.target.closest&&e.target.closest("a"); if(!a||!window.spsTrack) return; const h=a.getAttribute("href")||"";
+  if(h.startsWith("/app/lead")) spsTrack("ss_plan_tap",{where:a.closest(".dock")?"dock":a.closest(".pot")?"potential":a.closest(".cta")?"cta":"other"});
+  else if(h.startsWith("/app/verdict")) spsTrack("ss_verdict_tap",{id:h.split("/")[3].split("?")[0]});
+  else if(h.startsWith("/?src")||h==="/") spsTrack("ss_coach_tap"); },true);
 function ring(score,size,stroke){
   const r=(size-stroke)/2, C=2*Math.PI*r, col={low:"#d0362f",mid:"#e0a21b",high:"#1f9d5f"}[tone(score)];
   return `<svg viewBox="0 0 ${size} ${size}" aria-hidden="true"><circle cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke="#e6e8ef" stroke-width="${stroke}"/><circle cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke="${col}" stroke-width="${stroke}" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${C*(1-score/100)}"/></svg>`;
@@ -1314,6 +1324,7 @@ function renderResults(){
 
   document.getElementById("share").onclick=async e=>{
     const b=e.currentTarget;
+    window.spsTrack&&spsTrack("ss_share");
     try{ await navigator.clipboard.writeText(SHARE_URL); b.textContent="Copied ✓"; }
     catch(x){ const s=window.getSelection(), rg=document.createRange(); rg.selectNodeContents(document.getElementById("shareurl")); s.removeAllRanges(); s.addRange(rg); b.textContent="Selected. Copy it ✓"; }
     setTimeout(()=>b.textContent="Copy link",2200);

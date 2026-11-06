@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
+<script src="/t.js"></script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Six-Pack Stack Application</title>
@@ -134,7 +135,8 @@ function bindBack(){ const b=document.getElementById("back"); if(b) b.onclick=()
 function fail(msg){ document.getElementById("err").textContent=msg; }
 
 function render(){
-  if(step===0) return renderIntro();
+  if(step===0){ window.spsTrack&&spsTrack("apply_view",{},true); return renderIntro(); }
+  if(step===1) window.spsTrack&&spsTrack("apply_start",{},true);
   if(step===STEPS.length+1) return renderDone();
   const S=STEPS[step-1], i=step-1;
   if(S.type==="contact") return renderContact(i);
@@ -249,7 +251,7 @@ function renderMedical(S,i){
     A.medicalText=A.medicalYes?document.getElementById("mt").value.trim():"";
     if(A.medicalYes && A.medicalText.length<2) return fail("Add a quick note about it.");
     const btn=document.getElementById("next"); btn.disabled=true; btn.textContent="Sending…";
-    await sendToKit(); go(step+1);};
+    await sendToKit(); window.spsTrack&&spsTrack("apply_done",{ready:A.ready_to_invest||"",start:A.start_timing||""}); go(step+1);};
 }
 
 async function sendToKit(){
