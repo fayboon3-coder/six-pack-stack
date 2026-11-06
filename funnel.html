@@ -121,13 +121,16 @@ const $=id=>document.getElementById(id);
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const fmt=n=>(n||0).toLocaleString("en-US");
 function pct(a,b){ a=a||0; if(!b) return ""; const p=a/b*100; const cls=p>=30?"p-good":p>=10?"p-mid":"p-bad"; return `<span class="pct ${cls}">${p<1&&p>0?p.toFixed(1):Math.round(p)}%</span>`; }
-function videos(){ let v=[]; try{ v=JSON.parse(localStorage.getItem("sps_videos")||"null")||DEFAULT_VIDEOS; }catch(e){ v=DEFAULT_VIDEOS; } return v; }
+let SITE_VIDEOS=[];
+fetch("/funnel-videos.json",{cache:"no-store"}).then(r=>r.json()).then(v=>{ SITE_VIDEOS=v||[]; renderLinks(); if(data.length) render(); }).catch(()=>{});
+function titleOf(src){ const v=SITE_VIDEOS.find(x=>x.src===src); return v&&v.title?v.title:src; }
+function videos(){ let extra=[]; try{ extra=JSON.parse(localStorage.getItem("sps_videos")||"[]")||[]; }catch(e){} const site=SITE_VIDEOS.map(v=>v.src); const all=[...site,...extra.filter(x=>!site.includes(x))]; return all.length?all:DEFAULT_VIDEOS; }
 function saveVideos(v){ try{ localStorage.setItem("sps_videos",JSON.stringify(v)); }catch(e){} }
 function renderLinks(){
-  $("links").innerHTML=videos().map(v=>{ const u=`${SITE}/stack-score?src=${encodeURIComponent(v)}`; return `<div class="lk"><code>${esc(u)}</code><button data-copy="${esc(u)}">Copy</button></div>`; }).join("");
+  $("links").innerHTML=videos().map(v=>{ const u=`${SITE}/stack-score?src=${encodeURIComponent(v)}`; return `<div class="lk"><b style="font-size:13px;min-width:90px">${esc(titleOf(v))}</b><code>${esc(u)}</code><button data-copy="${esc(u)}">Copy</button></div>`; }).join("");
   $("links").querySelectorAll("[data-copy]").forEach(b=>b.onclick=async()=>{ try{ await navigator.clipboard.writeText(b.dataset.copy); b.textContent="Copied ✓"; }catch(e){ const r=document.createRange(); r.selectNodeContents(b.previousElementSibling); const s=getSelection(); s.removeAllRanges(); s.addRange(r); b.textContent="Selected"; } setTimeout(()=>b.textContent="Copy",1800); });
 }
-$("addv").onclick=()=>{ const v=$("newv").value.trim().toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,""); if(!v) return; const all=videos(); if(!all.includes(v)) all.unshift(v); saveVideos(all); $("newv").value=""; renderLinks(); };
+$("addv").onclick=()=>{ const v=$("newv").value.trim().toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,""); if(!v) return; let extra=[]; try{ extra=JSON.parse(localStorage.getItem("sps_videos")||"[]")||[]; }catch(e){} if(!videos().includes(v)) extra.unshift(v); saveVideos(extra); $("newv").value=""; renderLinks(); };
 
 function pivot(rows){
   const by={};
@@ -140,7 +143,7 @@ function render(){
   const list=pivot(data), t=total(list);
   $("kpis").innerHTML=[["Visits",t.ss_visit,""],["Leads",t.ss_done,pct(t.ss_done,t.ss_visit)+" of visits"],["Plan taps",t.ss_plan_tap,pct(t.ss_plan_tap,t.ss_done)+" of leads"],["App quiz done",t.quiz_done,""],["Paid",t.purchase_done,pct(t.purchase_done,t.ss_done)+" of leads"],["Applied",t.apply_done,pct(t.apply_done,t.ss_done)+" of leads"]]
     .map(([l,v,e])=>`<div class="kpi"><span>${l}</span><b>${fmt(v)}</b><em>${e||"&nbsp;"}</em></div>`).join("");
-  const row=o=>`<tr data-src="${esc(o.src)}" class="${selected===o.src?"sel":""}"><td><b>${esc(o.src)}</b></td>
+  const row=o=>`<tr data-src="${esc(o.src)}" class="${selected===o.src?"sel":""}"><td><b>${esc(titleOf(o.src))}</b>${titleOf(o.src)!==o.src?`<small>${esc(o.src)}</small>`:""}</td>
     <td>${fmt(o.ss_visit)}</td><td>${fmt(o.ss_preview_tap)}${pct(o.ss_preview_tap,o.ss_visit)}</td><td>${fmt(o.ss_start)}${pct(o.ss_start,o.ss_visit)}</td>
     <td><b>${fmt(o.ss_done)}</b>${pct(o.ss_done,o.ss_visit)}</td><td>${fmt(o.ss_plan_tap)}${pct(o.ss_plan_tap,o.ss_done)}</td>
     <td>${fmt(o.quiz_done)}</td><td><b>${fmt(o.purchase_done)}</b></td><td>${fmt(o.coach)}</td><td><b>${fmt(o.apply_done)}</b></td></tr>`;
