@@ -32,7 +32,7 @@
     },
     {
       "source": "/score",
-      "destination": "/stack-score",
+      "destination": "/stack-score?src=channel",
       "permanent": false
     },
     {
