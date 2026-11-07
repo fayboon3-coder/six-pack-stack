@@ -287,6 +287,9 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .share{display:flex;flex-direction:column;gap:10px;background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:var(--shadow)}
 .share code{font-family:var(--f);font-size:14px;color:var(--mute);overflow-wrap:anywhere;user-select:all}
 .coach{font-size:15px;color:var(--mute);text-align:center}
+.welcomeback{background:var(--ink);color:#fff;padding-block:12px}
+.welcomeback .in{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:15px}
+.welcomeback .btn{height:42px}
 .coachcard{display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:center;background:#fff;border:1px solid var(--line,#e6e8ef);border-radius:22px;padding:20px 22px;box-shadow:var(--shadow,0 8px 24px rgba(16,24,64,.06))}
 .coachcard img{width:64px;height:64px;border-radius:50%;object-fit:cover;border:3px solid var(--red)}
 .coachcard .cc-t{display:flex;flex-direction:column;gap:6px;min-width:0}
@@ -940,7 +943,9 @@ function wireLive(){
 function cta(label){ return `<div style="display:flex;flex-direction:column;gap:14px"><button class="btn" data-start>${label}</button><div class="micro"><span>Free</span><span>4 quick steps</span><span>Instant results</span></div></div>`; }
 function renderStart(){
   const imgs=PAIRS.flatMap(([k,n])=>[`<img src="/img/lp/${k}-b.jpg" alt="" loading="lazy">`,`<img src="/img/lp/${k}-a.jpg" alt="" loading="lazy">`]).join("");
+  let back=null; try{ const h=JSON.parse(localStorage.getItem("sps_stackscore")||"null"); if(h&&h.at&&Date.now()-h.at<30*864e5&&h.name&&h.score!=null) back=h; }catch(x){}
   app.innerHTML = `
+  ${back?`<div class="welcomeback gut"><div class="in"><span>Welcome back, <b>${esc(back.name)}</b>. Your last Stack Score was <b>${+back.score}</b>.</span><a class="btn sm" href="${PLAN_URL}">Build my free plan →</a></div></div>`:""}
   <section class="hero">
     <div class="in gut">
       <div class="hero-text">
