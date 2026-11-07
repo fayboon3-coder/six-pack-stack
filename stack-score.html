@@ -1323,7 +1323,15 @@ function renderResults(){
       <span class="prio-gain">+${Math.max(1,r.pot1-r.score)}<small>points</small></span>
     </div>
 
-    <section class="appad pop" style="animation-delay:.4s" aria-label="Your next step: the Six-Pack Stack app">
+
+    <div class="tabs pop" style="animation-delay:.45s" role="tablist" aria-label="Your breakdown">
+      ${tabs.map(A=>`<button role="tab" data-tab="${A.key}" aria-selected="${A.key===first}"><span class="tring">${ring(A.score,44,5)}<b>${A.score}</b></span><span class="tl">${A.name}</span></button>`).join("")}
+    </div>
+    <div class="panels">
+      ${tabs.map(A=>`<div class="panel" role="tabpanel" data-panel="${A.key}" ${A.key===first?"":"hidden"}>${areaCard(A, A.key==="supp"?verdictLabel(r.S):"", 0)}</div>`).join("")}
+    </div>
+
+    <section class="appad pop" style="animation-delay:.2s" aria-label="Your next step: the Six-Pack Stack app">
       <div class="aa-glow" aria-hidden="true"></div>
       <div class="aa-copy">
         <span class="aa-k"><i></i>Your next step · free</span>
@@ -1346,27 +1354,6 @@ function renderResults(){
         <span class="chip c2">${r.score} → ${r.potAll}</span>
       </div>
     </section>
-
-    <div class="tabs pop" style="animation-delay:.45s" role="tablist" aria-label="Your breakdown">
-      ${tabs.map(A=>`<button role="tab" data-tab="${A.key}" aria-selected="${A.key===first}"><span class="tring">${ring(A.score,44,5)}<b>${A.score}</b></span><span class="tl">${A.name}</span></button>`).join("")}
-    </div>
-    <div class="panels">
-      ${tabs.map(A=>`<div class="panel" role="tabpanel" data-panel="${A.key}" ${A.key===first?"":"hidden"}>${areaCard(A, A.key==="supp"?verdictLabel(r.S):"", 0)}</div>`).join("")}
-    </div>
-
-    <div class="cta pop" style="animation-delay:.2s">
-      <div>
-        <h2>Ready? Turn this into your plan. Free.</h2>
-        <p>My app builds the plan to ${esc(GOAL_TEXT[state.a.goal]||"hit your goal")} from the answers you just gave me.</p>
-      </div>
-      <ul>
-        <li>Your exact calories and protein</li>
-        <li>A meal plan made only from foods you already eat</li>
-        <li>Workouts on the days you choose, with a form video on every move</li>
-        <li>Stack Check: my verdict on all 47 products</li>
-      </ul>
-      <div>${planBtn("Build my free plan →")}<p class="small" style="margin-top:10px;text-align:center">2 minutes. Your answers carry over. First 2 weeks free, no card.</p></div>
-    </div>
 
     <div class="coachcard pop">
       <img src="/boon.jpg" alt="Boon Fay" width="64" height="64">
@@ -1408,7 +1395,7 @@ function renderResults(){
     app.querySelectorAll("[data-panel]").forEach(p=>{ const on=p.dataset.panel===t.dataset.tab; p.hidden=!on; if(on){ p.classList.remove("swap"); void p.offsetWidth; p.classList.add("swap"); } });
   });
   // dock appears once the potential card scrolls away
-  const dock=document.getElementById("dock"), pot=app.querySelector(".pot"), ctaBox=app.querySelector(".rbody .cta");
+  const dock=document.getElementById("dock"), pot=app.querySelector(".pot"), ctaBox=app.querySelector(".rbody .appad");
   const vis={pot:true,cta:false,potAbove:false};
   const upd=()=>{ const on=!vis.pot && vis.potAbove && !vis.cta; dock.classList.toggle("on",on); dock.setAttribute("aria-hidden",String(!on)); dock.querySelector("a").tabIndex=on?0:-1; };
   if("IntersectionObserver" in window){
