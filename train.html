@@ -177,7 +177,7 @@ function render(){
   <div class="card warm"><b style="color:#fff">Warm-up (5 min):</b> 3 minutes easy cardio, then 2 light sets of the first exercise.</div>
   ${D.x.map((x,i)=>{const L=LIB[x[0]]||[x[0],"",[]];const n=setsFor(x[1],i);const reps=String(x[1]).replace(/^\d+\s*×\s*/,"");const e=log["e"+i]||[];const pe=prev&&prev["e"+i]?prev["e"+i].filter(s=>s&&(s.w||s.r)):[];
     return `<div class="card ex"><div class="top"><div class="row" style="flex-wrap:nowrap;align-items:flex-start"><span class="num">${i+1}</span><div><h3>${esc(L[0])}</h3>${x[2]?`<p class="note">${esc(x[2])}</p>`:""}</div></div><span class="target">${n} × ${esc(reps)}</span></div>
-    ${L[1]?`<button class="vid" type="button" data-v="${L[1]}" aria-label="Play ${esc(L[0])} demo video"><img loading="lazy" alt="" src="https://i.ytimg.com/vi/${L[1]}/hqdefault.jpg"><span class="play"><span>▶ Watch form</span></span></button><a class="yt" href="https://www.youtube.com/watch?v=${L[1]}" target="_blank" rel="noopener">Open in YouTube ↗</a>`:""}
+    ${L[1]?`<button class="vid" type="button" data-v="${L[1]}" aria-label="Play ${esc(L[0])} demo video"><img loading="lazy" alt="" src="https://i.ytimg.com/vi/${L[1]}/hqdefault.jpg" onerror="if(!this.dataset.f){this.dataset.f=1;this.src=this.src.replace('hqdefault','mqdefault')}else{this.style.visibility='hidden'}"><span class="play"><span>▶ Watch form</span></span></button><a class="yt" href="https://www.youtube.com/watch?v=${L[1]}" target="_blank" rel="noopener">Open in YouTube ↗</a>`:""}
     <ul class="cues">${L[2].map(c=>`<li>${esc(c)}</li>`).join("")}</ul>
     <div class="sets">${Array.from({length:n},(_,s)=>{const v=e[s]||{};return `<div class="set"><label>Set ${s+1}</label><input type="number" inputmode="decimal" placeholder="lbs" aria-label="Set ${s+1} weight" data-e="${i}" data-s="${s}" data-k="w" value="${v.w??""}"><input type="number" inputmode="numeric" placeholder="reps" aria-label="Set ${s+1} reps" data-e="${i}" data-s="${s}" data-k="r" value="${v.r??""}"><button type="button" class="tick" aria-label="Set ${s+1} done" aria-pressed="${!!v.d}" data-e="${i}" data-s="${s}">✓</button></div>`}).join("")}</div>
     ${pe.length?`<p class="last">Last week: ${pe.map(s=>`${s.w||"–"}×${s.r||"–"}`).join(", ")}</p>`:""}
@@ -213,5 +213,6 @@ document.getElementById("tstop").onclick=()=>{clearInterval(tInt);T.style.displa
 render();
 }
 </script>
+<script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
