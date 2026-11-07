@@ -46,7 +46,7 @@ tfoot td{font-weight:900;border-top:2px solid var(--ink);border-bottom:0}
 .p-good{background:var(--green-bg);color:#13633d}.p-mid{background:var(--amber-bg);color:#7a5408}.p-bad{background:#fde2e0;color:#a3221b}
 .grid2{display:grid;grid-template-columns:1.2fr 1fr;gap:18px}
 .grid2>*{min-width:0}
-.steps{display:flex;flex-direction:column;gap:8px;margin-top:12px}
+.pw{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:12px}.pw h3{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted,#6d7894);margin:0 0 6px}.pw .r{display:flex;justify-content:space-between;gap:10px;font-size:13.5px;padding:5px 0;border-bottom:1px solid rgba(127,127,127,.15)}.pw .r span{min-width:0;overflow-wrap:anywhere}.steps{display:flex;flex-direction:column;gap:8px;margin-top:12px}
 .st{display:grid;grid-template-columns:150px 1fr 54px 56px;align-items:center;gap:10px;font-size:13px;font-weight:700}
 .st i{display:block;height:22px;border-radius:6px;background:var(--line);overflow:hidden}
 .st u{display:block;height:100%;background:var(--ink);border-radius:6px;transition:width .5s}
@@ -106,6 +106,7 @@ input{font:inherit;font-size:15px;padding:11px 12px;border:1.5px solid #d7dbe6;b
           <p class="note" style="margin-top:12px">Coaching clients and money come from Kit and RevenueCat, so they aren't counted here. Applications here are people who finished the coaching application.</p>
         </div>
       </div>
+      <div class="card" id="pwCard"><h2>Payment page</h2><p class="muted" style="font-size:13px">Everyone who saw the 7-day / 2-week trial offer: how far they scrolled, what they tapped, and where "Not now" people stopped.</p><div class="pw" id="pw"><p class="muted">Loading…</p></div></div>
     </div>
   </section>
 </div>
@@ -160,7 +161,17 @@ function render(){
 async function load(){
   const {data:rows,error}=await sb.rpc("funnel_by_source",{p_days:days});
   if(error){ $("rows").innerHTML=`<tr><td colspan="10" class="empty">${/coach only/.test(error.message)?"This account isn't set as the coach account.":/function|does not exist|schema cache/.test(error.message)?"The tracking setup hasn't been run in Supabase yet (supabase/008_funnel_by_source.sql).":esc(error.message)}</td></tr>`; return; }
-  data=rows||[]; render();
+  data=rows||[]; render(); loadPaywall();
+}
+const PW_LABEL={paywall_view:"Saw the offer",paywall_scroll:"Scrolled to",plan_pick:"Tapped plan",purchase_tap:"Tapped start (plan · button)",paywall_faq:"Opened question",trial_offer_skip:"Tapped Not now",purchase_done:"Started trial / paid"};
+async function loadPaywall(){
+  const {data:rows,error}=await sb.rpc("paywall_breakdown",{p_days:days});
+  if(error){ $("pw").innerHTML=`<p class="muted">${/function|does not exist|schema cache/.test(error.message)?"Runs once the tracking setup (008) is run in Supabase.":esc(error.message)}</p>`; return; }
+  const by={}; (rows||[]).forEach(r=>{ (by[r.metric]=by[r.metric]||[]).push(r); });
+  const seen=(by.paywall_view||[]).reduce((a,r)=>a+Number(r.people),0);
+  const order=["paywall_view","paywall_scroll","plan_pick","purchase_tap","trial_offer_skip","paywall_faq","purchase_done"];
+  const html=order.filter(k=>by[k]).map(k=>`<div><h3>${PW_LABEL[k]}</h3>${by[k].map(r=>`<div class="r"><span>${esc(r.detail||"—")}</span><b>${fmt(r.people)}${k!=="paywall_view"?pct(r.people,seen):""}</b></div>`).join("")}</div>`).join("");
+  $("pw").innerHTML=html||'<p class="muted">No one has seen the payment page yet in this period.</p>';
 }
 document.querySelectorAll("[data-d]").forEach(b=>b.onclick=()=>{ days=+b.dataset.d; document.querySelectorAll("[data-d]").forEach(x=>x.setAttribute("aria-pressed",String(x===b))); load(); });
 $("refresh").onclick=load;

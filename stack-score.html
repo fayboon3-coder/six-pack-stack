@@ -1148,7 +1148,7 @@ function renderGate(){
     state.result=computeResult();
     // Hand the answers to the app on this same site, so the plan builder starts pre-filled.
     const appGoal={fat:"Lose fat and see my abs",cut:"Lose fat and see my abs",muscle:"Build muscle",recomp:"Both"}[state.a.goal];
-    try{ localStorage.setItem("sps_stackscore", JSON.stringify({name:state.name,email:em,goal:appGoal,train:state.a.days,stack:[...state.picked],score:state.result.score,at:Date.now()})); }catch(x){}
+    try{ localStorage.setItem("sps_stackscore", JSON.stringify({name:state.name,email:em,goal:appGoal,goalKey:state.a.goal||"",train:state.a.days,style:state.a.style||"",prog:state.a.prog||"",out:state.a.out||"",weekend:state.a.weekend||"",stack:[...state.picked],score:state.result.score,at:Date.now()})); }catch(x){}
     state.sending = sendToKit(state.result).then(ok=>state.sent=ok);
     window.spsTrack&&spsTrack("ss_done",{score:state.result.score,goal:state.a.goal||"",picked:state.picked.size});
     go(CALC);
