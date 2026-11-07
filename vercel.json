@@ -17,5 +17,38 @@
         }
       ]
     }
+  ],
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "six-pack-stack.vercel.app"
+        }
+      ],
+      "destination": "https://boonfay.com/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/score",
+      "destination": "/stack-score",
+      "permanent": false
+    },
+    {
+      "source": "/bang",
+      "destination": "/stack-score?src=bang",
+      "permanent": false
+    },
+    {
+      "source": "/prime",
+      "destination": "/stack-score?src=prime",
+      "permanent": false
+    },
+    {
+      "source": "/electrolytes",
+      "destination": "/stack-score?src=electrolytes",
+      "permanent": false
+    }
   ]
 }
