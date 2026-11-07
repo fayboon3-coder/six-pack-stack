@@ -287,6 +287,43 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .share{display:flex;flex-direction:column;gap:10px;background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:var(--shadow)}
 .share code{font-family:var(--f);font-size:14px;color:var(--mute);overflow-wrap:anywhere;user-select:all}
 .coach{font-size:15px;color:var(--mute);text-align:center}
+.appad{position:relative;overflow:hidden;display:grid;grid-template-columns:1.05fr 1fr;gap:28px;align-items:center;background:linear-gradient(150deg,#141c33 0%,#1d2a52 60%,#2a1530 100%);color:#fff;border-radius:28px;padding:40px 40px 0 40px;box-shadow:var(--shadow-lg);isolation:isolate}
+.appad .aa-glow{position:absolute;inset:auto -20% -40% 30%;height:120%;background:radial-gradient(closest-side,rgba(208,54,47,.55),transparent);z-index:-1;filter:blur(10px)}
+.aa-copy{display:flex;flex-direction:column;gap:16px;padding-bottom:40px;min-width:0}
+.aa-k{display:inline-flex;align-items:center;gap:8px;align-self:flex-start;font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#fff;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:7px 12px}
+.aa-k i{width:8px;height:8px;border-radius:50%;background:#2fd17f;box-shadow:0 0 0 4px rgba(47,209,127,.25)}
+.appad h2{font-size:38px;line-height:1.08;font-weight:900;color:#fff;letter-spacing:-.02em;text-wrap:balance}
+.appad h2 em{font-style:normal;color:#ff6b62}
+.aa-sub{color:#c7cde0;font-size:17px;line-height:1.5;margin:0}
+.aa-list{list-style:none;margin:4px 0 0;padding:0;display:grid;gap:12px}
+.aa-list li{display:flex;gap:12px;align-items:flex-start}
+.aa-list li>span{flex:none;width:38px;height:38px;border-radius:12px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);display:grid;place-items:center;font-size:18px}
+.aa-list b{display:block;font-size:16px;color:#fff;line-height:1.3}
+.aa-list small{display:block;font-size:14px;color:#9aa3bd;line-height:1.4;margin-top:2px}
+.aa-btn{height:64px;font-size:20px;width:100%;margin-top:6px;box-shadow:0 14px 34px rgba(208,54,47,.45);animation:aaPulse 2.6s ease-in-out infinite}
+.aa-btn b{transition:transform .2s}.aa-btn:hover b{transform:translateX(4px)}
+@keyframes aaPulse{0%,100%{box-shadow:0 14px 34px rgba(208,54,47,.45)}50%{box-shadow:0 14px 44px rgba(208,54,47,.75)}}
+.aa-micro{display:flex;flex-wrap:wrap;gap:6px 14px;justify-content:center;font-size:13px;color:#9aa3bd}
+.aa-micro span::before{content:"✓ ";color:#5fd69a;font-weight:900}
+.aa-phones{position:relative;height:520px;align-self:end}
+.ph3{position:absolute;bottom:-40px;width:220px;aspect-ratio:720/1564;border-radius:30px;border:7px solid #0b1022;background:#0b1022;overflow:hidden;box-shadow:0 30px 60px rgba(0,0,0,.45)}
+.ph3 img{width:100%;height:100%;object-fit:cover;display:block}
+.ph3.p-c{left:50%;transform:translateX(-50%);bottom:-20px;width:240px;z-index:3}
+.ph3.p-l{left:2%;transform:rotate(-8deg);z-index:1;opacity:.92}
+.ph3.p-r{right:2%;transform:rotate(8deg);z-index:2;opacity:.92}
+.appad .chip{position:absolute;z-index:4;background:#fff;color:var(--ink);font-weight:800;font-size:13px;border-radius:999px;padding:8px 14px;box-shadow:0 10px 24px rgba(0,0,0,.25);white-space:nowrap}
+.appad .chip.c1{top:60px;left:0}
+.appad .chip.c2{top:140px;right:0;background:#2fd17f;color:#0b2a1a}
+@media (max-width:860px){
+  .appad{grid-template-columns:1fr;padding:28px 20px 0;gap:8px;border-radius:24px}
+  .appad h2{font-size:30px}
+  .aa-copy{padding-bottom:10px}
+  .aa-phones{height:330px;margin:0 -20px}
+  .ph3{width:150px;border-width:5px;border-radius:22px}
+  .ph3.p-c{width:170px}
+  .appad .chip.c1{top:10px;left:16px}.appad .chip.c2{top:70px;right:16px}
+}
+@media (prefers-reduced-motion:reduce){.aa-btn{animation:none}}
 .welcomeback{background:var(--ink);color:#fff;padding-block:12px}
 .welcomeback .in{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:15px}
 .welcomeback .btn{height:42px}
@@ -1195,7 +1232,7 @@ function renderCalc(){
 
 /* ---------- results ---------- */
 document.addEventListener("click",e=>{ const a=e.target.closest&&e.target.closest("a"); if(!a||!window.spsTrack) return; const h=a.getAttribute("href")||"";
-  if(h.startsWith("/app/lead")) spsTrack("ss_plan_tap",{where:a.closest(".dock")?"dock":a.closest(".pot")?"potential":a.closest(".cta")?"cta":"other"});
+  if(h.startsWith("/app/lead")) spsTrack("ss_plan_tap",{where:a.closest(".dock")?"dock":a.closest(".appad")?"appad":a.closest(".pot")?"potential":a.closest(".cta")?"cta":"other"});
   else if(h.startsWith("/app/verdict")) spsTrack("ss_verdict_tap",{id:h.split("/")[3].split("?")[0]});
   else if(h.startsWith("/?src")||h==="/") spsTrack("ss_coach_tap"); },true);
 function ring(score,size,stroke){
@@ -1286,6 +1323,30 @@ function renderResults(){
       <span class="prio-gain">+${Math.max(1,r.pot1-r.score)}<small>points</small></span>
     </div>
 
+    <section class="appad pop" style="animation-delay:.4s" aria-label="Your next step: the Six-Pack Stack app">
+      <div class="aa-glow" aria-hidden="true"></div>
+      <div class="aa-copy">
+        <span class="aa-k"><i></i>Your next step · free</span>
+        <h2>${esc(state.name)}, here's your plan to go from <em>${r.score}</em> to <em>${r.potAll}</em>.</h2>
+        <p class="aa-sub">My Six-Pack Stack app turns this report into your full 12-week plan to ${esc(GOAL_TEXT[state.a.goal]||"hit your goal")}, built from the answers you just gave me.</p>
+        <ul class="aa-list">
+          <li><span>🎯</span><div><b>Your #1 tweak is built into week 1</b><small>${esc(r.top.t)}</small></div></li>
+          <li><span>🍳</span><div><b>Meals made only from foods you already eat</b><small>Plus exactly what to order at Chipotle or Chick-fil-A</small></div></li>
+          <li><span>🏋️</span><div><b>Workouts on the days you pick</b><small>A form video and 3 cues on every move</small></div></li>
+          <li><span>🔢</span><div><b>Your calories and protein, done for you</b><small>Re-set at weeks 4 and 8 so you don't stall</small></div></li>
+        </ul>
+        <a class="btn aa-btn" href="${PLAN_URL}">Build my free plan <b aria-hidden="true">→</b></a>
+        <div class="aa-micro"><span>2 minutes</span><span>Your answers carry over</span><span>First 2 weeks free, no card</span></div>
+      </div>
+      <div class="aa-phones" aria-hidden="true">
+        <div class="ph3 p-l"><img src="/img/app/lp-meals.jpg" alt="" loading="lazy"></div>
+        <div class="ph3 p-r"><img src="/img/app/lp-workout.jpg" alt="" loading="lazy"></div>
+        <div class="ph3 p-c"><img src="/img/app/lp-programs.jpg" alt="" loading="lazy"></div>
+        <span class="chip c1">✓ Built from your answers</span>
+        <span class="chip c2">${r.score} → ${r.potAll}</span>
+      </div>
+    </section>
+
     <div class="tabs pop" style="animation-delay:.45s" role="tablist" aria-label="Your breakdown">
       ${tabs.map(A=>`<button role="tab" data-tab="${A.key}" aria-selected="${A.key===first}"><span class="tring">${ring(A.score,44,5)}<b>${A.score}</b></span><span class="tl">${A.name}</span></button>`).join("")}
     </div>
@@ -1295,7 +1356,7 @@ function renderResults(){
 
     <div class="cta pop" style="animation-delay:.2s">
       <div>
-        <h2>Turn this into your plan. Free.</h2>
+        <h2>Ready? Turn this into your plan. Free.</h2>
         <p>My app builds the plan to ${esc(GOAL_TEXT[state.a.goal]||"hit your goal")} from the answers you just gave me.</p>
       </div>
       <ul>
