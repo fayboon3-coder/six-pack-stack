@@ -287,6 +287,12 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .share{display:flex;flex-direction:column;gap:10px;background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:var(--shadow)}
 .share code{font-family:var(--f);font-size:14px;color:var(--mute);overflow-wrap:anywhere;user-select:all}
 .coach{font-size:15px;color:var(--mute);text-align:center}
+.coachcard{display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:center;background:#fff;border:1px solid var(--line,#e6e8ef);border-radius:22px;padding:20px 22px;box-shadow:var(--shadow,0 8px 24px rgba(16,24,64,.06))}
+.coachcard img{width:64px;height:64px;border-radius:50%;object-fit:cover;border:3px solid var(--red)}
+.coachcard .cc-t{display:flex;flex-direction:column;gap:6px;min-width:0}
+.coachcard .cc-t b{font-size:18px;line-height:1.3;color:var(--ink)}
+.coachcard .cc-t p{font-size:14px;line-height:1.5;color:var(--ink2,#3b4566);margin:0}
+@media (max-width:640px){.coachcard{grid-template-columns:52px 1fr;align-items:start;gap:14px;padding:18px}.coachcard img{width:52px;height:52px;border-width:2px}.coachcard .cc-t b{font-size:17px}.coachcard .btn{grid-column:1 / -1;width:100%;text-align:center}}
 .coach a{color:var(--ink);font-weight:800}
 .pop{opacity:0;transform:translateY(16px);animation:pop .6s cubic-bezier(.2,.8,.2,1) forwards}
 @keyframes pop{to{opacity:1;transform:none}}
@@ -561,6 +567,7 @@ const VERDICT_URL = id => `/app/verdict/${id}?src=stack-score`;
 const LOOKUP_URL  = "/app/stack-check?src=stack-score";
 const COACH_URL   = "/?src=stack-score";
 const SHARE_URL   = "https://six-pack-stack.vercel.app/stack-score?src=share";
+const FOUNDING_LINE = " Only 3 founding spots at $997, then it goes to $2,000.";   // set to "" once the founding spots are gone
 /* ========================== */
 
 // Boon's 47 Stack Check verdicts (same data as the app) plus 3 "enhanced" products. Built from src/data/stackcheck.json.
@@ -703,6 +710,14 @@ function computeResult(){
 
 /* ---------- lead source: ?src=video-name from a video link, remembered for this visitor ---------- */
 const LEAD_SOURCE = (()=>{ let v=""; try{ const q=new URLSearchParams(location.search); v=q.get("src")||q.get("utm_source")||""; if(v) localStorage.setItem("sps_src",v); else v=localStorage.getItem("sps_src")||""; }catch(e){} if(!v){ try{ v=document.referrer?new URL(document.referrer).hostname:""; }catch(e){} } return (v||"direct").slice(0,80); })();
+
+/* ---------- the video they came from: matched headline + that product first in the list ---------- */
+const VIDEOS = {
+  bang:{t:"Bang", pid:"caffeine_pills"},
+  prime:{t:"Prime", pid:"prime"},
+  electrolytes:{t:"electrolytes", pid:"electrolyte_packets"}
+};
+const VIDEO = VIDEOS[String(LEAD_SOURCE).toLowerCase()] || null;
 
 /* ---------- Kit ---------- */
 function reportText(r){
@@ -929,9 +944,12 @@ function renderStart(){
   <section class="hero">
     <div class="in gut">
       <div class="hero-text">
-        <span class="eyebrow">Free 60-second audit</span>
+        ${VIDEO?`<span class="eyebrow">From the ${esc(VIDEO.t)} video · free 60-second audit</span>
+        <h1>You saw the truth about <em>${esc(VIDEO.t)}</em>. Now score <em>your</em> stack.</h1>
+        <p class="sub">Tell me <b>how you lift, how you eat and what you take.</b> I'll show you what's working, what's a waste, and exactly what to tweak to hit your goal.</p>`
+        :`<span class="eyebrow">Free 60-second audit</span>
         <h1>What's your <em>Stack Score?</em></h1>
-        <p class="sub">Tell me <b>how you lift, how you eat and what you take.</b> I'll show you exactly what to tweak to hit your goal.</p>
+        <p class="sub">Tell me <b>how you lift, how you eat and what you take.</b> I'll show you exactly what to tweak to hit your goal.</p>`}
         ${cta("Get my Stack Score →")}
         <div class="built"><img src="/boon.jpg" alt="Boon Fay" width="44" height="44"><div><b>Built by Boon Fay</b><span>225 → 175 lbs. No sponsors, no affiliate links.</span></div></div>
       </div>
@@ -1066,8 +1084,9 @@ function renderPick(i){
     body = hits.length ? `<div class="chips">${hits.map(x=>chip(x.p,x.m.via)).join("")}</div>`
       : `<p class="muted">I haven't investigated that one yet. Add it below and I'll flag it in your report.</p>`;
   } else if(!state.showAll){
-    const pop=PRODUCTS.filter(p=>p.pop<99).sort((a,b)=>a.pop-b.pop);
-    const extra=PRODUCTS.filter(p=>p.pop===99 && state.picked.has(p.id));
+    let pop=PRODUCTS.filter(p=>p.pop<99).sort((a,b)=>a.pop-b.pop);
+    if(VIDEO&&PMAP[VIDEO.pid]) pop=[PMAP[VIDEO.pid],...pop.filter(p=>p.id!==VIDEO.pid)];
+    const extra=PRODUCTS.filter(p=>p.pop===99 && state.picked.has(p.id) && !pop.includes(p));
     body = `<div class="cat"><h3>Most common</h3><div class="chips">${[...pop,...extra].map(p=>chip(p)).join("")}</div></div>
       <button class="more" id="all">Show all ${PRODUCTS.length} →</button>`;
   } else {
@@ -1283,6 +1302,16 @@ function renderResults(){
       <div>${planBtn("Build my free plan →")}<p class="small" style="margin-top:10px;text-align:center">2 minutes. Your answers carry over. First 2 weeks free, no card.</p></div>
     </div>
 
+    <div class="coachcard pop">
+      <img src="/boon.jpg" alt="Boon Fay" width="64" height="64">
+      <div class="cc-t">
+        <span class="eyebrow">Want me to do it with you?</span>
+        <b>1:1 coaching with me. Abs in 12 weeks, or I coach you free until you do.</b>
+        <p>I audit your stack, build your plan around your food and your week, and review your check-in every Sunday.${FOUNDING_LINE}</p>
+      </div>
+      <a class="btn ghost" href="${COACH_URL}">See if you qualify →</a>
+    </div>
+
     <div class="rfoot">
       <div class="share">
         <b>Know someone who needs this?</b>
@@ -1292,7 +1321,6 @@ function renderResults(){
       </div>
       <div class="stack-mini">
         <p class="small muted">A copy is on its way to <b style="color:var(--ink)">${esc(state.email)}</b>.${state.sent?"":" Check your promotions tab if you don't see it."}</p>
-        <p class="coach">Want me to do it with you? <a href="${COACH_URL}">See if you qualify for 1:1 coaching</a>. Abs in 12 weeks, or I coach you free until you do.</p>
         <button class="link" id="redo">Retake the audit</button>
       </div>
     </div>

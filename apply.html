@@ -118,7 +118,9 @@ let step = 0;
 /* Lead source: ?src=video-name (or utm_source) from a video link, remembered for this visitor */
 const LEAD_SOURCE = (()=>{ let v=""; try{ const q=new URLSearchParams(location.search); v=q.get("src")||q.get("utm_source")||""; if(v) localStorage.setItem("sps_src",v); else v=localStorage.getItem("sps_src")||""; }catch(e){} if(!v){ try{ v=document.referrer?new URL(document.referrer).hostname:""; }catch(e){} } return (v||"direct").slice(0,80); })();
 /* Prefill from the reminder email link: /apply?name=...&email=... */
-(()=>{ try{ const q=new URLSearchParams(location.search); const n=q.get("name"), m=q.get("email"); if(n&&!/[{}]/.test(n)) A.name=n; if(m&&!/[{}]/.test(m)) A.email=m; if(A.name||A.email) step=1; }catch(e){} })();
+(()=>{ try{ const q=new URLSearchParams(location.search); const n=q.get("name"), m=q.get("email"); if(n&&!/[{}]/.test(n)) A.name=n; if(m&&!/[{}]/.test(m)) A.email=m; if(A.name||A.email) step=1; }catch(e){}
+  /* Took the Stack Score on this browser: their name and email are already known */
+  try{ if(!A.name&&!A.email){ const h=JSON.parse(localStorage.getItem("sps_stackscore")||"null"); if(h&&h.at&&Date.now()-h.at<30*864e5){ A.name=h.name||""; A.email=h.email||""; } } }catch(e){} })();
 let startedSent = false;
 async function startedToKit(){
   if(startedSent) return; startedSent=true;
