@@ -237,7 +237,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .g2-a u{display:block;height:100%;width:60%;background:linear-gradient(90deg,#ff5a50,#ffb020);filter:blur(2px)}
 .g2-a:nth-child(2) u{width:42%}.g2-a:nth-child(3) u{width:75%}
 .g2 .blur{filter:blur(6px);user-select:none}
-.g2-tweak{display:flex;gap:10px;align-items:baseline;font-size:14px;color:#c7cde0;margin-top:4px;min-width:0}
+.g2-tweak{display:flex;gap:10px;white-space:nowrap;align-items:baseline;font-size:14px;color:#c7cde0;margin-top:4px;min-width:0}
 .g2-tweak b{color:#fff;white-space:nowrap;overflow:hidden}
 .g2-lock{grid-column:1 / -1;justify-self:center;background:#fff;color:var(--ink);font-weight:800;font-size:12px;border-radius:999px;padding:6px 10px;box-shadow:0 6px 16px rgba(0,0,0,.25)}
 .g2-facts{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
@@ -252,7 +252,26 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .g2-boon{display:flex;gap:10px;align-items:center;justify-content:center;font-size:14px;color:var(--mute)}
 .g2-boon img{width:40px;height:40px;border-radius:50%;object-fit:cover;border:2px solid var(--red)}
 .g2-boon b{color:var(--ink)}
-@media (max-width:560px){.g2 h2{font-size:28px}.g2-preview{grid-template-columns:1fr;justify-items:center;padding:22px 18px}.g2-areas{width:100%}.g2-facts{gap:8px}.g2-facts li{padding:10px 6px}.g2-facts b{font-size:22px}.g2-facts span{font-size:12px}.g2-sub{font-size:15px}.g2-ring{width:104px;height:104px}.g2-preview{gap:14px;padding:18px 16px}}
+@media (max-width:560px){
+  .gate2 .progress{display:none}
+  .g2{gap:14px}
+  .g2-k{font-size:11px;padding:6px 10px}
+  .g2 h2{font-size:27px}
+  .g2-sub{font-size:14.5px}
+  .g2-preview{grid-template-columns:84px 1fr;gap:14px;padding:16px 16px 14px;border-radius:20px}
+  .g2-ring{width:84px;height:84px}.g2-ring b{font-size:26px}.g2-ring span{font-size:9.5px}
+  .g2-a{grid-template-columns:78px 1fr 18px;gap:8px;font-size:12.5px}
+  .g2-tweak{font-size:12.5px}
+  .g2-lock{font-size:11.5px;padding:5px 10px}
+  .g2-facts{display:flex;flex-wrap:wrap;justify-content:center;gap:6px}
+  .g2-facts li{flex-direction:row;align-items:baseline;gap:5px;padding:7px 11px;border-radius:999px}
+  .g2-facts b{font-size:15px}
+  .g2-facts span{font-size:12.5px}
+  .g2-form{padding:16px;gap:10px;border-radius:20px}
+  .g2-ask{font-size:17px}
+  .g2-btn{height:56px;font-size:18px}
+  .g2-boon{font-size:12.5px;text-align:left}
+}
 .gatewrap{position:relative}
 .blurred{filter:blur(5px);pointer-events:none;user-select:none;opacity:.8}
 .gatewrap .badge{position:absolute;inset:0;display:grid;place-items:center}
@@ -1206,9 +1225,9 @@ function renderGate(){
   const nT=[pre.L,pre.E,pre.S].reduce((n,A)=>n+A.tweaks.length,0);
   const nV=S.verdicts.length, nBad=S.verdicts.filter(v=>v.k==="skip"||v.k==="risk").length;
   const facts=[
-    `<li><b>${nT}</b><span>tweaks found for your goal</span></li>`,
-    nV?`<li><b>${nV}</b><span>product${nV===1?"":"s"} checked${nBad?`, <em>${nBad} flagged</em>`:""}</span></li>`:`<li><b>3</b><span>areas scored: lifting, eating, supplements</span></li>`,
-    `<li><b>1</b><span>change that moves your score the most</span></li>`
+    `<li><b>${nT}</b><span>tweaks found</span></li>`,
+    nV?`<li><b>${nV}</b><span>product${nV===1?"":"s"} checked${nBad?`, <em>${nBad} flagged</em>`:""}</span></li>`:`<li><b>3</b><span>areas scored</span></li>`,
+    `<li><b>1</b><span>biggest fix</span></li>`
   ].join("");
   app.innerHTML = `<div class="quiz gut"><div class="qwrap gate2">
   <div class="progress"><div class="qmeta"><span><b>Done</b> · Your breakdown is ready</span><span>100%</span></div><div class="bar"><i style="width:100%"></i></div></div>
