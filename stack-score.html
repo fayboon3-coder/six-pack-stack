@@ -1399,16 +1399,17 @@ function renderResults(){
         <p class="aa-sub">My Six-Pack Stack app turns this report into your full 12-week plan to ${esc(GOAL_TEXT[state.a.goal]||"hit your goal")}, built from the answers you just gave me.</p>
         <ul class="aa-list">
           <li><span>🎯</span><div><b>Your #1 tweak is built into week 1</b><small>${esc(r.top.t)}</small></div></li>
-          <li><span>🍳</span><div><b>Meals made only from foods you already eat</b><small>Plus exactly what to order at Chipotle or Chick-fil-A</small></div></li>
-          <li><span>🏋️</span><div><b>Workouts on the days you pick</b><small>A form video and 3 cues on every move</small></div></li>
-          <li><span>🔢</span><div><b>Your calories and protein, done for you</b><small>Re-set at weeks 4 and 8 so you don't stall</small></div></li>
+          <li><span>🔎</span><div><b>Scan any supplement before you buy it</b><small>Barcode or label, and you see my verdict right there in the store</small></div></li>
+          <li><span>🍳</span><div><b>Meals made only from foods you already eat</b><small>Snap anything else and it logs the calories and protein for you</small></div></li>
+          <li><span>🏋️</span><div><b>Workouts on the days you pick</b><small>A form video on every move and today's target, so you get stronger every week</small></div></li>
+          <li><span>📉</span><div><b>Calories that adjust to your real trend</b><small>See the date you'll hit your goal, and stop guessing</small></div></li>
         </ul>
         <a class="btn aa-btn" href="${PLAN_URL}">Build my free plan <b aria-hidden="true">→</b></a>
         <div class="aa-micro"><span>2 minutes</span><span>Your answers carry over</span><span>First 2 weeks free, no card</span></div>
       </div>
       <div class="aa-phones" aria-hidden="true">
-        <div class="ph3 p-l"><img src="/img/app/lp-meals.jpg" alt="" loading="lazy"></div>
-        <div class="ph3 p-r"><img src="/img/app/lp-workout.jpg" alt="" loading="lazy"></div>
+        <div class="ph3 p-l"><img src="/img/app/lp-scan.jpg" alt="" loading="lazy"></div>
+        <div class="ph3 p-r"><img src="/img/app/lp-progress.jpg" alt="" loading="lazy"></div>
         <div class="ph3 p-c"><img src="/img/app/lp-programs.jpg" alt="" loading="lazy"></div>
         <span class="chip c1">✓ Built from your answers</span>
         <span class="chip c2">${r.score} → ${r.potAll}</span>
