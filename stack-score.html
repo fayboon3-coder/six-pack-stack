@@ -219,6 +219,40 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .sticky-next{position:sticky;bottom:0;padding:16px 0 calc(16px + env(safe-area-inset-bottom,0px));background:linear-gradient(to top,var(--bg) 70%,rgba(243,244,248,0));display:flex;gap:12px;align-items:center;margin-top:6px;z-index:5}
 .sticky-next .btn{flex:1}
 .sticky-next .btn.ghost{flex:none;width:56px;padding:0}
+.g2{display:flex;flex-direction:column;gap:18px}
+.gate2{max-width:560px}
+.g2-top{display:flex;flex-direction:column;gap:10px;text-align:center;align-items:center}
+.g2-k{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--green);background:var(--green-bg);border-radius:999px;padding:7px 12px}
+.g2-k i{width:8px;height:8px;border-radius:50%;background:var(--green)}
+.g2 h2{font-size:34px;line-height:1.08;font-weight:900;letter-spacing:-.02em;text-wrap:balance}
+.g2-sub{color:var(--mute);font-size:16px;line-height:1.5;margin:0;max-width:44ch}
+.g2-preview{position:relative;display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:center;background:linear-gradient(150deg,#141c33,#1d2a52 70%,#2a1530);color:#fff;border-radius:22px;padding:22px;box-shadow:var(--shadow-lg);overflow:hidden}
+.g2-ring{position:relative;width:118px;height:118px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
+.g2-ring svg{position:absolute;inset:0;width:100%;height:100%}
+.g2-ring b{position:relative;font-size:36px;font-weight:900;line-height:1;filter:blur(1px)}
+.g2-ring span{position:relative;font-size:11px;color:#9aa3bd}
+.g2-areas{display:grid;gap:9px;min-width:0}
+.g2-a{display:grid;grid-template-columns:92px 1fr 28px;gap:10px;align-items:center;font-size:14px;color:#c7cde0}
+.g2-a i{height:8px;border-radius:99px;background:rgba(255,255,255,.1);overflow:hidden}
+.g2-a u{display:block;height:100%;width:60%;background:linear-gradient(90deg,#ff5a50,#ffb020);filter:blur(2px)}
+.g2-a:nth-child(2) u{width:42%}.g2-a:nth-child(3) u{width:75%}
+.g2 .blur{filter:blur(6px);user-select:none}
+.g2-tweak{display:flex;gap:10px;align-items:baseline;font-size:14px;color:#c7cde0;margin-top:4px;min-width:0}
+.g2-tweak b{color:#fff;white-space:nowrap;overflow:hidden}
+.g2-lock{grid-column:1 / -1;justify-self:center;background:#fff;color:var(--ink);font-weight:800;font-size:12px;border-radius:999px;padding:6px 10px;box-shadow:0 6px 16px rgba(0,0,0,.25)}
+.g2-facts{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.g2-facts li{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px 12px;display:flex;flex-direction:column;gap:4px;text-align:center}
+.g2-facts b{font-size:28px;font-weight:900;color:var(--red);line-height:1}
+.g2-facts span{font-size:13px;line-height:1.35;color:var(--ink2)}
+.g2-facts em{font-style:normal;font-weight:800;color:var(--red)}
+.g2-form{display:flex;flex-direction:column;gap:12px;background:#fff;border:1px solid var(--line);border-radius:22px;padding:20px;box-shadow:var(--shadow-lg)}
+.g2-ask{font-size:19px;font-weight:900;margin:0;color:var(--ink)}
+.g2-btn{height:60px;font-size:19px}
+.g2-fine{font-size:13px;color:var(--soft);text-align:center;margin:0}
+.g2-boon{display:flex;gap:10px;align-items:center;justify-content:center;font-size:14px;color:var(--mute)}
+.g2-boon img{width:40px;height:40px;border-radius:50%;object-fit:cover;border:2px solid var(--red)}
+.g2-boon b{color:var(--ink)}
+@media (max-width:560px){.g2 h2{font-size:28px}.g2-preview{grid-template-columns:1fr;justify-items:center;padding:22px 18px}.g2-areas{width:100%}.g2-facts{gap:8px}.g2-facts li{padding:10px 6px}.g2-facts b{font-size:22px}.g2-facts span{font-size:12px}.g2-sub{font-size:15px}.g2-ring{width:104px;height:104px}.g2-preview{gap:14px;padding:18px 16px}}
 .gatewrap{position:relative}
 .blurred{filter:blur(5px);pointer-events:none;user-select:none;opacity:.8}
 .gatewrap .badge{position:absolute;inset:0;display:grid;place-items:center}
@@ -910,8 +944,10 @@ function livePanel(){
 const fillNow={eat:0,lift:0,supp:0};
 function setFill(key,score){
   const L=LAYERS.find(l=>l.key===key), from=fillNow[key], to=score, t=tone(score), t0=performance.now(), dur=reduce?0:1000;
+  if(!document.getElementById("fl-"+key)) return;
   ["l","r","t"].forEach(f=>document.getElementById(`f${f}-${key}`).setAttribute("fill",`url(#f${f}-${t})`));
   const draw=v=>{ const h=Math.max(2,LH*v/100), g=prism(LW-8,L.z+2,h-2);
+    if(!document.getElementById("fl-"+key)) return;
     document.getElementById("fl-"+key).setAttribute("points",g.left); document.getElementById("fr-"+key).setAttribute("points",g.right); document.getElementById("ft-"+key).setAttribute("points",g.top); };
   cancelAnimationFrame(setFill["_"+key]);
   const tick=n=>{ const k=dur?Math.min(1,(n-t0)/dur):1, e=1-Math.pow(1-k,3), v=from+(to-from)*e; fillNow[key]=v; draw(v); if(k<1) setFill["_"+key]=requestAnimationFrame(tick); };
@@ -1166,37 +1202,42 @@ function renderPick(i){
 /* ---------- email gate ---------- */
 function renderGate(){
   window.spsTrack&&spsTrack("ss_gate",{},true);
-  app.innerHTML = `<div class="quiz gut"><div class="qwrap">
+  const pre=computeResult(), S=pre.S;
+  const nT=[pre.L,pre.E,pre.S].reduce((n,A)=>n+A.tweaks.length,0);
+  const nV=S.verdicts.length, nBad=S.verdicts.filter(v=>v.k==="skip"||v.k==="risk").length;
+  const facts=[
+    `<li><b>${nT}</b><span>tweaks found for your goal</span></li>`,
+    nV?`<li><b>${nV}</b><span>product${nV===1?"":"s"} checked${nBad?`, <em>${nBad} flagged</em>`:""}</span></li>`:`<li><b>3</b><span>areas scored: lifting, eating, supplements</span></li>`,
+    `<li><b>1</b><span>change that moves your score the most</span></li>`
+  ].join("");
+  app.innerHTML = `<div class="quiz gut"><div class="qwrap gate2">
   <div class="progress"><div class="qmeta"><span><b>Done</b> · Your breakdown is ready</span><span>100%</span></div><div class="bar"><i style="width:100%"></i></div></div>
-  <section class="qcard fade">
-    <h2>Your breakdown is ready.</h2>
-    <div class="gatewrap">
-      <div class="facts blurred" aria-hidden="true">
-        <div class="ft">Stack Score Facts</div>
-        <div class="scoreline"><div><div class="lbl">Stack Score</div><div class="band">"———"</div></div><div class="bignum">??<span>/100</span></div></div>
-        <div class="vrow"><span class="nm">Lifting</span><span class="pill p-worth">██</span></div>
-        <div class="vrow"><span class="nm">Eating</span><span class="pill p-skip">██</span></div>
-        <div class="vrow"><span class="nm">Supplements</span><span class="pill p-situational">██</span></div>
-        <div class="trow"><span>#1 tweak</span><span class="v">████████</span></div>
-      </div>
-      <div class="badge"><span>🔒 Built for your goal</span></div>
+  <section class="g2 fade">
+    <div class="g2-top">
+      <span class="g2-k"><i></i>Audit complete</span>
+      <h2>Your Stack Score is ready.</h2>
+      <p class="g2-sub">I scored how you lift, how you eat and what you take against your goal to ${esc(GOAL_TEXT[state.a.goal]||"hit your goal")}.</p>
     </div>
-    <p style="font-size:19px;font-weight:800">Where should I send it?</p>
-    <ul class="inside">
-      <li>Your score, plus your lifting, eating and supplement scores</li>
-      <li>The exact tweaks to ${esc(GOAL_TEXT[state.a.goal]||"hit your goal")}</li>
-      <li>Your protein and calorie targets</li>
-      <li>My verdict on everything you take</li>
-    </ul>
-    <form id="gate" class="stack" novalidate style="gap:12px">
+    <div class="g2-preview" aria-hidden="true">
+      <div class="g2-ring"><svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="50" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="10"/><circle cx="60" cy="60" r="50" fill="none" stroke="url(#g2g)" stroke-width="10" stroke-linecap="round" stroke-dasharray="314" stroke-dashoffset="110" transform="rotate(-90 60 60)"/><defs><linearGradient id="g2g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff5a50"/><stop offset="1" stop-color="#ffb020"/></linearGradient></defs></svg><b>??</b><span>out of 100</span></div>
+      <div class="g2-areas">
+        ${["Lifting","Eating","Supplements"].map(n=>`<div class="g2-a"><span>${n}</span><i><u></u></i><b class="blur">00</b></div>`).join("")}
+        <div class="g2-tweak"><span>#1 tweak</span><b class="blur">Hit your protein every day</b></div>
+      </div>
+      <span class="g2-lock">🔒 Unlocks with your email</span>
+    </div>
+    <ul class="g2-facts">${facts}</ul>
+    <form id="gate" class="g2-form" novalidate>
+      <p class="g2-ask">Where should I send your full breakdown?</p>
       <div class="field"><label for="name">First name</label>
         <input type="text" id="name" autocomplete="given-name" placeholder="Your first name" value="${esc(state.name)}" required></div>
       <div class="field"><label for="email">Email</label>
         <input type="email" id="email" autocomplete="email" inputmode="email" placeholder="you@email.com" value="${esc(state.email)}" required>
         <div class="err" id="err" role="alert"></div></div>
-      <button class="btn full" id="show" type="submit">Show my breakdown →</button>
-      <p class="muted small" style="text-align:center">🔒 No spam. Unsubscribe anytime.</p>
+      <button class="btn full g2-btn" id="show" type="submit">Show my Stack Score →</button>
+      <p class="g2-fine">On screen right away, plus a copy in your inbox. No spam, unsubscribe anytime.</p>
     </form>
+    <div class="g2-boon"><img src="/boon.jpg" alt="" width="40" height="40"><span><b>Built by Boon Fay.</b> 225 → 175 lbs. No sponsors, no affiliate links.</span></div>
     <div><button class="link" id="back">← Back</button></div>
   </section></div></div>`;
   document.getElementById("back").onclick=()=>go(state.step-1);
