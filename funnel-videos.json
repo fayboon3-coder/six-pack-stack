@@ -1,5 +1,152 @@
 [
-  {"src":"bang","title":"Bang","youtube":"","posted":""},
-  {"src":"prime","title":"Prime","youtube":"","posted":""},
-  {"src":"electrolytes","title":"Electrolytes","youtube":"","posted":""}
+ {
+  "src": "bang",
+  "title": "Bang (upcoming)",
+  "youtube": "",
+  "posted": ""
+ },
+ {
+  "src": "prime",
+  "title": "Prime (upcoming)",
+  "youtube": "",
+  "posted": ""
+ },
+ {
+  "src": "electrolytes",
+  "title": "Electrolytes (upcoming)",
+  "youtube": "",
+  "posted": ""
+ },
+ {
+  "src": "freakishly-strong",
+  "title": "How Is Everyone Getting Freakishly Strong?",
+  "youtube": "https://youtu.be/Ha164V70JeA",
+  "posted": "2026-09-28"
+ },
+ {
+  "src": "investigating-gen-z",
+  "title": "Investigating Gen Z's Steroid Epidemic",
+  "youtube": "https://youtu.be/NQpYK-xeI2w",
+  "posted": "2026-08-15"
+ },
+ {
+  "src": "ozempic",
+  "title": "The Dirty Secret About Ozempic",
+  "youtube": "https://youtu.be/72zCREhp9a4",
+  "posted": "2026-07-30"
+ },
+ {
+  "src": "joe-rogan",
+  "title": "Joe Rogan's Spreading Misinformation Again...",
+  "youtube": "https://youtu.be/uGtTELDWpzs",
+  "posted": "2026-07-06"
+ },
+ {
+  "src": "ag1",
+  "title": "Exposing The Fitness Industry's Latest Scam (AG1)",
+  "youtube": "https://youtu.be/4v82WHxsNcw",
+  "posted": "2026-06-24"
+ },
+ {
+  "src": "get-jacked",
+  "title": "How To Get Jacked So Fast It's Almost Illegal",
+  "youtube": "https://youtu.be/2kx7cNvVEdM",
+  "posted": "2026-06-13"
+ },
+ {
+  "src": "summer-cut",
+  "title": "The Problem with Doing a Summer Cut",
+  "youtube": "https://youtu.be/jIHy2MynhkM",
+  "posted": "2026-06-02"
+ },
+ {
+  "src": "love-handles",
+  "title": "How To Lose Your Love Handles",
+  "youtube": "https://youtu.be/Mu6oT4l5npg",
+  "posted": "2026-05-23"
+ },
+ {
+  "src": "weight-after-college",
+  "title": "The REAL Reason You Gained Weight After College",
+  "youtube": "https://youtu.be/sXJ3TG_5gJA",
+  "posted": "2026-05-04"
+ },
+ {
+  "src": "summer-2-months",
+  "title": "You Only Have 2 Months Left to Get in Shape for Summer",
+  "youtube": "https://youtu.be/D-73mu1DwZk",
+  "posted": "2026-04-24"
+ },
+ {
+  "src": "full-time-schedule",
+  "title": "How To Get in Shape While Working Full Time",
+  "youtube": "https://youtu.be/aXhlMkef0EY",
+  "posted": "2026-04-17"
+ },
+ {
+  "src": "lifting-split",
+  "title": "The Easiest Lifting Split to Get a Six Pack",
+  "youtube": "https://youtu.be/z92NLgx7MiA",
+  "posted": "2026-04-09"
+ },
+ {
+  "src": "eating-system",
+  "title": "The Simple Eating System That Helped Me Lose 40 Pounds",
+  "youtube": "https://youtu.be/1mxNpflP0ZI",
+  "posted": "2026-04-01"
+ },
+ {
+  "src": "post-grad-system",
+  "title": "The Exact System to Get in Shape After College",
+  "youtube": "https://youtu.be/eHM4xP6dXxg",
+  "posted": "2026-03-25"
+ },
+ {
+  "src": "after-graduation",
+  "title": "After Graduation, Most People Get This Wrong",
+  "youtube": "https://youtu.be/jjbxPaNaiO4",
+  "posted": "2026-03-21"
+ },
+ {
+  "src": "muscle-after-grad",
+  "title": "How to Build 15 Lbs of Muscle After Graduation",
+  "youtube": "https://youtu.be/Lf5mAJIF014",
+  "posted": "2026-03-15"
+ },
+ {
+  "src": "eat-after-grad",
+  "title": "How to Eat After Graduation Without Changing Your Diet",
+  "youtube": "https://youtu.be/ytPrsitvTRc",
+  "posted": "2026-03-10"
+ },
+ {
+  "src": "freshman-15",
+  "title": "How to Avoid the Freshman 15 in College",
+  "youtube": "https://youtu.be/-yLEAmkI3LE",
+  "posted": "2026-02-26"
+ },
+ {
+  "src": "lose-25-semester",
+  "title": "How To Lose 25 Lbs in One Semester",
+  "youtube": "https://youtu.be/l8nQ6DGlMPI",
+  "posted": "2026-02-17"
+ },
+ {
+  "src": "aggressive-cuts",
+  "title": "The Quickest Way To Lose Fat In College",
+  "youtube": "https://youtu.be/xN6QOPLiBRk",
+  "posted": "2026-02-03"
+ },
+ {
+  "src": "abs-in-college",
+  "title": "How I Finally Got Abs In College",
+  "youtube": "https://youtu.be/cKoExKv-W_s",
+  "posted": "2026-01-27"
+ },
+ {
+  "src": "my-story",
+  "title": "How I went from an overweight college student to having a six pack in 2 years",
+  "youtube": "https://youtu.be/TJixnGzzIik",
+  "posted": "2026-01-15"
+ }
 ]
