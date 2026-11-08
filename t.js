@@ -18,6 +18,16 @@
     if (v) store("sps_src", v.slice(0, 80)); else v = store("sps_src") || "";
     return (v || "direct").slice(0, 80);
   }
+  // Boon's own devices: open any page once with ?internal=1 and that browser stops being
+  // counted (?internal=0 turns counting back on). Keeps test clicks out of the funnel numbers.
+  var internal = (function () {
+    try {
+      var f = new URLSearchParams(location.search).get("internal");
+      if (f === "1") localStorage.setItem("sps:internal", "1");
+      if (f === "0") localStorage.removeItem("sps:internal");
+      return localStorage.getItem("sps:internal") === "1";
+    } catch (e) { return false; }
+  })();
   window.spsTrack = function (name, props, once) {
     try {
       props = props || {};
@@ -25,7 +35,7 @@
       props.page = location.pathname.replace(/\.html$/, "") || "/";
       var key = name + JSON.stringify(props);
       if (once && sent[key]) return; sent[key] = 1;
-      if (/\b(localhost|127\.0\.0\.1)\b/.test(location.hostname)) return; // don't count local tests
+      if (internal || /\b(localhost|127\.0\.0\.1)\b/.test(location.hostname)) return; // don't count tests
       fetch(URL_, {
         method: "POST", keepalive: true,
         headers: { "Content-Type": "application/json", apikey: KEY, Authorization: "Bearer " + KEY, Prefer: "return=minimal" },
