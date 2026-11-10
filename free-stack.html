@@ -116,6 +116,7 @@ a:focus-visible{outline:3px solid #d0362f;outline-offset:3px}
 .sps-foot-dl{order:2}
 }
 </style>
+<script src="/t.js"></script>
 </head>
 <body>
 
@@ -343,6 +344,14 @@ a:focus-visible{outline:3px solid #d0362f;outline-offset:3px}
 </div>
 
 <script>
+// Landing page tracking: a visit, and each tap into the app (where on the page it was).
+(function(){
+  try{
+    if(window.spsTrack) spsTrack('lp_visit',{},true);
+    document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[data-go]');if(a&&window.spsTrack)spsTrack('lp_plan_tap',{where:a.closest('#faq')?'faq':a.closest('header,section')===document.querySelector('section')?'hero':'page'});});
+  }catch(e){}
+})();
+
 // Carry the source through (e.g. ?src=stack-score or a video slug) so we know where app sign-ups came from.
 (function(){
   try{

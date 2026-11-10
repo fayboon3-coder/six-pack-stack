@@ -386,51 +386,6 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .coachcard .cc-t b{font-size:18px;line-height:1.3;color:var(--ink)}
 .coachcard .cc-t p{font-size:14px;line-height:1.5;color:var(--ink2,#3b4566);margin:0}
 @media (max-width:640px){.coachcard{grid-template-columns:52px 1fr;align-items:start;gap:14px;padding:18px}.coachcard img{width:52px;height:52px;border-width:2px}.coachcard .cc-t b{font-size:17px}.coachcard .btn{grid-column:1 / -1;width:100%;text-align:center}}
-/* ---------- the app landing page, continued under "Your next step" ---------- */
-.applp{display:grid;gap:18px}
-.lp-block{background:#fff;border:1px solid var(--line);border-radius:22px;padding:28px;box-shadow:var(--shadow);display:grid;gap:14px;min-width:0}
-.lp-h{font-size:26px;line-height:1.15;font-weight:900;color:var(--ink);letter-spacing:-.01em;margin:0;text-wrap:balance}
-.lp-phases{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:4px}
-.lp-ph{border:1px solid var(--line);border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:6px;background:var(--bg)}
-.lp-ph .lp-wk{font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--mute)}
-.lp-ph b{font-size:22px;font-weight:900;color:var(--ink)}
-.lp-ph:first-child b{color:var(--red)}
-.lp-ph p{margin:0;font-size:15px;line-height:1.5;color:var(--ink2)}
-.lp-ph small{display:block;margin-top:4px;font-size:13px;line-height:1.45;color:var(--red);font-weight:700}
-.lp-res{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:4px}
-.lp-r{margin:0;display:grid;gap:10px}
-.lp-ba{display:grid;grid-template-columns:1fr 1fr;gap:3px;border-radius:14px;overflow:hidden;background:var(--line)}
-.lp-ba img{width:100%;aspect-ratio:3/4;object-fit:cover;display:block}
-.lp-r figcaption{display:flex;flex-direction:column;gap:2px}
-.lp-r figcaption b{font-size:16px;color:var(--ink)}
-.lp-r figcaption span{font-size:15px;font-weight:800;color:var(--green)}
-.lp-fine{margin:0;font-size:12.5px;color:var(--mute)}
-.lp-boon{display:grid;grid-template-columns:180px minmax(0,1fr);gap:24px;align-items:center;background:linear-gradient(150deg,#141c33 0%,#1d2a52 70%);color:#fff;border-radius:22px;padding:22px;box-shadow:var(--shadow-lg)}
-.lp-boon img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:14px;display:block}
-.lp-boon .lp-h{color:#fff}
-.lp-boon .eyebrow{color:#ff8a82}
-.lp-boon p{margin:8px 0 0;font-size:16px;line-height:1.55;color:#c7cde0;max-width:56ch}
-.lp-faq{display:grid;gap:8px}
-.lp-faq details{border:1px solid var(--line);border-radius:14px;background:var(--bg)}
-.lp-faq summary{cursor:pointer;list-style:none;padding:16px 18px;font-weight:800;font-size:16px;color:var(--ink);display:flex;justify-content:space-between;gap:12px}
-.lp-faq summary::-webkit-details-marker{display:none}
-.lp-faq summary::after{content:"+";font-size:20px;line-height:1;color:var(--red)}
-.lp-faq details[open] summary::after{content:"–"}
-.lp-faq details p{margin:0;padding:0 18px 16px;font-size:15px;line-height:1.55;color:var(--ink2)}
-.lp-final{display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;background:linear-gradient(150deg,#141c33 0%,#1d2a52 60%,#2a1530 100%);color:#fff;border-radius:22px;padding:30px 24px;box-shadow:var(--shadow-lg)}
-.lp-final b{font-size:24px;line-height:1.2;font-weight:900;text-wrap:balance}
-.lp-final span{font-size:15px;color:#c7cde0}
-.lp-final .btn{margin-top:8px;min-width:280px}
-@media (max-width:760px){
-  .lp-block{padding:20px}
-  .lp-h{font-size:22px}
-  .lp-phases{grid-template-columns:minmax(0,1fr)}
-  .lp-res{grid-template-columns:minmax(0,1fr)}
-  .lp-r{grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);align-items:center}
-  .lp-boon{grid-template-columns:96px minmax(0,1fr);gap:16px;padding:18px;align-items:start}
-  .lp-boon p{font-size:15px}
-  .lp-final .btn{width:100%;min-width:0}
-}
 .coach a{color:var(--ink);font-weight:800}
 .pop{opacity:0;transform:translateY(16px);animation:pop .6s cubic-bezier(.2,.8,.2,1) forwards}
 @keyframes pop{to{opacity:1;transform:none}}
@@ -700,7 +655,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 /* ======== SETTINGS ======== */
 const KIT_API_KEY = "rWMhWOuYNu8lJKKWoWIfsg";   // Kit PUBLIC API key (safe in a web page)
 const KIT_FORM_ID = "10078143";                  // "Stack Score" form in Kit
-const PLAN_URL    = "/app/lead?want=plan&src=stack-score";  // straight into the plan builder, answers carried over
+const PLAN_URL    = "/free-stack?src=stack-score";  // next step: the app landing page; its buttons open the plan builder with the answers carried over
 const VERDICT_URL = id => `/app/verdict/${id}?src=stack-score`;
 const LOOKUP_URL  = "/app/stack-check?src=stack-score";
 const COACH_URL   = "/?src=stack-score";
@@ -1337,7 +1292,7 @@ function renderCalc(){
 
 /* ---------- results ---------- */
 document.addEventListener("click",e=>{ const a=e.target.closest&&e.target.closest("a"); if(!a||!window.spsTrack) return; const h=a.getAttribute("href")||"";
-  if(h.startsWith("/app/lead")) spsTrack("ss_plan_tap",{where:a.closest(".dock")?"dock":a.closest(".appad")?"appad":a.closest(".applp")?"landing":a.closest(".pot")?"potential":a.closest(".cta")?"cta":"other"});
+  if(h.startsWith("/app/lead")||h.startsWith("/free-stack")) spsTrack("ss_plan_tap",{where:a.closest(".dock")?"dock":a.closest(".appad")?"appad":a.closest(".pot")?"potential":a.closest(".cta")?"cta":"other"});
   else if(h.startsWith("/app/verdict")) spsTrack("ss_verdict_tap",{id:h.split("/")[3].split("?")[0]});
   else if(h.startsWith("/?src")||h==="/") spsTrack("ss_coach_tap"); },true);
 function ring(score,size,stroke){
@@ -1458,52 +1413,6 @@ function renderResults(){
         <div class="ph3 p-c"><img src="/img/app/lp-programs.jpg" alt="" loading="lazy"></div>
         <span class="chip c1">✓ Built from your answers</span>
         <span class="chip c2">${r.score} → ${r.potAll}</span>
-      </div>
-    </section>
-
-    <section class="applp" aria-label="How the Six-Pack Stack app works">
-      <div class="lp-block">
-        <span class="eyebrow">How your 12 weeks work</span>
-        <h2 class="lp-h">Three phases. The app tells you exactly what to do each day.</h2>
-        <div class="lp-phases">
-          <div class="lp-ph"><span class="lp-wk">Weeks 1–4</span><b>Strip</b><p>${state.a.goal==="muscle"?"Lock in your training and protein so every session builds muscle.":"Lose the first 8–10 lbs of fat."}</p><small>Your #1 tweak starts here: ${esc(r.top.t)}</small></div>
-          <div class="lp-ph"><span class="lp-wk">Weeks 5–8</span><b>Stack</b><p>${state.a.goal==="muscle"?"Your calories adjust to your real trend, so you add muscle without adding fat.":"Your calories adjust to your real trend, so you keep the muscle while the fat comes off."}</p></div>
-          <div class="lp-ph"><span class="lp-wk">Weeks 9–12</span><b>Six-Pack</b><p>Finish lean and see your abs. Weigh in each morning and the app shows the date you'll get there.</p></div>
-        </div>
-      </div>
-
-      <div class="lp-block">
-        <span class="eyebrow">Real results</span>
-        <h2 class="lp-h">Guys who followed the system</h2>
-        <div class="lp-res">
-          ${[["robert","Robert","−30+ lbs in 3 months"],["gerardo","Gerardo, 22","−40 lbs in 4 months"],["james","James, 24","+10 lbs of muscle in 4 months"]].map(([k,n,t])=>`<figure class="lp-r"><div class="lp-ba"><img src="/img/lp/${k}-b.jpg" alt="${n}, before" loading="lazy"><img src="/img/lp/${k}-a.jpg" alt="${n}, after" loading="lazy"></div><figcaption><b>${n}</b><span>${t}</span></figcaption></figure>`).join("")}
-        </div>
-        <p class="lp-fine">Real clients. Results vary and depend on following the plan.</p>
-      </div>
-
-      <div class="lp-boon">
-        <img src="/img/lp/boon-red.jpg" alt="Boon Fay" loading="lazy">
-        <div>
-          <span class="eyebrow">Built by Boon Fay</span>
-          <h2 class="lp-h">I went from 225 to 175 lbs.</h2>
-          <p>I investigate fitness products with no sponsors and no affiliate links. I built this app around the exact system that worked for me.</p>
-        </div>
-      </div>
-
-      <div class="lp-block">
-        <span class="eyebrow">Questions</span>
-        <div class="lp-faq">
-          <details><summary>Is it really free?</summary><p>Yes. Your first 2 weeks are free with no card: your calories, your meal plan and your first 2 weeks of training. After that, weeks 3 to 12 are part of The Full Stack. If you don't want it, you don't pay anything.</p></details>
-          <details><summary>Do I have to count calories?</summary><p>No. Every portion is already sized for you. Pick one of the 3 options for each meal and you're on plan.</p></details>
-          <details><summary>I don't have a gym. Does it still work?</summary><p>Yes. Pick home with dumbbells or no equipment in the quiz and your workouts are built for that. You can change it any time.</p></details>
-          <details><summary>Do I need to buy supplements?</summary><p>No. Most people end up buying less. The app tells you the short list that's worth it, and Stack Check tells you what to skip.</p></details>
-        </div>
-      </div>
-
-      <div class="lp-final">
-        <b>${esc(state.name)}, your plan is 2 minutes away.</b>
-        <span>First 2 weeks free. Your answers carry over.</span>
-        <a class="btn" href="${PLAN_URL}">Build my free plan →</a>
       </div>
     </section>
 
