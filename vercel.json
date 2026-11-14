@@ -49,6 +49,11 @@
       "source": "/electrolytes",
       "destination": "/stack-score?src=electrolytes",
       "permanent": false
+    },
+    {
+      "source": "/steroids",
+      "destination": "/stack-score?src=steroids",
+      "permanent": false
     }
   ]
 }
