@@ -655,7 +655,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 /* ======== SETTINGS ======== */
 const KIT_API_KEY = "rWMhWOuYNu8lJKKWoWIfsg";   // Kit PUBLIC API key (safe in a web page)
 const KIT_FORM_ID = "10078143";                  // "Stack Score" form in Kit
-const PLAN_URL    = "/free-stack?src=stack-score";  // next step: the app landing page; its buttons open the plan builder with the answers carried over
+let PLAN_URL      = "/app/lead?want=plan";  // straight into the plan builder (answers carry over); the video src is added below, after LEAD_SOURCE
 const VERDICT_URL = id => `/app/verdict/${id}?src=stack-score`;
 const LOOKUP_URL  = "/app/stack-check?src=stack-score";
 const COACH_URL   = "/?src=stack-score";
@@ -787,12 +787,14 @@ function computeResult(){
   const L=liftArea(a,g), E=eatArea(a,g), S=suppArea(a,g);
   const score = overall(L.score,E.score,S.score,g);
   const up = A => Math.min(100, A.score + A.tweaks.reduce((x,t)=>x+(t.p||0),0));
-  // #1 tweak: first tweak of the weakest area (eating wins ties for fat loss, lifting for muscle)
   const areas=[L,E,S];
-  const weakest = areas.slice().sort((x,y)=>x.score-y.score || (g==="muscle"?(x.key==="lift"?-1:1):(x.key==="eat"?-1:1)))[0];
-  const top = weakest.tweaks[0];
-  const bump = A => A===weakest ? Math.min(100,A.score+(top.p||0)) : A.score;
-  const pot1 = Math.max(score, overall(bump(L),bump(E),bump(S),g));
+  // #1 tweak: the single tweak that raises the overall score the most (so "Do your #1 tweak" shows the real biggest gain).
+  // No tweak with points: first tweak of the weakest area (eating wins ties for fat loss, lifting for muscle).
+  let weakest = areas.slice().sort((x,y)=>x.score-y.score || (g==="muscle"?(x.key==="lift"?-1:1):(x.key==="eat"?-1:1)))[0];
+  let top = weakest.tweaks[0], pot1 = score;
+  areas.forEach(A=>A.tweaks.forEach(t=>{ if(!t.p) return;
+    const v = overall(...areas.map(X=>X===A?Math.min(100,X.score+t.p):X.score), g);
+    if(v>pot1){ pot1=v; weakest=A; top=t; } }));
   const potAll = Math.max(pot1, overall(up(L),up(E),up(S),g));
   let band, bandText;
   if(score<50){band="Leaking";bandText=`A few big things are standing between you and your goal. The good news: they're all fixable.`;}
@@ -803,6 +805,7 @@ function computeResult(){
 
 /* ---------- lead source: ?src=video-name from a video link, remembered for this visitor ---------- */
 const LEAD_SOURCE = (()=>{ let v=""; try{ const q=new URLSearchParams(location.search); v=q.get("src")||q.get("utm_source")||""; if(v) localStorage.setItem("sps_src",v); else v=localStorage.getItem("sps_src")||""; }catch(e){} if(!v){ try{ v=document.referrer?new URL(document.referrer).hostname:""; }catch(e){} } return (v||"direct").slice(0,80); })();
+PLAN_URL += "&src=" + encodeURIComponent(LEAD_SOURCE);  // keep the video credit all the way into the app
 
 /* ---------- the video they came from: matched headline + that product first in the list ---------- */
 const VIDEOS = {

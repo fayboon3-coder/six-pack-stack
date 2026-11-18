@@ -355,7 +355,7 @@ a:focus-visible{outline:3px solid #d0362f;outline-offset:3px}
 // Carry the source through (e.g. ?src=stack-score or a video slug) so we know where app sign-ups came from.
 (function(){
   try{
-    var q=new URLSearchParams(location.search), src=q.get('src');
+    var q=new URLSearchParams(location.search), src=q.get('src'); if(!src){try{src=localStorage.getItem('sps_src');}catch(e){}}
     if(src&&/^stack-score/.test(src)){document.getElementById('sps-headline').textContent='Your Score Shows What to Cut. Your Plan Shows What to Do.';}
     if(src){document.querySelectorAll('[data-go]').forEach(function(a){var u=new URL(a.getAttribute('href'),location.origin);u.searchParams.set('src',src.slice(0,80));a.setAttribute('href',u.pathname+u.search);});}
   }catch(e){}
