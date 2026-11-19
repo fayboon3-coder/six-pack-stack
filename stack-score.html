@@ -644,6 +644,179 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   .hero .mwall{order:7}
 }
 
+
+/* ================= Nov 2026 redesign: navy-led, red only for the main button and warnings ================= */
+:root{--navy:#141c33;--navy-bg:#eef1f8;--navy-line:#c9d0e2;--red-bg:#f6f7fb}
+.ico{width:22px;height:22px;flex:none;display:block}
+.ico.sm{width:16px;height:16px;display:inline-block;vertical-align:-3px}
+.btn:focus-visible,.opt:focus-visible,.seg button:focus-visible,.chk:focus-within,.link:focus-visible,input:focus-visible,.more:focus-visible,summary:focus-visible,.ynb:focus-visible{outline:3px solid rgba(20,28,51,.35);outline-offset:2px}
+/* no more faded pink: disabled is a clean grey, selected is navy */
+.btn[disabled]{opacity:1;background:#e3e6ee;color:#8a92a8;box-shadow:none;cursor:not-allowed}
+.btn[disabled]:hover{background:#e3e6ee;color:#8a92a8;transform:none;box-shadow:none}
+.bar i{background:var(--navy)}
+.opt[aria-pressed="true"]{border-color:var(--navy);background:var(--navy-bg);box-shadow:0 0 0 1px var(--navy) inset}
+.opt[aria-pressed="true"] .arrow{background:var(--navy);border-color:var(--navy);color:#fff}
+.opt .arrow{color:transparent}
+.opt .arrow .ico{width:15px;height:15px;stroke-width:2.6}
+.seg button[aria-pressed="true"]{border-color:var(--navy);background:var(--navy);color:#fff;box-shadow:0 6px 14px rgba(20,28,51,.22)}
+.chk:has(input:checked){border-color:var(--navy);background:var(--navy-bg)}
+.chk:has(input:checked) .box{background:var(--navy);border-color:var(--navy)}
+.card .n{background:var(--navy-bg);color:var(--navy)}
+.scard .tw{background:var(--navy-bg)}
+.b-low,.sc.low{background:#fff;color:#b92d27;box-shadow:0 0 0 1.5px #d0362f inset}
+.p-skip{background:#fff;color:#b92d27;box-shadow:0 0 0 1.5px #d0362f inset}
+
+/* question header: an icon for every question */
+.qhead{display:flex;gap:14px;align-items:flex-start}
+.qico{flex:none;width:48px;height:48px;border-radius:14px;background:var(--navy);color:#fff;display:grid;place-items:center;box-shadow:0 8px 18px rgba(20,28,51,.18)}
+.qico .ico{width:24px;height:24px}
+.qht{display:flex;flex-direction:column;gap:6px;min-width:0;padding-top:2px}
+.qht .hint{margin-top:0}
+.qsub{display:flex;align-items:center;gap:10px}
+.qsub b{font-size:16px;font-weight:800;line-height:1.3}
+.qsico{flex:none;width:30px;height:30px;border-radius:9px;background:var(--navy-bg);color:var(--navy);display:grid;place-items:center}
+.qsico .ico{width:17px;height:17px}
+.qblock{gap:12px;padding-top:4px}
+.qblock+.qblock{border-top:1px solid var(--line);padding-top:20px}
+.opt{gap:14px}
+.oico{flex:none;width:40px;height:40px;border-radius:12px;background:var(--navy-bg);color:var(--navy);display:grid;place-items:center}
+.opt[aria-pressed="true"] .oico{background:var(--navy);color:#fff}
+.otx{flex:1;min-width:0}
+.opts.two{grid-template-columns:1fr 1fr}
+.opts.two .opt{padding:13px 14px;font-size:15.5px}
+.opts.two .opt small{font-size:13px}
+@media (max-width:420px){.opts.two{grid-template-columns:1fr}}
+
+/* question 5: big yes / no */
+.yn{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.ynb{appearance:none;cursor:pointer;font:inherit;color:var(--ink);background:#fff;border:1.5px solid var(--line2);border-radius:20px;padding:26px 16px 22px;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;transition:all .15s}
+.ynb:hover{border-color:var(--ink);transform:translateY(-2px);box-shadow:var(--shadow)}
+.ynb b{font-size:26px;font-weight:900;letter-spacing:-.02em}
+.ynb small{font-size:14px;color:var(--mute);font-weight:600;line-height:1.35}
+.yni{width:60px;height:60px;border-radius:50%;display:grid;place-items:center;background:var(--navy-bg);color:var(--navy);margin-bottom:4px}
+.yni .ico{width:28px;height:28px;stroke-width:2.4}
+.ynb[aria-pressed="true"]{border-color:var(--navy);background:var(--navy-bg);box-shadow:0 0 0 1px var(--navy) inset}
+.ynb[aria-pressed="true"] .yni{background:var(--navy);color:#fff}
+.searchw{position:relative}
+.searchw .ico{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--soft);width:20px;height:20px}
+.searchw .search{padding-left:44px}
+
+/* email capture */
+.gate3{max-width:940px;margin:0 auto;padding-bottom:40px}
+.gt{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);background:#fff;border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow-lg);overflow:hidden}
+.gt-form{display:flex;flex-direction:column;gap:14px;padding:36px 34px}
+.gt-k{align-self:flex-start;display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#13633d;background:var(--green-bg);border-radius:999px;padding:6px 11px}
+.gt-k i{width:7px;height:7px;border-radius:50%;background:var(--green)}
+.gt-form h2{font-size:34px;line-height:1.08;font-weight:900}
+.gt-sub{color:var(--mute);font-size:16px;line-height:1.5;margin-bottom:4px}
+.gt-btn{height:58px;font-size:18px;margin-top:4px}
+.gt-fine{display:flex;gap:8px;align-items:flex-start;font-size:13px;color:var(--mute);line-height:1.45}
+.gt-fine .ico{width:18px;height:18px;color:var(--green);margin-top:1px}
+.gt-side{background:linear-gradient(165deg,#141c33 0%,#0b1430 100%);color:#fff;padding:30px 28px;display:flex;flex-direction:column;gap:20px}
+.gt-brand{display:flex;align-items:center;gap:12px}
+.gt-brand img{width:40px;height:40px;border-radius:10px}
+.gt-brand b{display:block;font-size:16px;font-weight:900}
+.gt-brand span{display:block;font-size:13px;color:#9aa3bd}
+.gt-list{list-style:none;margin:0;padding:0;display:grid;gap:2px}
+.gt-list li{display:grid;grid-template-columns:36px 1fr auto;gap:12px;align-items:center;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.08)}
+.gt-list li:last-child{border-bottom:0}
+.gt-list .gi{width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,.08);display:grid;place-items:center;color:#fff}
+.gt-list .gi .ico{width:19px;height:19px}
+.gt-list b{display:block;font-size:15px;font-weight:800}
+.gt-list div span{display:block;font-size:13px;color:#9aa3bd}
+.gt-list .gl{color:#6f7a98}.gt-list .gl .ico{width:17px;height:17px}
+.gt-boon{display:flex;gap:10px;align-items:center;font-size:13px;color:#9aa3bd;margin-top:auto;padding-top:6px}
+.gt-boon img{width:40px;height:40px;border-radius:50%;object-fit:cover;border:2px solid rgba(255,255,255,.25)}
+.gt-boon b{color:#fff}
+.gt-back{padding-top:14px}
+@media (max-width:760px){
+  .gt{grid-template-columns:1fr;border-radius:20px}
+  .gt-form{padding:24px 20px;gap:12px}
+  .gt-form h2{font-size:28px}
+  .gt-sub{font-size:15px}
+  .gt-side{padding:22px 20px;gap:14px}
+  .gt-list li{padding:8px 0}
+}
+
+/* running your audit: the logo in the spinner */
+.calc-logo{position:relative;width:104px;height:104px;display:grid;place-items:center}
+.calc-logo .spin{position:absolute;inset:0;width:auto;height:auto;border:4px solid var(--line);border-top-color:var(--navy);border-right-color:var(--red)}
+.calc-logo img{width:68px;height:68px;border-radius:16px;box-shadow:0 10px 24px rgba(20,28,51,.25)}
+.calc-brand{font-size:13px;font-weight:900;letter-spacing:.16em;color:var(--ink);margin-top:-6px}
+.calc-brand b{color:var(--red)}
+.calc li i{color:#fff}
+.calc li i .ico{width:14px;height:14px;stroke-width:3;opacity:0}
+.calc li.on i .ico{opacity:1}
+.calc li.on i::after{content:none}
+
+/* results */
+.rh-areas{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:26px}
+.rha{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:14px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.10);color:#fff;text-decoration:none;min-width:0;transition:background .15s}
+.rha:hover{background:rgba(255,255,255,.12)}
+.rha-i{flex:none;width:32px;height:32px;border-radius:9px;background:rgba(255,255,255,.08);display:grid;place-items:center}
+.rha-i .ico{width:18px;height:18px}
+.rha-t{font-size:13.5px;font-weight:700;color:#c7cde0;flex:1;min-width:0;overflow-wrap:anywhere;line-height:1.25}
+.rha b{font-size:20px;font-weight:900}
+.rha .t-low{color:#ff9a8f}.rha .t-mid{color:#ffd27a}.rha .t-high{color:#8af0bd}
+.rh-copy p{font-size:16px;line-height:1.55}
+.pot-k{font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#c7cde0}
+.rbody .prio{border-top:4px solid var(--navy)}
+.prio-ico{background:var(--navy);color:#fff}
+.prio-ico .ico{width:24px;height:24px}
+.prio .eyebrow{color:var(--navy)}
+.ans{background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);padding:22px 20px;display:flex;flex-direction:column;gap:16px}
+.ans-h{display:flex;justify-content:space-between;align-items:flex-end;gap:14px;flex-wrap:wrap}
+.ans-h .eyebrow{color:var(--navy)}
+.ans-h h2{font-size:24px;font-weight:900;margin-top:4px}
+.ans-key{display:flex;gap:12px;font-size:12px;font-weight:800;color:var(--mute)}
+.ans-key span::before{content:"";display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;vertical-align:0}
+.k-good::before{background:var(--green)}.k-fix::before{background:#e0a21b}.k-leak::before{background:var(--red)}
+.ans-list{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ans-list li{display:grid;grid-template-columns:38px 1fr auto;gap:12px;align-items:start;padding:14px;border:1px solid var(--line);border-radius:16px;background:#fff;border-left:4px solid var(--line2)}
+.ans-list li.st-good{border-left-color:var(--green)}
+.ans-list li.st-fix{border-left-color:#e0a21b}
+.ans-list li.st-leak{border-left-color:var(--red)}
+.ans-list .ai{width:38px;height:38px;border-radius:11px;background:var(--navy-bg);color:var(--navy);display:grid;place-items:center}
+.ans-list .ai .ico{width:19px;height:19px}
+.at{display:flex;flex-direction:column;gap:2px;min-width:0}
+.aq{font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--soft)}
+.at b{font-size:16px;font-weight:800;line-height:1.3}
+.an{font-size:14px;color:var(--mute);line-height:1.45}
+.as{font-size:11.5px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;padding:4px 8px;border-radius:6px;white-space:nowrap}
+.st-good .as{background:var(--green-bg);color:#13633d}
+.st-fix .as{background:var(--amber-bg);color:#7a5408}
+.st-leak .as{background:var(--red);color:#fff}
+.area-h{justify-content:flex-start;gap:14px}
+.area-h .tring{width:52px;height:52px}
+.area-h .tring b{font-size:16px}
+.area-h .eyebrow{color:var(--soft);display:flex;align-items:center;gap:6px}
+.area-h h3{margin-top:3px}
+.working{display:flex;gap:10px;align-items:flex-start}
+.working .ico{width:18px;height:18px;color:#13633d;margin-top:2px;stroke-width:2.4}
+.tw-k{font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--soft)}
+.tweaks li::before{background:var(--navy)}
+.tg{align-self:start;font-size:13px;font-weight:900;color:#13633d;background:var(--green-bg);border-radius:8px;padding:4px 8px;white-space:nowrap}
+.aa-list li>span{color:#fff}
+.aa-list li>span .ico{width:20px;height:20px}
+.stack-mini .ico{color:var(--mute)}
+@media (max-width:900px){
+  .rh-areas{margin-top:20px}
+  .ans-list{grid-template-columns:1fr}
+}
+@media (max-width:560px){
+  .rh-areas{gap:6px}
+  .rha{flex-direction:column;gap:4px;padding:10px 6px;text-align:center}
+  .rha-t{font-size:12px}
+  .ans{padding:18px 14px}
+  .ans-h h2{font-size:21px}
+  .ans-list li{grid-template-columns:34px 1fr auto;gap:10px;padding:12px}
+  .as{font-size:10.5px;padding:3px 6px}
+  .ans-list .ai{width:34px;height:34px}
+  .qico{width:42px;height:42px;border-radius:12px}
+  .ynb{padding:20px 10px 18px}
+  .yni{width:52px;height:52px}
+  .ynb b{font-size:22px}
+}
 </style>
 <script defer src="/_vercel/insights/script.js"></script>
 </head>
@@ -670,29 +843,68 @@ const KIND = {worth:"Worth it",situational:"Depends",skip:"Skip it",risk:"Risky"
 
 /* ---------- the 4 steps ---------- */
 const GOALS = [
-  {v:"fat",    t:"Lose a lot of fat",          s:"20+ lbs to lose"},
-  {v:"cut",    t:"Lose the last of my belly fat", s:"Close, I want my abs to show"},
-  {v:"muscle", t:"Build muscle",               s:"Get bigger and stronger"},
-  {v:"recomp", t:"Build muscle and lose fat",  s:"Both at the same time"}
+  {v:"fat",    t:"Lose a lot of fat",                  s:"20+ lbs to lose",           i:"scale"},
+  {v:"cut",    t:"Lose the last 10 lbs to show my abs", s:"Close, I want my abs to show", i:"abs"},
+  {v:"muscle", t:"Build muscle",                       s:"Get bigger and stronger",   i:"dumbbell"},
+  {v:"recomp", t:"Build muscle and lose fat",          s:"Both at the same time",     i:"recomp"}
 ];
-const GOAL_TEXT = {fat:"lose the fat", cut:"lose the last of your belly fat", muscle:"build muscle", recomp:"build muscle and lose fat"};
+const GOAL_TEXT = {fat:"lose a lot of fat", cut:"lose the last 10 lbs and show your abs", muscle:"build muscle", recomp:"build muscle and lose fat"};
+const SPLITS = [
+  {v:"full",  t:"Full body",       s:"Every muscle, every session"},
+  {v:"ul",    t:"Upper / lower",   s:"Upper one day, legs the next"},
+  {v:"ppl",   t:"Push / pull / legs", s:"Three rotating days"},
+  {v:"bro",   t:"Bro split",       s:"One muscle a day"},
+  {v:"none",  t:"No set split",    s:"I do what I feel like"}
+];
+const SPLIT_NAME = Object.fromEntries(SPLITS.map(s=>[s.v,s.t]));
+/* 5 questions. Sub-questions each get their own small icon. */
 const STEPS = [
-  {id:"goal", label:"Your goal", q:"What's your goal?"},
-  {id:"lift", label:"How you lift", q:"How do you train right now?", subs:[
-    {id:"days",  q:"Days a week you train", opts:["0–1","2–3","4+"]},
-    {id:"style", q:"What does a workout look like?", opts:["Weights, a set plan","Weights, I wing it","Mostly cardio or classes","I don't train yet"]},
-    {id:"prog",  q:"Do your weights go up over time?", opts:["Yes, I track it","Sometimes","Not really"]}
+  {id:"goal", label:"Your goal", q:"What's your goal?", i:"target"},
+  {id:"lift", label:"How you train", q:"How do you train right now?", i:"dumbbell", subs:[
+    {id:"days",  q:"Days a week", i:"calendar", opts:["0–1","2–3","4–6"]},
+    {id:"split", q:"Your split", i:"split", opts:SPLITS.map(s=>s.v), labels:SPLIT_NAME, cards:true}
   ]},
-  {id:"eat", label:"How you eat", q:"How do you eat?", subs:[
-    {id:"protein", q:"Do you hit your protein most days?", opts:["Yes","Sometimes","No","No idea how much I need"]},
-    {id:"cals",    q:"Do you know how many calories you eat?", opts:["Yes, I track","Roughly","No idea"]},
-    {id:"out",     q:"How often do you eat out or order in?", opts:["Rarely","A few times a week","Most meals"]},
-    {id:"weekend", q:"How are your weekends?", opts:["On track","A bit loose","I undo the whole week"]}
+  {id:"prog", label:"Progressive overload", q:"Are you progressively overloading your lifts?", i:"trend", hint:"Lifting a little more weight, or doing a few more reps, over time.",
+    opts:[{v:"yes",t:"Yes, I'm hitting new PRs",s:"My numbers keep going up"},{v:"stuck",t:"No, I'm stuck at the same weight",s:"Same numbers for weeks"},{v:"dk",t:"I don't know",s:"I don't track my lifts"}]},
+  {id:"eat", label:"How you eat", q:"How do you eat?", i:"plate", subs:[
+    {id:"cals",    q:"Do you track or know how many calories you eat?", i:"flame", opts:["Yes, I track","Roughly","No idea"]},
+    {id:"protein", q:"Do you eat 100+ g of protein every day?", i:"egg", opts:["Yes","Some days","No","Not sure"]},
+    {id:"out",     q:"How often do you eat out?", i:"bag", opts:["Rarely","A few times a week","Most meals"]},
+    {id:"weekend", q:"How do you eat on the weekends?", i:"weekend", opts:["Same as weekdays","A bit looser","I undo the whole week"]}
   ]},
-  {id:"supps", label:"What you take", q:"What do you take right now?", hint:"Supplements, gadgets, anything. Type a brand if you don't see it, like AG1, C4 or Hydroxycut."}
+  {id:"supps", label:"Supplements", q:"Are you taking any supplements right now?", i:"pill", hint:"Powders, pills, pre-workout, gummies, anything."}
 ];
+const PICK_HINT = "Tap everything you take. Type a brand if you don't see it, like AG1, C4 or Hydroxycut.";
 
-const state = {step:0, a:{}, picked:new Set(), none:false, other:"", filter:"", showAll:false, name:"", email:"", result:null, sent:false};
+/* ---------- line icons (one per question) ---------- */
+const ICONS = {
+  target:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/>',
+  dumbbell:'<path d="M6.5 6.5v11M17.5 6.5v11M3.5 9v6M20.5 9v6M6.5 12h11"/>',
+  calendar:'<rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/>',
+  split:'<rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"/>',
+  trend:'<path d="M3.5 17l6-6 4 4 7-7.5"/><path d="M15 7.5h5.5V13"/>',
+  plate:'<path d="M7 3v8M4.5 3v5a2.5 2.5 0 0 0 5 0V3M7 11v10"/><path d="M17.5 21V3c-2.2 1.4-3.5 4-3.5 7.5 0 2.3 1.2 3.5 3.5 3.5"/>',
+  flame:'<path d="M12 21c-3.9 0-6.5-2.6-6.5-6.1 0-3.4 2.6-5.4 3.6-8.4.4 1.8 1.4 2.9 2.4 3.6.3-2.6 1.6-4.7 3.4-6.1-.1 2.6 3.6 5 3.6 10.1 0 3.6-2.6 6.9-6.5 6.9z"/>',
+  egg:'<path d="M12 3c3.6 0 6.5 5.7 6.5 10.2A6.5 6.5 0 0 1 12 20a6.5 6.5 0 0 1-6.5-6.8C5.5 8.7 8.4 3 12 3z"/>',
+  bag:'<path d="M5 8h14l-1.2 12H6.2z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/>',
+  weekend:'<rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/><path d="M14.5 13.5h3v3h-3z" fill="currentColor" stroke="none"/>',
+  pill:'<path d="M10.6 20.1a5 5 0 0 1-7.1-7.1l9.5-9.5a5 5 0 0 1 7.1 7.1z"/><path d="M8.3 8.3l7.4 7.4"/>',
+  scale:'<rect x="4" y="4" width="16" height="16" rx="3.5"/><path d="M8.5 9.5a4 4 0 0 1 7 0"/><path d="M12 9.5l1.4-1.8"/>',
+  abs:'<rect x="6" y="3.5" width="5" height="4.5" rx="1.4"/><rect x="13" y="3.5" width="5" height="4.5" rx="1.4"/><rect x="6" y="9.75" width="5" height="4.5" rx="1.4"/><rect x="13" y="9.75" width="5" height="4.5" rx="1.4"/><rect x="6" y="16" width="5" height="4.5" rx="1.4"/><rect x="13" y="16" width="5" height="4.5" rx="1.4"/>',
+  recomp:'<path d="M7 17V7M4 10l3-3 3 3"/><path d="M17 7v10M14 14l3 3 3-3"/>',
+  check:'<path d="M5 12.5l4.5 4.5L19 7.5"/>',
+  x:'<path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/>',
+  lock:'<rect x="5" y="10.5" width="14" height="10" rx="2.5"/><path d="M8.5 10.5V7.5a3.5 3.5 0 0 1 7 0v3"/>',
+  mail:'<rect x="3.5" y="5.5" width="17" height="13" rx="2.5"/><path d="M4 7l8 6 8-6"/>',
+  scan:'<path d="M4 8V5.5A1.5 1.5 0 0 1 5.5 4H8M16 4h2.5A1.5 1.5 0 0 1 20 5.5V8M20 16v2.5a1.5 1.5 0 0 1-1.5 1.5H16M8 20H5.5A1.5 1.5 0 0 1 4 18.5V16M7 12h10"/>',
+  chart:'<path d="M4 20h16"/><path d="M7 16v-4M12 16V8M17 16v-6"/>',
+  bolt:'<path d="M13 3L5 13.5h6L10 21l8-10.5h-6z"/>',
+  shield:'<path d="M12 3l7.5 3v5.5c0 4.6-3.2 8.2-7.5 9.5-4.3-1.3-7.5-4.9-7.5-9.5V6z"/><path d="M8.8 12l2.3 2.3 4.2-4.6"/>',
+  arrow:'<path d="M5 12h14M13 6l6 6-6 6"/>'
+};
+const ico = (k,cls="") => `<svg class="ico ${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[k]||""}</svg>`;
+
+const state = {step:0, a:{}, picked:new Set(), none:false, takes:null, other:"", filter:"", showAll:false, name:"", email:"", result:null, sent:false};
 const app = document.getElementById("app");
 const esc = s => String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const money = n => "$"+Math.round(n).toLocaleString("en-US");
@@ -719,15 +931,16 @@ function liftArea(a,g){
   else if(a.days==="2–3"){
     if(muscle){ s-=25; T.push({p:25,t:"Add a 4th day",b:"Switch to an upper/lower split, 4 days a week. More quality sets per muscle each week is the biggest lever for growth once you're showing up.",w:"Each muscle gets trained twice a week instead of once."}); }
     else { s-=10; T.push({p:10,t:"Make every session full body",b:"With 2–3 days, hit every major muscle each session: a squat or leg press, a hinge, a push and a pull.",w:"That's how you keep your muscle while you diet, so you look lean, not just smaller."}); }
-  } else good.push("You train 4+ days a week. That's the hardest part, done.");
+  } else good.push("You train 4–6 days a week. That's the hardest part, done.");
 
-  if(a.style==="Mostly cardio or classes"){ s-=30; T.push({p:30,t:"Swap 2 cardio sessions for weights",b:"Cardio burns calories, but lifting decides what you look like when the fat is gone. Keep the walks, trade the classes.",w:lean?"Without lifting, a big chunk of the weight you lose can be muscle.":"You can't build muscle without a reason to: heavy-ish weights."}); }
-  else if(a.style==="Weights, I wing it"){ s-=15; T.push({p:15,t:"Run one plan for 8 weeks",b:"Same exercises in the same order every week. Change the weight and reps, not the workout.",w:"You can't beat last week's numbers if last week was a different workout."}); }
-  else if(a.style==="I don't train yet"){ s-=35; T.push({p:35,t:"Start with 6 basic moves",b:"A squat, a hinge, a push, a pull, a lunge and a carry. Learn them light with clean form, then add weight every week.",w:"Beginners grow fastest. Your first 6 months are the best gains you'll ever get."}); }
-  else good.push("You follow a set plan.");
+  const sp=a.split, few=a.days!=="4–6";
+  if(sp==="none"){ s-=15; T.push({p:15,t:"Run one plan for 8 weeks",b:a.days==="4–6"?"With 4–6 days, an upper/lower or push/pull/legs split is the easiest to stick to. Same exercises every week. Change the weight and reps, not the workout.":"With "+a.days+" days, run full body every session. Same exercises every week. Change the weight and reps, not the workout.",w:"You can't beat last week's numbers if last week was a different workout."}); }
+  else if(sp==="bro"){ const d=few?20:10; s-=d; T.push({p:d,t:few?"Switch to full body":"Hit every muscle twice a week",b:few?"A bro split on "+a.days+" days means some muscles only get trained every 10+ days. Full body, "+a.days+" times a week, trains everything at least twice.":"Turn your bro split into upper/lower or push/pull/legs. Same days in the gym, but every muscle gets hit twice a week instead of once.",w:"Twice a week per muscle beats once a week for growth, with the same total work."}); }
+  else if(sp==="ppl" && few){ s-=10; T.push({p:10,t:"Switch to full body or upper/lower",b:"Push/pull/legs works best on 6 days. On "+a.days+" days each muscle only gets trained about once a week.",w:"Hitting each muscle twice a week is the easy win when you can't train more often."}); }
+  else if(sp) good.push(`Your ${SPLIT_NAME[sp].toLowerCase()} split fits ${a.days} days a week.`);
 
-  if(a.prog==="Not really"||a.prog==="Sometimes"){ const d=a.prog==="Not really"?20:10; s-=d; T.push({p:d,t:"Beat last week by one rep",b:"Log every set. When you hit the top of your rep range on every set, add 5 lbs next time.",w:"That's progressive overload. If the weights don't go up, your muscles have no reason to change."}); }
-  else if(a.prog) good.push("Your lifts go up because you track them.");
+  if(a.prog==="stuck"||a.prog==="dk"){ const d=a.prog==="stuck"?20:15; s-=d; T.push({p:d,t:a.prog==="stuck"?"Break the plateau: beat last week by one rep":"Log every set, then beat it",b:a.prog==="stuck"?"Pick a rep range (like 8–12). When you hit the top on every set, add 5 lbs. Can't add reps for 3 weeks? Drop the weight 10% and build back up.":"Write down the weight and reps of every set. Next session, beat one number: one more rep or 5 more lbs.",w:a.prog==="stuck"?"Same weight for weeks means your muscles have no reason to change. That's usually why the mirror doesn't either.":"If you don't know whether your weights go up, they probably aren't. Progressive overload is what makes muscle grow."}); }
+  else if(a.prog==="yes") good.push("You're hitting new PRs. That's progressive overload, and it's working.");
 
   if(lean) T.push({t:"Walk 8,000–10,000 steps a day",b:"Get them in short walks: after meals, on calls, parking further away.",w:"Over a week, steps burn more than most cardio sessions, without making you hungrier or hurting your recovery."});
   if(muscle && T.length<2) T.push({t:"Push most sets close to failure",b:"Finish most sets with 1–2 good reps left in the tank. If you could've done 5 more, the set didn't count for much.",w:"Effort per set matters more than the number of exercises."});
@@ -737,9 +950,9 @@ function liftArea(a,g){
 function eatArea(a,g){
   let s=100; const T=[], good=[], lean=g==="fat"||g==="cut";
   if(a.protein!=="Yes"){
-    const d={"Sometimes":15,"No":30,"No idea how much I need":25}[a.protein]||0; s-=d;
-    T.push({p:d,t:"Hit your protein every day",b:"Aim for about 0.7–1g per pound of your goal body weight. For most guys that's 140–180g. Build every meal around a protein first.",w:lean?"It protects your muscle while you diet and keeps you full, so the deficit is easier.":"It's the raw material for new muscle. Train hard without it and you're leaving gains on the table."});
-  } else good.push("You hit your protein. That's the habit most guys miss.");
+    const d={"Some days":15,"No":30,"Not sure":25}[a.protein]||0; s-=d;
+    T.push({p:d,t:"Hit your protein every day",b:(a.protein==="Not sure"?"If you're not sure, you're probably under. ":"")+"Aim for about 0.7–1g per pound of your goal body weight. For most guys that's 140–180g, so 100g is the floor. Build every meal around a protein first.",w:lean?"It protects your muscle while you diet and keeps you full, so the deficit is easier.":"It's the raw material for new muscle. Train hard without it and you're leaving gains on the table."});
+  } else good.push("You eat 100+ g of protein every day. That's the habit most guys miss.");
   if(a.cals!=="Yes, I track"){
     const dc=a.cals==="No idea"?25:10; s-=dc;
     const c={fat:{t:"Eat 400–500 calories under maintenance",b:"That's about 1 lb a week. Track for just 2 weeks to learn what your portions really are. You don't have to do it forever."},
@@ -748,10 +961,10 @@ function eatArea(a,g){
              recomp:{t:"Eat about 200 calories under maintenance",b:"A small deficit plus high protein and heavy lifting lets you lose fat and build muscle at the same time."}}[g];
     T.push({...c,p:dc,w:a.cals==="Roughly"?"Roughly is close, but small misses add up over weeks. Know the number and the results get predictable.":"If you don't know your number, you're guessing. Most guys underestimate what they eat by a lot."});
   } else good.push("You know your calories.");
-  if(a.weekend!=="On track"){
+  if(a.weekend!=="Same as weekdays"){
     const dw=a.weekend==="I undo the whole week"?25:10; s-=dw;
     T.push({p:dw,t:"Plan 2 meals out on the weekend",b:"Pick them ahead of time and keep the rest of the weekend like a weekday.",w:"Two loose days can wipe out five good ones. That's usually why the scale doesn't move."});
-  } else good.push("Your weekends are on track.");
+  } else good.push("Your weekends look like your weekdays.");
   if(a.out!=="Rarely"){
     const dout=a.out==="Most meals"?15:5; s-=dout;
     T.push({p:dout,t:"Pick 3 go-to orders",b:"One for each place you go most. Think a burrito bowl with double chicken, or grilled nuggets with a side salad. Decide before you walk in.",w:"When you've already decided, the menu doesn't decide for you."});
@@ -858,7 +1071,7 @@ function progress(i){
   const pct=Math.round(((i+1)/STEPS.length)*100);
   const prev=Math.round((i/STEPS.length)*100);
   setTimeout(()=>{const el=document.getElementById("pbar"); if(el) el.style.width=pct+"%";},30);
-  return `<div class="progress"><div class="qmeta"><span><b>Step ${i+1} of ${STEPS.length}</b> · ${esc(STEPS[i].label)}</span><span>${pct}%</span></div><div class="bar"><i id="pbar" style="width:${prev}%"></i></div></div>`;
+  return `<div class="progress"><div class="qmeta"><span><b>Question ${i+1} of ${STEPS.length}</b> · ${esc(STEPS[i].label)}</span><span>${pct}%</span></div><div class="bar"><i id="pbar" style="width:${prev}%"></i></div></div>`;
 }
 
 /* ---------- start ---------- */
@@ -891,8 +1104,8 @@ const BLOCKS=[
   {k:"stack",t:"Clean stack",s:"no junk",i:"💊"}
 ];
 const COL2={low:"#ff4d4d",mid:"#ffb020",high:"#2fd17f"};
-function pvAnswersFor(on){ return {goal:pv.goal,days:on.has("days")?"4+":"2–3",style:on.has("prog")?"Weights, a set plan":"Weights, I wing it",prog:on.has("prog")?"Yes, I track it":"Not really",
-  protein:on.has("protein")?"Yes":"No",cals:on.has("cals")?"Yes, I track":"No idea",out:"A few times a week",weekend:on.has("weekend")?"On track":"I undo the whole week"}; }
+function pvAnswersFor(on){ return {goal:pv.goal,days:on.has("days")?"4–6":"2–3",split:on.has("prog")?"ul":"none",prog:on.has("prog")?"yes":"stuck",
+  protein:on.has("protein")?"Yes":"No",cals:on.has("cals")?"Yes, I track":"No idea",out:"A few times a week",weekend:on.has("weekend")?"Same as weekdays":"I undo the whole week"}; }
 function pvComputeFor(on){
   const a=pvAnswersFor(on), g=a.goal, pk=new Set(on.has("stack")?["creatine","whey_protein"]:["fat_burners","greens_powders"]);
   const L=liftArea(a,g), E=eatArea(a,g), S=suppArea(a,g,pk);
@@ -1018,7 +1231,7 @@ function wireLive(){
   el.querySelectorAll(".hb").forEach(b=>b.onclick=()=>{touch();const k=b.dataset.b;pv.on.has(k)?pv.on.delete(k):pv.on.add(k);b.classList.remove("pop2");void b.offsetWidth;b.classList.add("pop2");pvRender();});
   document.getElementById("lGo").onclick=()=>{
     // carry the preview into the real quiz so their taps aren't wasted
-    if(pv.touched){ const a=pvAnswersFor(pv.on); Object.assign(state.a,{goal:pv.goal,days:a.days,style:a.style,prog:a.prog,protein:a.protein,cals:a.cals,weekend:a.weekend}); if(pv.on.has("stack")) state.picked=new Set(["creatine","whey_protein"]); }
+    if(pv.touched){ const a=pvAnswersFor(pv.on); Object.assign(state.a,{goal:pv.goal,days:a.days,split:a.split,prog:a.prog,protein:a.protein,cals:a.cals,weekend:a.weekend}); if(pv.on.has("stack")){ state.picked=new Set(["creatine","whey_protein"]); state.takes=true; } }
     window.spsTrack&&spsTrack("ss_start",{from:"preview",touched:pv.touched});
     go(1);
   };
@@ -1035,7 +1248,7 @@ function wireLive(){
     if(k<order.length){ pv.on.add(order[k]); } else if(k===order.length+1){ pv.on=new Set(["protein"]); k=-1; }
     k++; pvRender(); },1500);
 }
-function cta(label){ return `<div style="display:flex;flex-direction:column;gap:14px"><button class="btn" data-start>${label}</button><div class="micro"><span>Free</span><span>4 quick steps</span><span>Instant results</span></div></div>`; }
+function cta(label){ return `<div style="display:flex;flex-direction:column;gap:14px"><button class="btn" data-start>${label}</button><div class="micro"><span>Free</span><span>5 quick questions</span><span>Instant results</span></div></div>`; }
 function renderStart(){
   const imgs=PAIRS.flatMap(([k,n])=>[`<img src="/img/lp/${k}-b.jpg" alt="" loading="lazy">`,`<img src="/img/lp/${k}-a.jpg" alt="" loading="lazy">`]).join("");
   let back=null; try{ const h=JSON.parse(localStorage.getItem("sps_stackscore")||"null"); if(h&&h.at&&Date.now()-h.at<30*864e5&&h.name&&h.score!=null) back=h; }catch(x){}
@@ -1078,10 +1291,10 @@ function renderStart(){
 
   <section class="sec alt">
     <div class="in gut">
-      <div class="center reveal"><span class="eyebrow">How it works</span><h2>4 steps. 60 seconds.</h2><p class="lead">No typing, no weighing anything. Just taps.</p></div>
+      <div class="center reveal"><span class="eyebrow">How it works</span><h2>5 questions. 60 seconds.</h2><p class="lead">No typing, no weighing anything. Just taps.</p></div>
       <div class="cards3">
-        <div class="card reveal"><span class="n">1</span><b>Pick your goal</b><p>Lose the fat, see your abs, build muscle, or both.</p></div>
-        <div class="card reveal"><span class="n">2</span><b>How you lift, eat and what you take</b><p>A few taps each. Search any supplement by brand.</p></div>
+        <div class="card reveal"><span class="n">1</span><b>Pick your goal</b><p>Lose the fat, show your abs, build muscle, or both.</p></div>
+        <div class="card reveal"><span class="n">2</span><b>How you train, eat and what you take</b><p>A few taps each. Search any supplement by brand.</p></div>
         <div class="card reveal"><span class="n">3</span><b>Get your breakdown</b><p>On screen right away, with a copy in your inbox.</p></div>
       </div>
     </div>
@@ -1115,7 +1328,7 @@ function renderStart(){
   <section class="final gut">
     <div class="in center reveal" style="gap:18px">
       <h2>Find out what's holding you back.</h2>
-      <p>4 steps. 60 seconds. Free.</p>
+      <p>5 questions. 60 seconds. Free.</p>
       <div style="width:100%;max-width:380px">${cta("Get my Stack Score →")}</div>
     </div>
   </section>`;
@@ -1130,45 +1343,78 @@ function renderStart(){
 }
 
 /* ---------- steps ---------- */
+const qhead = (S, q, hint) => `<div class="qhead"><span class="qico">${ico(S.i)}</span><div class="qht"><h2>${esc(q||S.q)}</h2>${(hint||S.hint)?`<p class="hint">${esc(hint||S.hint)}</p>`:""}</div></div>`;
+const optBtn = (v,t,s,icon,pressed,attr="") => `<button type="button" class="opt" data-v="${esc(v)}" ${attr} aria-pressed="${pressed}">${icon?`<span class="oico">${ico(icon)}</span>`:""}<span class="otx">${esc(t)}${s?`<small>${esc(s)}</small>`:""}</span><span class="arrow">${ico("check")}</span></button>`;
+
 function renderStep(i){
   const S=STEPS[i];
   window.spsTrack&&spsTrack("ss_step",{n:i+1},true);
-  if(S.id==="goal") return renderGoal(i);
-  if(S.id==="supps") return renderPick(i);
+  if(S.id==="goal") return renderChoice(i, GOALS.map(g=>({v:g.v,t:g.t,s:g.s,i:g.i})), "goal");
+  if(S.id==="prog") return renderChoice(i, S.opts, "prog");
+  if(S.id==="supps") return state.pickOpen ? renderPick(i) : renderYN(i);
   const done = () => S.subs.every(q=>state.a[q.id]);
   app.innerHTML = `<div class="quiz gut"><div class="qwrap">${progress(i)}
   <section class="qcard fade">
-    <h2>${esc(S.q)}</h2>
-    ${S.subs.map(q=>`<div class="qblock" role="group" aria-label="${esc(q.q)}"><b>${esc(q.q)}</b><div class="seg">${q.opts.map(o=>`<button type="button" data-q="${q.id}" data-v="${esc(o)}" aria-pressed="${state.a[q.id]===o}">${esc(o)}</button>`).join("")}</div></div>`).join("")}
+    ${qhead(S)}
+    ${S.subs.map(q=>`<div class="qblock" role="group" aria-label="${esc(q.q)}">
+      <div class="qsub"><span class="qsico">${ico(q.i)}</span><b>${esc(q.q)}</b></div>
+      ${q.cards
+        ? `<div class="opts two">${SPLITS.map(o=>optBtn(o.v,o.t,o.s,"",state.a[q.id]===o.v,`data-q="${q.id}"`)).join("")}</div>`
+        : `<div class="seg">${q.opts.map(o=>`<button type="button" data-q="${q.id}" data-v="${esc(o)}" aria-pressed="${state.a[q.id]===o}">${esc(o)}</button>`).join("")}</div>`}
+    </div>`).join("")}
   </section>
   <div class="sticky-next">
     <button class="btn ghost" id="back" aria-label="Back">←</button>
     <button class="btn" id="next" ${done()?"":"disabled"}>Next →</button>
   </div></div></div>`;
-  app.querySelectorAll(".seg button").forEach(b=>b.onclick=()=>{
+  app.querySelectorAll("[data-q]").forEach(b=>b.onclick=()=>{
     state.a[b.dataset.q]=b.dataset.v;
-    b.parentElement.querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));
-    if(b.dataset.q==="style" && b.dataset.v==="I don't train yet"){ // nothing to progress yet
-      state.a.prog = state.a.prog || "Not really";
-      app.querySelectorAll('[data-q="prog"]').forEach(x=>x.setAttribute("aria-pressed",String(x.dataset.v===state.a.prog)));
-    }
+    app.querySelectorAll(`[data-q="${b.dataset.q}"]`).forEach(x=>x.setAttribute("aria-pressed",String(x===b)));
     document.getElementById("next").disabled=!done();
   });
   document.getElementById("back").onclick=()=>go(state.step-1);
   document.getElementById("next").onclick=()=>{ if(done()) go(state.step+1); };
 }
-function renderGoal(i){
-  const cur=state.a.goal;
+
+/* one tap and it moves on (goal, progressive overload) */
+function renderChoice(i, opts, key){
+  const S=STEPS[i], cur=state.a[key];
   app.innerHTML = `<div class="quiz gut"><div class="qwrap">${progress(i)}
   <section class="qcard fade">
-    <h2>What's your goal?</h2>
-    <div class="opts">${GOALS.map(g=>`<button class="opt" data-v="${g.v}" aria-pressed="${cur===g.v}"><span>${esc(g.t)}<small>${esc(g.s)}</small></span><span class="arrow">✓</span></button>`).join("")}</div>
+    ${qhead(S)}
+    <div class="opts">${opts.map(o=>optBtn(o.v,o.t,o.s,o.i,cur===o.v)).join("")}</div>
     <div><button class="link" id="back">← Back</button></div>
   </section></div></div>`;
   app.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{
-    state.a.goal=b.dataset.v;
+    state.a[key]=b.dataset.v;
     app.querySelectorAll(".opt").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));
-    setTimeout(()=>go(state.step+1),160);
+    setTimeout(()=>go(state.step+1),180);
+  });
+  document.getElementById("back").onclick=()=>go(state.step-1);
+}
+
+/* question 5, part 1: a big yes / no */
+function renderYN(i){
+  const S=STEPS[i];
+  app.innerHTML = `<div class="quiz gut"><div class="qwrap">${progress(i)}
+  <section class="qcard fade">
+    ${qhead(S)}
+    <div class="yn">
+      <button type="button" class="ynb" data-yn="yes" aria-pressed="${state.takes===true}">
+        <span class="yni">${ico("check")}</span><b>Yes</b><small>I'll check each one against my verdicts</small>
+      </button>
+      <button type="button" class="ynb" data-yn="no" aria-pressed="${state.takes===false}">
+        <span class="yni">${ico("x")}</span><b>No</b><small>Nothing right now</small>
+      </button>
+    </div>
+    <div><button class="link" id="back">← Back</button></div>
+  </section></div></div>`;
+  app.querySelectorAll(".ynb").forEach(b=>b.onclick=()=>{
+    const yes=b.dataset.yn==="yes";
+    app.querySelectorAll(".ynb").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));
+    state.takes=yes;
+    if(yes){ state.none=false; setTimeout(()=>{ state.pickOpen=true; renderStep(i); window.scrollTo({top:0,behavior:reduce?"auto":"smooth"}); },180); }
+    else { state.none=true; state.picked.clear(); state.other=""; setTimeout(()=>go(GATE),180); }
   });
   document.getElementById("back").onclick=()=>go(state.step-1);
 }
@@ -1176,6 +1422,7 @@ function renderGoal(i){
 function chip(p,via){
   return `<label class="chk"><input type="checkbox" value="${p.id}" ${state.picked.has(p.id)?"checked":""}><span class="box"></span><span>${esc(p.n)}${via?` <span class="via">(${esc(via)})</span>`:""}</span></label>`;
 }
+/* question 5, part 2: what do you take? */
 function renderPick(i){
   const S=STEPS[i], f=norm(state.filter);
   let body="";
@@ -1193,88 +1440,86 @@ function renderPick(i){
     const cats=[...new Set(PRODUCTS.map(p=>p.c))];
     body = cats.map(c=>`<div class="cat"><h3>${esc(c)}</h3><div class="chips">${PRODUCTS.filter(p=>p.c===c).map(p=>chip(p)).join("")}</div></div>`).join("");
   }
-  const n=state.picked.size;
+  const lbl=n=>n?`See my score (${n}) →`:"See my score →";
   app.innerHTML = `<div class="quiz gut"><div class="qwrap">${progress(i)}
   <section class="qcard fade" style="gap:16px">
-    <h2>${esc(S.q)}</h2>
-    <p class="hint">${esc(S.hint)}</p>
-    <label class="chk" style="align-self:flex-start"><input type="checkbox" id="none" ${state.none?"checked":""}><span class="box"></span><span>Nothing right now</span></label>
-    <input class="search" id="filter" type="search" placeholder="Search a product or brand…" value="${esc(state.filter)}" aria-label="Search products" autocomplete="off">
+    ${qhead(S,"What do you take?",PICK_HINT)}
+    <div class="searchw">${ico("scan")}<input class="search" id="filter" type="search" placeholder="Search a product or brand…" value="${esc(state.filter)}" aria-label="Search products" autocomplete="off"></div>
     ${body}
     <div class="field"><label for="other">Something else? Type it in</label><input type="text" id="other" placeholder="e.g. a specific brand or product" value="${esc(state.other)}"></div>
   </section>
   <div class="sticky-next">
     <button class="btn ghost" id="back" aria-label="Back">←</button>
-    <button class="btn" id="next">${n?`See my breakdown (${n}) →`:"See my breakdown →"}</button>
+    <button class="btn" id="next">${lbl(state.picked.size)}</button>
   </div></div></div>`;
   app.querySelectorAll('.chk input[value]').forEach(cb=>cb.onchange=()=>{
     cb.checked?state.picked.add(cb.value):state.picked.delete(cb.value);
-    if(cb.checked){state.none=false;document.getElementById("none").checked=false;}
-    const c=state.picked.size; document.getElementById("next").textContent=c?`See my breakdown (${c}) →`:"See my breakdown →";
+    document.getElementById("next").textContent=lbl(state.picked.size);
   });
-  document.getElementById("none").onchange=e=>{ state.none=e.target.checked; if(e.target.checked){state.picked.clear();renderPick(i);} };
   const fi=document.getElementById("filter");
   fi.oninput=()=>{state.filter=fi.value;const pos=fi.selectionStart;renderPick(i);const el=document.getElementById("filter");el.focus();el.setSelectionRange(pos,pos);};
   const all=document.getElementById("all"); if(all) all.onclick=()=>{state.showAll=true;renderPick(i);};
   document.getElementById("other").oninput=e=>state.other=e.target.value;
-  document.getElementById("back").onclick=()=>{state.filter="";go(state.step-1);};
-  document.getElementById("next").onclick=()=>{state.filter="";go(state.step+1);};
+  document.getElementById("back").onclick=()=>{state.filter="";state.pickOpen=false;renderStep(i);window.scrollTo({top:0});};
+  document.getElementById("next").onclick=()=>{state.filter="";state.none=!state.picked.size&&!state.other.trim();go(state.step+1);};
 }
 
 /* ---------- email gate ---------- */
 function renderGate(){
   window.spsTrack&&spsTrack("ss_gate",{},true);
-  const pre=computeResult(), S=pre.S;
+  const pre=computeResult(), S=pre.S, a=state.a;
   const nT=[pre.L,pre.E,pre.S].reduce((n,A)=>n+A.tweaks.length,0);
-  const nV=S.verdicts.length, nBad=S.verdicts.filter(v=>v.k==="skip"||v.k==="risk").length;
-  const facts=[
-    `<li><b>${nT}</b><span>tweaks found</span></li>`,
-    nV?`<li><b>${nV}</b><span>product${nV===1?"":"s"} checked${nBad?`, <em>${nBad} flagged</em>`:""}</span></li>`:`<li><b>3</b><span>areas scored</span></li>`,
-    `<li><b>1</b><span>biggest fix</span></li>`
-  ].join("");
-  app.innerHTML = `<div class="quiz gut"><div class="qwrap gate2">
-  <div class="progress"><div class="qmeta"><span><b>Done</b> · Your breakdown is ready</span><span>100%</span></div><div class="bar"><i style="width:100%"></i></div></div>
-  <section class="g2 fade">
-    <div class="g2-top">
-      <span class="g2-k"><i></i>Audit complete</span>
-      <h2>Your Stack Score is ready.</h2>
-      <p class="g2-sub">I scored how you lift, how you eat and what you take against your goal to ${esc(GOAL_TEXT[state.a.goal]||"hit your goal")}.</p>
+  const nV=S.verdicts.length+(state.other.trim()?1:0), nBad=S.verdicts.filter(v=>v.k==="skip"||v.k==="risk").length;
+  const rows=[
+    ["target","Your Stack Score","out of 100"],
+    ["dumbbell","Training",`${a.days} days · ${SPLIT_NAME[a.split]||"your split"}`],
+    ["trend","Progressive overload",{yes:"Hitting PRs",stuck:"Stuck",dk:"Not tracked"}[a.prog]||""],
+    ["plate","Eating","4 habits checked"],
+    ["pill","Supplements",nV?`${nV} checked${nBad?`, ${nBad} flagged`:""}`:"None taken"],
+    ["bolt","Your #1 tweak",`+ ${nT} personal tweaks`]
+  ];
+  app.innerHTML = `<div class="quiz gut"><div class="gate3 fade">
+    <div class="gt">
+      <form id="gate" class="gt-form" novalidate>
+        <span class="gt-k"><i></i>Audit complete</span>
+        <h2>Your Stack Score is ready.</h2>
+        <p class="gt-sub">I scored your training, eating and supplements against your goal to ${esc(GOAL_TEXT[a.goal]||"hit your goal")}. Where should I send your results?</p>
+        <div class="field"><label for="name">First name</label>
+          <input type="text" id="name" autocomplete="given-name" placeholder="Your first name" value="${esc(state.name)}" required></div>
+        <div class="field"><label for="email">Email</label>
+          <input type="email" id="email" autocomplete="email" inputmode="email" placeholder="you@email.com" value="${esc(state.email)}" required>
+          <div class="err" id="err" role="alert"></div></div>
+        <button class="btn full gt-btn" id="show" type="submit">Show my Stack Score <b aria-hidden="true">→</b></button>
+        <p class="gt-fine">${ico("shield")}<span>Results on screen right away, plus a copy in your inbox. No spam, and I never sell your email.</span></p>
+      </form>
+      <aside class="gt-side" aria-label="What's in your report">
+        <div class="gt-brand"><img src="/logo-b.png" alt="" width="34" height="34"><div><b>Stack Score report</b><span>Built for your goal</span></div></div>
+        <ul class="gt-list">${rows.map(([i,t,s])=>`<li><span class="gi">${ico(i)}</span><div><b>${esc(t)}</b><span>${esc(s)}</span></div><span class="gl">${ico("lock")}</span></li>`).join("")}</ul>
+        <div class="gt-boon"><img src="/boon.jpg" alt="" width="40" height="40"><span><b>Built by Boon Fay.</b> 225 → 175 lbs. No sponsors, no affiliate links.</span></div>
+      </aside>
     </div>
-    <div class="g2-preview" aria-hidden="true">
-      <div class="g2-ring"><svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="50" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="10"/><circle cx="60" cy="60" r="50" fill="none" stroke="url(#g2g)" stroke-width="10" stroke-linecap="round" stroke-dasharray="314" stroke-dashoffset="110" transform="rotate(-90 60 60)"/><defs><linearGradient id="g2g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff5a50"/><stop offset="1" stop-color="#ffb020"/></linearGradient></defs></svg><b>??</b><span>out of 100</span></div>
-      <div class="g2-areas">
-        ${["Lifting","Eating","Supplements"].map(n=>`<div class="g2-a"><span>${n}</span><i><u></u></i><b class="blur">00</b></div>`).join("")}
-        <div class="g2-tweak"><span>#1 tweak</span><b class="blur">Hit your protein every day</b></div>
-      </div>
-      <span class="g2-lock">🔒 Unlocks with your email</span>
-    </div>
-    <ul class="g2-facts">${facts}</ul>
-    <form id="gate" class="g2-form" novalidate>
-      <p class="g2-ask">Where should I send your full breakdown?</p>
-      <div class="field"><label for="name">First name</label>
-        <input type="text" id="name" autocomplete="given-name" placeholder="Your first name" value="${esc(state.name)}" required></div>
-      <div class="field"><label for="email">Email</label>
-        <input type="email" id="email" autocomplete="email" inputmode="email" placeholder="you@email.com" value="${esc(state.email)}" required>
-        <div class="err" id="err" role="alert"></div></div>
-      <button class="btn full g2-btn" id="show" type="submit">Show my Stack Score →</button>
-      <p class="g2-fine">On screen right away, plus a copy in your inbox. No spam, unsubscribe anytime.</p>
-    </form>
-    <div class="g2-boon"><img src="/boon.jpg" alt="" width="40" height="40"><span><b>Built by Boon Fay.</b> 225 → 175 lbs. No sponsors, no affiliate links.</span></div>
-    <div><button class="link" id="back">← Back</button></div>
-  </section></div></div>`;
-  document.getElementById("back").onclick=()=>go(state.step-1);
+    <div class="gt-back"><button class="link" id="back">← Back</button></div>
+  </div></div>`;
+  document.getElementById("back").onclick=()=>{ state.pickOpen=!!state.takes; go(STEPS.length); };
   document.getElementById("gate").onsubmit=e=>{
     e.preventDefault();
     const nm=document.getElementById("name").value.trim(), em=document.getElementById("email").value.trim(), err=document.getElementById("err");
     if(nm.length<2){err.textContent="Add your first name so I know who this is for.";return;}
-    if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(em)){err.textContent="Enter a valid email so I can send your breakdown.";return;}
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(em)){err.textContent="Enter a valid email so I can send your results.";return;}
     state.name=nm.charAt(0).toUpperCase()+nm.slice(1); state.email=em;
     state.result=computeResult();
-    // Hand the answers to the app on this same site, so the plan builder starts pre-filled.
-    const appGoal={fat:"Lose fat and see my abs",cut:"Lose fat and see my abs",muscle:"Build muscle",recomp:"Both"}[state.a.goal];
-    try{ localStorage.setItem("sps_stackscore", JSON.stringify({name:state.name,email:em,goal:appGoal,goalKey:state.a.goal||"",train:state.a.days,style:state.a.style||"",prog:state.a.prog||"",out:state.a.out||"",weekend:state.a.weekend||"",stack:[...state.picked],score:state.result.score,at:Date.now()})); }catch(x){}
+    // Hand the answers to the app on this same site, so the plan builder starts pre-filled and never asks for the email again.
+    // train/style/prog/weekend keep the older values the app already understands.
+    const appGoal={fat:"Lose fat and see my abs",cut:"Lose fat and see my abs",muscle:"Build muscle",recomp:"Both"}[a.goal];
+    try{ localStorage.setItem("sps_stackscore", JSON.stringify({name:state.name,email:em,goal:appGoal,goalKey:a.goal||"",
+      train:a.days==="4–6"?"4+":a.days, days:a.days, split:a.split||"",
+      style:a.split==="none"?"Weights, I wing it":"Weights, a set plan",
+      prog:a.prog==="yes"?"Yes, I track it":"Not really", progRaw:a.prog||"",
+      protein:a.protein||"", cals:a.cals||"", out:a.out||"",
+      weekend:{"Same as weekdays":"On track","A bit looser":"A bit loose"}[a.weekend]||a.weekend||"",
+      stack:[...state.picked],score:state.result.score,at:Date.now()})); }catch(x){}
     state.sending = sendToKit(state.result).then(ok=>state.sent=ok);
-    window.spsTrack&&spsTrack("ss_done",{score:state.result.score,goal:state.a.goal||"",picked:state.picked.size});
+    window.spsTrack&&spsTrack("ss_done",{score:state.result.score,goal:a.goal||"",picked:state.picked.size});
     go(CALC);
   };
 }
@@ -1282,11 +1527,12 @@ function renderGate(){
 /* ---------- the "working on it" beat ---------- */
 function renderCalc(){
   const n=state.picked.size;
-  const steps=["Scoring your training","Scoring your eating",n?`Checking ${n} product${n===1?"":"s"} against my 47 verdicts`:"Checking your supplements","Building your tweaks for "+(GOAL_TEXT[state.a.goal]||"your goal")];
+  const steps=["Scoring your training","Scoring your eating",n?`Checking ${n} product${n===1?"":"s"} against my 47 verdicts`:"Checking your supplements","Building your tweaks to "+(GOAL_TEXT[state.a.goal]||"hit your goal")];
   app.innerHTML = `<div class="quiz gut"><div class="qwrap"><section class="qcard calcwrap fade">
-    <div class="spin" aria-hidden="true"></div>
+    <div class="calc-logo"><span class="spin" aria-hidden="true"></span><img src="/logo-b.png" alt="Six-Pack Stack" width="64" height="64"></div>
+    <span class="calc-brand">SIX-PACK <b>STACK</b></span>
     <h2>Running your audit, ${esc(state.name)}…</h2>
-    <ul class="calc">${steps.map(s=>`<li><i></i>${esc(s)}</li>`).join("")}</ul>
+    <ul class="calc">${steps.map(s=>`<li><i>${ico("check")}</i>${esc(s)}</li>`).join("")}</ul>
   </section></div></div>`;
   const lis=[...app.querySelectorAll(".calc li")], gap=reduce?60:520;
   lis.forEach((li,k)=>setTimeout(()=>li.classList.add("on"),gap*(k+1)));
@@ -1303,15 +1549,21 @@ function ring(score,size,stroke){
   return `<svg viewBox="0 0 ${size} ${size}" aria-hidden="true"><circle cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke="#e6e8ef" stroke-width="${stroke}"/><circle cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke="${col}" stroke-width="${stroke}" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${C*(1-score/100)}"/></svg>`;
 }
 function tweakList(T){ return `<ol class="tweaks">${T.map(t=>`<li><div><b>${esc(t.t)}</b><p>${esc(t.b)}<span class="why">Why: ${esc(t.w)}</span></p></div></li>`).join("")}</ol>`; }
-function areaCard(A,extra,k){
+const AREA_ICON={lift:"dumbbell",eat:"plate",supp:"pill"};
+function areaCard(A,extra){
   return `<section class="area" id="a-${A.key}">
-    <div class="area-h"><h3>Your ${A.name.toLowerCase()}</h3><span class="sc ${tone(A.score)}">${A.score}/100</span></div>
-    ${A.good.length?`<p class="working"><b>Working:</b> ${A.good.map(esc).join(" ")}</p>`:""}
+    <div class="area-h"><span class="tring">${ring(A.score,52,5)}<b>${A.score}</b></span><div><span class="eyebrow">${ico(AREA_ICON[A.key],"sm")} ${esc(A.name)}</span><h3>${esc(areaLine(A))}</h3></div></div>
+    ${A.good.length?`<div class="working">${ico("check")}<p>${A.good.map(esc).join(" ")}</p></div>`:""}
     ${A.targets?`<div class="target">${A.targets.map(t=>`<span>${esc(t)}</span>`).join("")}</div>`:""}
-    <span class="eyebrow" style="color:var(--soft)">What to tweak</span>
-    ${tweakList(A.tweaks)}
+    ${A.tweaks.length?`<span class="tw-k">What to change</span>${tweakList(A.tweaks)}`:""}
     ${extra||""}
   </section>`;
+}
+function areaLine(A){
+  const t=tone(A.score);
+  return {lift:{low:"Your training is holding you back",mid:"Your training is close",high:"Your training is dialed in"},
+          eat:{low:"Your eating is the biggest leak",mid:"Your eating is close",high:"Your eating is dialed in"},
+          supp:{low:"You're paying for the wrong things",mid:"A few swaps to make",high:"Your stack is clean"}}[A.key][t];
 }
 function vrow(p){
   const pill = p.k==="risk"?`<span class="pill p-risk">Risky</span>`:`<span class="pill p-${p.k}">${KIND[p.k]}</span>`;
@@ -1337,14 +1589,67 @@ function gradRing(id,size,stroke,score){
     <circle cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke="rgba(255,255,255,.10)" stroke-width="${stroke}"/>
     <circle id="${id}" cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke="url(#${id}g)" stroke-width="${stroke}" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${C}" data-c="${C}" data-s="${score}"/></svg>`;
 }
+
+/* every answer, read back with what it means for this goal */
+function answerRows(r){
+  const a=state.a, g=a.goal, muscle=g==="muscle"||g==="recomp", S=r.S;
+  const R=[];
+  const add=(i,q,ans,st,note)=>R.push({i,q,ans,st,note});
+  add("calendar","Days a week",a.days,
+    a.days==="0–1"?"leak":a.days==="2–3"?(muscle?"fix":"good"):"good",
+    a.days==="0–1"?"Not enough to change how you look. 3 is the minimum.":a.days==="2–3"?(muscle?"Enough to start. A 4th day speeds up growth.":"Enough for fat loss if every session is full body."):"Plenty. Consistency is handled.");
+  const few=a.days!=="4–6", sp=a.split;
+  add("split","Split",SPLIT_NAME[sp]||"",
+    sp==="none"||sp==="bro"||(sp==="ppl"&&few)?"fix":"good",
+    sp==="none"?"Without a set plan you can't beat last week.":sp==="bro"?"Each muscle only gets trained once a week.":sp==="ppl"&&few?`On ${a.days} days, each muscle gets hit about once a week.`:`A good fit for ${a.days} days a week.`);
+  add("trend","Progressive overload",{yes:"Hitting new PRs",stuck:"Stuck at the same weight",dk:"Don't know"}[a.prog]||"",
+    a.prog==="yes"?"good":a.prog==="stuck"?"leak":"fix",
+    a.prog==="yes"?"This is what builds muscle. Keep logging.":a.prog==="stuck"?"Your muscles have no new reason to grow.":"If you don't track it, it's probably not happening.");
+  add("flame","Calories",a.cals,
+    a.cals==="Yes, I track"?"good":a.cals==="Roughly"?"fix":"leak",
+    a.cals==="Yes, I track"?"You know your number. Results get predictable.":a.cals==="Roughly"?"Close, but small misses add up over weeks.":"Without your number, you're guessing.");
+  add("egg","100+ g protein daily",a.protein,
+    a.protein==="Yes"?"good":a.protein==="No"?"leak":"fix",
+    a.protein==="Yes"?(muscle?"Your muscle has what it needs to grow.":"It protects your muscle while you lose fat."):a.protein==="Not sure"?"Most guys who aren't sure are under.":"Your #1 food habit for "+(muscle?"building muscle.":"keeping muscle while you diet."));
+  add("bag","Eating out",a.out,
+    a.out==="Rarely"?"good":a.out==="Most meals"?"leak":"fix",
+    a.out==="Rarely"?"You control what's on your plate.":a.out==="Most meals"?"Restaurant meals often run 1,000+ calories.":"Fine with 3 go-to orders you decide ahead.");
+  add("weekend","Weekends",a.weekend,
+    a.weekend==="Same as weekdays"?"good":a.weekend==="I undo the whole week"?"leak":"fix",
+    a.weekend==="Same as weekdays"?"Your week doesn't get undone.":a.weekend==="I undo the whole week"?"Two loose days can wipe out five good ones.":"Plan 2 meals out and keep the rest normal.");
+  const bad=S.verdicts.filter(v=>v.k==="skip"||v.k==="risk").length;
+  add("pill","Supplements",state.takes===false||(!S.verdicts.length&&!state.other.trim())?"None":`${S.verdicts.length+(state.other.trim()?1:0)} products`,
+    S.verdicts.some(v=>v.k==="risk")?"leak":bad?"fix":S.missingCreatine?"fix":"good",
+    bad?`${bad} flagged${S.wasteYear>0?`, about ${money(S.wasteYear)} a year wasted`:""}.`:S.missingCreatine?"No wasted money. Creatine is the one worth adding.":"Clean. Nothing you're wasting money on.");
+  return R;
+}
+/* a few plain sentences about this person, from every answer */
+function readOn(r){
+  const a=state.a, low=s=>s.charAt(0).toLowerCase()+s.slice(1);
+  const SPL={full:"full body",ul:"an upper/lower split",ppl:"push/pull/legs",bro:"a bro split",none:"no set split"};
+  const train=`You train ${a.days} days a week on ${SPL[a.split]||"your split"}`+
+    ({yes:" and your lifts keep going up.",stuck:", but your lifts are stuck.",dk:", but you don't know if your lifts are going up."}[a.prog]||".");
+  const eatBits=[];
+  eatBits.push(a.cals==="Yes, I track"?"you track your calories":a.cals==="Roughly"?"you roughly know your calories":"you don't know your calories");
+  eatBits.push(a.protein==="Yes"?"you hit 100+ g of protein":a.protein==="Some days"?"you hit your protein some days":a.protein==="No"?"you don't hit 100 g of protein":"you're not sure about your protein");
+  if(a.weekend==="I undo the whole week") eatBits.push("your weekends undo the week");
+  else if(a.weekend==="A bit looser") eatBits.push("your weekends get a bit loose");
+  const eat=`On food, ${listy(eatBits)}.`;
+  const best=r.areas.slice().sort((x,y)=>y.score-x.score)[0];
+  const verdict = r.score>=75 ? `Your basics are solid. What's left is the last 10%.`
+    : `${best.score>=75&&!(best.key==="supp"&&r.S.skips)?`Your ${{lift:"training is",eat:"eating is",supp:"supplements are"}[best.key]} in good shape. `:""}The biggest thing between you and your goal is your ${{lift:"training",eat:"eating",supp:"supplements"}[r.weakest.key]}.`;
+  return `${train} ${eat} ${verdict}`;
+}
+
 function renderResults(){
   const r=state.result||computeResult();
   const g=GOALS.find(x=>x.v===state.a.goal);
   const today=new Date().toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"});
   const planBtn=(label,cls="")=>`<a class="btn full ${cls}" href="${PLAN_URL}">${label}</a>`;
   const potRow=(label,val,cls)=>`<div class="pot-row ${cls}"><div><span>${label}</span><b data-count="${val}">0</b></div><i><u style="--w:${val}%"></u></i></div>`;
-  const tabs=[r.L,r.E,r.S];
-  const first=r.weakest.key;
+  const order=[r.weakest,...r.areas.filter(A=>A!==r.weakest)];
+  const rows=answerRows(r), nFix=rows.filter(x=>x.st!=="good").length;
+  const ST={good:"Working",fix:"Tweak",leak:"Leak"};
   app.innerHTML = `<div class="report">
   <section class="rhead">
     <div class="rh-bg" aria-hidden="true"></div>
@@ -1356,14 +1661,15 @@ function renderResults(){
           <div class="rh-copy">
             <span class="rband b-${r.tone}">${esc(r.band)}</span>
             <h1>${esc(state.name)}, your Stack Score is <em>${r.score}</em>.</h1>
-            <p>${esc(r.bandText)}</p>
+            <p>${esc(readOn(r))}</p>
           </div>
         </div>
+        <div class="rh-areas">${r.areas.map(A=>`<a href="#a-${A.key}" class="rha"><span class="rha-i">${ico(AREA_ICON[A.key])}</span><span class="rha-t">${esc(A.name)}</span><b class="t-${tone(A.score)}">${A.score}</b></a>`).join("")}</div>
       </div>
       <div class="rh-right pop" style="animation-delay:.2s">
         <div class="pot">
-          <span class="eyebrow" style="color:#ff8a82">Your potential</span>
-          <p class="pot-h">Where your score goes when you make the tweaks</p>
+          <span class="pot-k">Your potential</span>
+          <p class="pot-h">Where your score goes when you make the changes</p>
           ${potRow("Today",r.score,"now")}
           ${potRow("Do your #1 tweak",r.pot1,"one")}
           ${potRow("Do all your tweaks",r.potAll,"all")}
@@ -1376,7 +1682,7 @@ function renderResults(){
 
   <div class="in gut rbody">
     <div class="prio pop" style="animation-delay:.35s">
-      <div class="prio-ico" aria-hidden="true">🎯</div>
+      <div class="prio-ico" aria-hidden="true">${ico("bolt")}</div>
       <div>
         <span class="eyebrow">Your #1 tweak · ${esc(r.weakest.name)}</span>
         <span class="t">${esc(r.top.t)}</span>
@@ -1386,13 +1692,13 @@ function renderResults(){
       <span class="prio-gain">+${Math.max(1,r.pot1-r.score)}<small>points</small></span>
     </div>
 
+    <section class="ans pop" style="animation-delay:.45s" aria-label="Your answers, scored">
+      <div class="ans-h"><div><span class="eyebrow">Your answers, scored</span><h2>${nFix?`${nFix} of ${rows.length} habits need a change`:"Every habit is working"}</h2></div>
+        <div class="ans-key"><span class="k-good">Working</span><span class="k-fix">Tweak</span><span class="k-leak">Leak</span></div></div>
+      <ul class="ans-list">${rows.map(x=>`<li class="st-${x.st}"><span class="ai">${ico(x.i)}</span><div class="at"><span class="aq">${esc(x.q)}</span><b>${esc(x.ans)}</b><span class="an">${esc(x.note)}</span></div><span class="as">${ST[x.st]}</span></li>`).join("")}</ul>
+    </section>
 
-    <div class="tabs pop" style="animation-delay:.45s" role="tablist" aria-label="Your breakdown">
-      ${tabs.map(A=>`<button role="tab" data-tab="${A.key}" aria-selected="${A.key===first}"><span class="tring">${ring(A.score,44,5)}<b>${A.score}</b></span><span class="tl">${A.name}</span></button>`).join("")}
-    </div>
-    <div class="panels">
-      ${tabs.map(A=>`<div class="panel" role="tabpanel" data-panel="${A.key}" ${A.key===first?"":"hidden"}>${areaCard(A, A.key==="supp"?verdictLabel(r.S):"", 0)}</div>`).join("")}
-    </div>
+    ${order.map(A=>areaCard(A, A.key==="supp"?verdictLabel(r.S):"")).join("")}
 
     <section class="appad pop" style="animation-delay:.2s" aria-label="Your next step: the Six-Pack Stack app">
       <div class="aa-glow" aria-hidden="true"></div>
@@ -1401,11 +1707,11 @@ function renderResults(){
         <h2>${esc(state.name)}, here's your plan to go from <em>${r.score}</em> to <em>${r.potAll}</em>.</h2>
         <p class="aa-sub">My Six-Pack Stack app turns this report into your full 12-week plan to ${esc(GOAL_TEXT[state.a.goal]||"hit your goal")}, built from the answers you just gave me.</p>
         <ul class="aa-list">
-          <li><span>🎯</span><div><b>Your #1 tweak is built into week 1</b><small>${esc(r.top.t)}</small></div></li>
-          <li><span>🔎</span><div><b>Scan any supplement before you buy it</b><small>Barcode or label, and you see my verdict right there in the store</small></div></li>
-          <li><span>🍳</span><div><b>Meals made only from foods you already eat</b><small>Snap anything else and it logs the calories and protein for you</small></div></li>
-          <li><span>🏋️</span><div><b>Workouts on the days you pick</b><small>A form video on every move and today's target, so you get stronger every week</small></div></li>
-          <li><span>📉</span><div><b>Calories that adjust to your real trend</b><small>See the date you'll hit your goal, and stop guessing</small></div></li>
+          <li><span>${ico("bolt")}</span><div><b>Your #1 tweak is built into week 1</b><small>${esc(r.top.t)}</small></div></li>
+          <li><span>${ico("scan")}</span><div><b>Scan any supplement before you buy it</b><small>Barcode or label, and you see my verdict right there in the store</small></div></li>
+          <li><span>${ico("plate")}</span><div><b>Meals made only from foods you already eat</b><small>Snap anything else and it logs the calories and protein for you</small></div></li>
+          <li><span>${ico("dumbbell")}</span><div><b>Workouts on the days you pick</b><small>A form video on every move and today's target, so you get stronger every week</small></div></li>
+          <li><span>${ico("chart")}</span><div><b>Calories that adjust to your real trend</b><small>See the date you'll hit your goal, and stop guessing</small></div></li>
         </ul>
         <a class="btn aa-btn" href="${PLAN_URL}">Build my free plan <b aria-hidden="true">→</b></a>
         <div class="aa-micro"><span>2 minutes</span><span>Your answers carry over</span><span>First 2 weeks free, no card</span></div>
@@ -1437,7 +1743,7 @@ function renderResults(){
         <button class="btn ghost sm full" id="share">Copy link</button>
       </div>
       <div class="stack-mini">
-        <p class="small muted">A copy is on its way to <b style="color:var(--ink)">${esc(state.email)}</b>.${state.sent?"":" Check your promotions tab if you don't see it."}</p>
+        <p class="small muted">${ico("mail","sm")} A copy is on its way to <b style="color:var(--ink)">${esc(state.email)}</b>.${state.sent?"":" Check your promotions tab if you don't see it."}</p>
         <button class="link" id="redo">Retake the audit</button>
       </div>
     </div>
@@ -1453,11 +1759,6 @@ function renderResults(){
   countTo(document.getElementById("sc"),r.score,1600);
   app.querySelectorAll("[data-count]").forEach((n,i)=>setTimeout(()=>countTo(n,+n.dataset.count,1200),400+i*250));
 
-  // tabs
-  app.querySelectorAll("[data-tab]").forEach(t=>t.onclick=()=>{
-    app.querySelectorAll("[data-tab]").forEach(x=>x.setAttribute("aria-selected",String(x===t)));
-    app.querySelectorAll("[data-panel]").forEach(p=>{ const on=p.dataset.panel===t.dataset.tab; p.hidden=!on; if(on){ p.classList.remove("swap"); void p.offsetWidth; p.classList.add("swap"); } });
-  });
   // dock appears once the potential card scrolls away
   const dock=document.getElementById("dock"), pot=app.querySelector(".pot"), ctaBox=app.querySelector(".rbody .appad");
   const vis={pot:true,cta:false,potAbove:false};
@@ -1474,9 +1775,8 @@ function renderResults(){
     catch(x){ const s=window.getSelection(), rg=document.createRange(); rg.selectNodeContents(document.getElementById("shareurl")); s.removeAllRanges(); s.addRange(rg); b.textContent="Selected. Copy it ✓"; }
     setTimeout(()=>b.textContent="Copy link",2200);
   };
-  document.getElementById("redo").onclick=()=>{state.a={};state.picked.clear();state.none=false;state.other="";state.result=null;state.showAll=false;go(0);};
+  document.getElementById("redo").onclick=()=>{state.a={};state.picked.clear();state.none=false;state.takes=null;state.pickOpen=false;state.other="";state.result=null;state.showAll=false;go(0);};
 }
-
 render();
 </script>
 </body>
