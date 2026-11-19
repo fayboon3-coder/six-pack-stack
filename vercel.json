@@ -54,6 +54,116 @@
       "source": "/steroids",
       "destination": "/stack-score?src=steroids",
       "permanent": false
+    },
+    {
+      "source": "/freakishly-strong",
+      "destination": "/stack-score?src=freakishly-strong",
+      "permanent": false
+    },
+    {
+      "source": "/investigating-gen-z",
+      "destination": "/stack-score?src=investigating-gen-z",
+      "permanent": false
+    },
+    {
+      "source": "/ozempic",
+      "destination": "/stack-score?src=ozempic",
+      "permanent": false
+    },
+    {
+      "source": "/joe-rogan",
+      "destination": "/stack-score?src=joe-rogan",
+      "permanent": false
+    },
+    {
+      "source": "/ag1",
+      "destination": "/stack-score?src=ag1",
+      "permanent": false
+    },
+    {
+      "source": "/get-jacked",
+      "destination": "/stack-score?src=get-jacked",
+      "permanent": false
+    },
+    {
+      "source": "/summer-cut",
+      "destination": "/stack-score?src=summer-cut",
+      "permanent": false
+    },
+    {
+      "source": "/love-handles",
+      "destination": "/stack-score?src=love-handles",
+      "permanent": false
+    },
+    {
+      "source": "/weight-after-college",
+      "destination": "/stack-score?src=weight-after-college",
+      "permanent": false
+    },
+    {
+      "source": "/summer-2-months",
+      "destination": "/stack-score?src=summer-2-months",
+      "permanent": false
+    },
+    {
+      "source": "/full-time-schedule",
+      "destination": "/stack-score?src=full-time-schedule",
+      "permanent": false
+    },
+    {
+      "source": "/lifting-split",
+      "destination": "/stack-score?src=lifting-split",
+      "permanent": false
+    },
+    {
+      "source": "/eating-system",
+      "destination": "/stack-score?src=eating-system",
+      "permanent": false
+    },
+    {
+      "source": "/post-grad-system",
+      "destination": "/stack-score?src=post-grad-system",
+      "permanent": false
+    },
+    {
+      "source": "/after-graduation",
+      "destination": "/stack-score?src=after-graduation",
+      "permanent": false
+    },
+    {
+      "source": "/muscle-after-grad",
+      "destination": "/stack-score?src=muscle-after-grad",
+      "permanent": false
+    },
+    {
+      "source": "/eat-after-grad",
+      "destination": "/stack-score?src=eat-after-grad",
+      "permanent": false
+    },
+    {
+      "source": "/freshman-15",
+      "destination": "/stack-score?src=freshman-15",
+      "permanent": false
+    },
+    {
+      "source": "/lose-25-semester",
+      "destination": "/stack-score?src=lose-25-semester",
+      "permanent": false
+    },
+    {
+      "source": "/aggressive-cuts",
+      "destination": "/stack-score?src=aggressive-cuts",
+      "permanent": false
+    },
+    {
+      "source": "/abs-in-college",
+      "destination": "/stack-score?src=abs-in-college",
+      "permanent": false
+    },
+    {
+      "source": "/my-story",
+      "destination": "/stack-score?src=my-story",
+      "permanent": false
     }
   ]
 }
