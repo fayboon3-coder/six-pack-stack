@@ -817,6 +817,56 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   .yni{width:52px;height:52px}
   .ynb b{font-size:22px}
 }
+
+/* ---- clean navy: flat #141c33 panels, no glows, grids or purple gradients ---- */
+.rhead{background:#141c33}
+.rh-bg{display:none}
+.big-ring svg{filter:none}
+.rh-copy h1 em{background:none;-webkit-background-clip:border-box;background-clip:border-box;color:#fff;text-decoration:underline;text-decoration-color:#d0362f;text-decoration-thickness:4px;text-underline-offset:6px}
+.rh-meta span{background:#1c2542;border-color:#2a3456;color:#c7cde0}
+.rh-meta span:first-child{background:#1c2542;border-color:#2a3456;color:#fff}
+.rband.b-low{background:#1c2542;color:#ff8a82;border:1px solid #3a2a3a}
+.rband.b-mid{background:#1c2542;color:#ffd27a;border:1px solid #3a3a2a}
+.rband.b-high{background:#1c2542;color:#7fe3b0;border:1px solid #24443a}
+.rha{background:#1c2542;border-color:#2a3456}
+.rha:hover{background:#222c4d}
+.rha-i{background:#26304f}
+.pot{background:#1c2542;border-color:#2a3456;box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none}
+.pot-row i{background:#2a3456}
+.pot-row.now u{background:#c7cde0}
+.pot-row.one u{background:#e0a21b}
+.pot-row.all u{background:#1f9d5f;box-shadow:none}
+.pot-row.all b{color:#7fe3b0}
+.appad{background:#141c33}
+.appad .aa-glow{display:none}
+.aa-k{background:#1c2542;border-color:#2a3456}
+.aa-k i{box-shadow:none}
+.appad h2 em{color:#fff;text-decoration:underline;text-decoration-color:#d0362f;text-decoration-thickness:3px;text-underline-offset:5px}
+.aa-list li>span{background:#1c2542;border-color:#2a3456}
+.aa-btn{animation:none;box-shadow:0 10px 24px rgba(0,0,0,.25)}
+.ph3{border-color:#0e1426;background:#0e1426;box-shadow:0 20px 40px rgba(0,0,0,.35)}
+.appad .chip{box-shadow:0 6px 16px rgba(0,0,0,.2)}
+.appad .chip.c2{background:#1f9d5f;color:#fff}
+.gt-side{background:#141c33}
+.gt-list .gi{background:#1c2542}
+.gt-list li{border-bottom-color:#232c4a}
+.dock-in{background:#141c33}
+.final{background:#141c33}
+/* the live preview on the start page */
+.st{background:#2a3456}
+.st::after{display:none}
+.st-in{background:#141c33;box-shadow:0 30px 60px rgba(20,28,51,.25)}
+.st-in::after,.aurora,.sparks,.floorglow{display:none}
+.st-num b{background:none;color:#fff;filter:none;-webkit-background-clip:border-box;background-clip:border-box}
+.st-goal,.hb{background:#1c2542;border-color:#2a3456;-webkit-backdrop-filter:none;backdrop-filter:none}
+.st-pill{box-shadow:none}
+.hb[aria-pressed="true"]{background:#1d3a35;border-color:#1f9d5f;box-shadow:none}
+.st-tweak{background:#1c2542;border-color:#2a3456}
+.st-tweak .k{color:#9aa3bd}
+.st-go{background:#d0362f;box-shadow:none}
+.st-go::after{display:none}
+.st-stage.full .st{background:#1f9d5f}
+@media (max-width:560px){.st-band{background:#1c2542;border-color:#2a3456}.tag{background:#1c2542;border-color:#2a3456}}
 </style>
 <script defer src="/_vercel/insights/script.js"></script>
 </head>
@@ -1098,7 +1148,7 @@ const PV_GOALS=[["fat","Lose fat"],["cut","See my abs"],["muscle","Build muscle"
 const BLOCKS=[
   {k:"protein",t:"Protein",s:"most days",i:"🥩"},
   {k:"cals",t:"Calories",s:"known",i:"🔢"},
-  {k:"days",t:"4+ days",s:"of training",i:"🏋️"},
+  {k:"days",t:"4–6 days",s:"of training",i:"🏋️"},
   {k:"prog",t:"Progress",s:"weights go up",i:"📈"},
   {k:"weekend",t:"Weekends",s:"on track",i:"📅"},
   {k:"stack",t:"Clean stack",s:"no junk",i:"💊"}
@@ -1584,9 +1634,9 @@ function verdictLabel(S){
   </div>${S.gearSpent>0?`<p class="small muted">Plus about ${money(S.gearSpent)} already spent on gadgets and tests that don't work.</p>`:""}`;
 }
 function gradRing(id,size,stroke,score){
-  const r=(size-stroke)/2, C=2*Math.PI*r, t=tone(score), c1={low:"#ff5a50",mid:"#ffb020",high:"#2fd17f"}[t], c2={low:"#ff9a6b",mid:"#ffe08a",high:"#8af0bd"}[t];
+  const r=(size-stroke)/2, C=2*Math.PI*r, t=tone(score), c1={low:"#e5483f",mid:"#e8a92a",high:"#22b06a"}[t], c2=c1;
   return `<svg viewBox="0 0 ${size} ${size}" aria-hidden="true"><defs><linearGradient id="${id}g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${c1}"/><stop offset="1" stop-color="${c2}"/></linearGradient></defs>
-    <circle cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke="rgba(255,255,255,.10)" stroke-width="${stroke}"/>
+    <circle cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke="#2a3456" stroke-width="${stroke}"/>
     <circle id="${id}" cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke="url(#${id}g)" stroke-width="${stroke}" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${C}" data-c="${C}" data-s="${score}"/></svg>`;
 }
 
