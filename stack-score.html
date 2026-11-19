@@ -1534,7 +1534,10 @@ function renderPick(i){
     let top=PICK_TOP.map(id=>PMAP[id]).filter(Boolean);
     if(VIDEO&&PMAP[VIDEO.pid]) top=[PMAP[VIDEO.pid],...top.filter(p=>p.id!==VIDEO.pid)];
     const extra=[...state.picked].map(id=>PMAP[id]).filter(p=>p&&!top.includes(p));
-    body = `<div class="cat"><h3>Most popular</h3><div class="ptiles">${top.map(tile).join("")}</div></div>
+    const SHOW=6, more=top.length-SHOW, hidden=top.slice(SHOW).filter(p=>!state.picked.has(p.id));
+    const shown=state.showAll?top:top.filter((p,k)=>k<SHOW||state.picked.has(p.id));
+    body = `<div class="cat"><h3>Most popular</h3><div class="ptiles">${shown.map(tile).join("")}</div>
+      ${!state.showAll&&hidden.length?`<button class="more" id="all">Show ${hidden.length} more</button>`:""}</div>
       ${extra.length?`<div class="cat"><h3>Also added</h3><div class="chips">${extra.map(p=>chip(p)).join("")}</div></div>`:""}
       <p class="small muted">Don't see yours? Search it above.</p>`;
   }
