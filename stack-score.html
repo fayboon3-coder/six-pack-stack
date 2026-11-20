@@ -885,6 +885,39 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .ptile:focus-within{outline:3px solid rgba(20,28,51,.35);outline-offset:2px}
 @media (max-width:420px){.ptiles{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.ptile{flex-direction:row;justify-content:flex-start;text-align:left;padding:12px 16px 12px 9px;gap:8px}.pti{width:32px;height:32px;border-radius:10px;flex:none}.pti .ico{width:18px;height:18px}.ptn{font-size:13px;min-width:0;hyphens:none;letter-spacing:-.01em}.ptc{top:6px;right:6px;width:16px;height:16px}.ptc .ico{width:10px;height:10px}}
 @media (max-width:380px){.ptile{padding:11px 14px 11px 8px;gap:7px}.pti{width:28px;height:28px;border-radius:9px}.pti .ico{width:16px;height:16px}.ptn{font-size:12px}}
+
+/* email screen: tease the real score, blurred until they unlock it */
+.tz{display:flex;gap:16px;align-items:center;background:#1c2542;border:1px solid #2a3456;border-radius:18px;padding:14px}
+.tz-ring{position:relative;width:96px;height:96px;flex:none}
+.tz-ring svg{width:100%;height:100%}
+.tz-num{position:absolute;inset:0;display:grid;place-items:center}
+.tz-num b{font-size:34px;font-weight:900;color:#fff;filter:blur(7px);user-select:none;letter-spacing:-.02em}
+.tz-num span{position:absolute;width:30px;height:30px;border-radius:50%;background:rgba(13,19,38,.85);border:1px solid #2a3456;display:grid;place-items:center;color:#fff}
+.tz-num span .ico{width:15px;height:15px}
+.tz-copy{display:flex;flex-direction:column;gap:4px;min-width:0}
+.tz-k{font-size:11.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#7fe3b0}
+.tz-copy b{font-size:17px;font-weight:900;line-height:1.25}
+.tz-copy>span:last-child{font-size:13px;color:#9aa3bd;line-height:1.4}
+.tz-bars{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.tz-bars li{display:grid;grid-template-columns:118px 1fr 26px 16px;gap:10px;align-items:center;font-size:13.5px;font-weight:700;color:#c7cde0}
+.tz-n{display:flex;align-items:center;gap:6px;white-space:nowrap}
+.tz-bars i{height:8px;border-radius:4px;background:#2a3456;overflow:hidden;display:block}
+.tz-bars u{display:block;height:100%;border-radius:4px;filter:blur(1.5px)}
+.tz-bars u.t-low{background:#e5483f}.tz-bars u.t-mid{background:#e8a92a}.tz-bars u.t-high{background:#22b06a}
+.tz-bars b{font-weight:900;color:#fff;filter:blur(5px);user-select:none;text-align:right}
+.tz-bars .ico{color:#6f7a98}
+.tz-unl{list-style:none;margin:0;padding:12px 0 0;border-top:1px solid #232c4a;display:grid;gap:8px}
+.tz-unl li{display:flex;gap:8px;align-items:center;font-size:13.5px;color:#c7cde0;font-weight:600}
+.tz-unl .ico{color:#7fe3b0;flex:none}
+@media (max-width:760px){
+  .gt-side{order:-1;gap:12px;padding:18px 16px}
+  .gt-side .gt-boon,.gt-side .tz-unl{display:none}
+  .gt-brand{display:none}
+  .tz{padding:12px;gap:14px}
+  .tz-ring{width:84px;height:84px}
+  .tz-num b{font-size:30px}
+  .tz-bars li{grid-template-columns:104px 1fr 24px 14px;gap:8px;font-size:12.5px}
+}
 </style>
 <script defer src="/_vercel/insights/script.js"></script>
 </head>
@@ -1593,9 +1626,19 @@ function renderGate(){
         <button class="btn full gt-btn" id="show" type="submit">Show my Stack Score <b aria-hidden="true">→</b></button>
         <p class="gt-fine">${ico("shield")}<span>Results on screen right away, plus a copy in your inbox. No spam, and I never sell your email.</span></p>
       </form>
-      <aside class="gt-side" aria-label="What's in your report">
-        <div class="gt-brand"><img src="/logo-b.png" alt="" width="34" height="34"><div><b>Stack Score report</b><span>Built for your goal</span></div></div>
-        <ul class="gt-list">${rows.map(([i,t,s])=>`<li><span class="gi">${ico(i)}</span><div><b>${esc(t)}</b><span>${esc(s)}</span></div><span class="gl">${ico("lock")}</span></li>`).join("")}</ul>
+      <aside class="gt-side" aria-label="Your score is ready">
+        <div class="gt-brand"><img src="/logo-b.png" alt="" width="34" height="34"><div><b>Stack Score report</b><span>${esc(state.a.goal?GOALS.find(g=>g.v===state.a.goal).t:"Built for your goal")}</span></div></div>
+        <div class="tz">
+          <div class="tz-ring">${(()=>{const r=46,C=2*Math.PI*r,col={low:"#e5483f",mid:"#e8a92a",high:"#22b06a"}[tone(pre.score)];return `<svg viewBox="0 0 108 108" aria-hidden="true"><circle cx="54" cy="54" r="${r}" fill="none" stroke="#2a3456" stroke-width="9"/><circle cx="54" cy="54" r="${r}" fill="none" stroke="${col}" stroke-width="9" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${C*(1-pre.score/100)}" transform="rotate(-90 54 54)"/></svg>`})()}
+            <div class="tz-num"><b aria-hidden="true">${pre.score}</b><span>${ico("lock")}</span></div></div>
+          <div class="tz-copy"><span class="tz-k">Your score is ready</span><b>${pre.weakest.score>=75?"Your next win":"Your biggest leak"}: ${esc(pre.weakest.name.toLowerCase())}</b><span>Enter your email to see your score and how to fix it.</span></div>
+        </div>
+        <ul class="tz-bars">${[pre.L,pre.E,pre.S].map(A=>`<li><span class="tz-n">${ico(AREA_ICON[A.key],"sm")} ${esc(A.name)}</span><i><u class="t-${tone(A.score)}" style="width:${Math.max(8,A.score)}%"></u></i><b aria-hidden="true">${A.score}</b>${ico("lock","sm")}</li>`).join("")}</ul>
+        <ul class="tz-unl">
+          <li>${ico("bolt","sm")} Your #1 tweak, worth the most points</li>
+          <li>${ico("check","sm")} ${nT} personal tweaks for your goal</li>
+          <li>${ico("pill","sm")} ${nV?`Verdicts on the ${nV} product${nV===1?"":"s"} you take`:"Which supplements are worth it for you"}</li>
+        </ul>
         <div class="gt-boon"><img src="/boon.jpg" alt="" width="40" height="40"><span><b>Built by Boon Fay.</b> 225 → 175 lbs. No sponsors, no affiliate links.</span></div>
       </aside>
     </div>
